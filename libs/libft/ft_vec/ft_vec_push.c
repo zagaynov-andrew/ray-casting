@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 00:08:40 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 00:23:32 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 13:53:03 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,18 @@ static t_vec	*ft_vec_realloc(t_vec *vec)
 	return (vec);
 }
 
-void			ft_vec_push(t_vec **vec, void *new)
+t_vec			*ft_vec_push(t_vec **vec, void *new)
 {
 	if (!vec)
-		return ;
+		return (NULL);
 	if ((*vec)->size < (*vec)->capacity)
 		((*vec)->data)[(*vec)->size] = new;
 	else
 	{
-		ft_vec_realloc(*vec);
+		if (!ft_vec_realloc(*vec))
+			return (NULL);
 		((*vec)->data)[(*vec)->size] = new;
 	}
 	(*vec)->size++;
+	return (*vec);
 }

@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 17:43:11 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/26 18:36:49 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:24:10 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3d.h"
 
 t_scene	*scene_new(void)
 {
@@ -27,7 +27,33 @@ t_scene	*scene_new(void)
 	scene->s = NULL;
 	scene->f = 0x1000000;
 	scene->c = 0x1000000;
+	scene->start_pos = 0;
+	if (!(scene->map = ft_vec_new(8)))
+		return (NULL);
 	return (scene);
+}
+
+void	ft_vec_data_free(void **data, size_t size)
+{
+	int	i;
+
+	if (!data)
+		return ;
+	i = 0;
+	while (i < (int)size)
+	{
+		free(data[i]);
+		i++;
+	}
+	free(data);
+}
+
+void	ft_vec_free(t_vec *vec)
+{
+	if (!vec)
+		return ;
+	ft_vec_data_free(vec->data, vec->size);
+	free(vec);
 }
 
 void	free_scene(t_scene *scene)
@@ -42,5 +68,7 @@ void	free_scene(t_scene *scene)
 		free(scene->ea);
 	if (scene->s != NULL)
 		free(scene->s);
+	if (scene->map != NULL)
+		ft_vec_free(scene->map);
 	free(scene);
 }

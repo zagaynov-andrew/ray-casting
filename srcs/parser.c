@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/26 18:52:23 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:24:07 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3d.h"
 
 t_scene	*parse_cub(char *path)
 {
@@ -29,12 +29,15 @@ t_scene	*parse_cub(char *path)
 		{
 			free(line);
 			free_scene(scene);
+			read_remain(fd);
+			close(fd);
 			return (NULL);
 		}
 		free(line);
 		if (gnl_res == 0)
-			break;
+			break ;
 	}
+	close(fd);
 	return (scene);
 }
 
@@ -52,7 +55,23 @@ int		parse_line(char *line, t_scene *scene)
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;
 	if (!*tmp)
+	{
+		if (scene->map->size != 0)
+		{
+			errno = 999;
+			return (-1);
+		}
 		return (1);
+	}
+	if (parse_map_line(line, scene) != 1)
+		return (-1);
+	return (1);
+}
+
+int		parse_map_line(char *line, t_scene *scene)
+{
+	char	*line_copy;
+
 	if (!is_full_configs(scene))
 	{
 		errno = 999;
@@ -60,32 +79,19 @@ int		parse_line(char *line, t_scene *scene)
 	}
 	else
 	{
-		// Обработка строки карты
+		if (!is_valid_map_line(line, scene))
+			return (-1);
+		if (!(line_copy = ft_strdup(line)))
+		{
+			errno = 999;
+			return (-1);
+		}
+		if (!ft_vec_push(&(scene->map), (void*)line_copy))
+		{
+			errno = 999;
+			return (-1);
+		}
 	}
-}
-
-int		is_full_configs(t_scene *scene)
-{
-	if (!scene)
-		return (-1);
-	if (scene->width == -1)
-		return (0);
-	if (scene->height == -1)
-		return (0);
-	if (scene->f == 0x1000000)
-		return (0);
-	if (scene->c == 0x1000000)
-		return (0);
-	if (scene->s == NULL)
-		return (0);
-	if (scene->no == NULL)
-		return (0);
-	if (scene->so == NULL)
-		return (0);
-	if (scene->we == NULL)
-		return (0);
-	if (scene->ea == NULL)
-		return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 #    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/01/25 22:28:16 by nforce           ###   ########.fr        #
+#    Updated: 2021/01/27 15:24:22 by nforce           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,42 +70,40 @@ LIBFT_SRCS	=	ft_memset.c		\
 				ft_lstclear.c		\
 				ft_lstdelone.c		\
 				ft_lstiter.c		\
-				ft_lstmap.c
+				ft_lstmap.c			\
+				ft_vec/ft_vec_new.c		\
+				ft_vec/ft_vec_push.c	\
+				ft_vec/ft_vec_free.c
 
 GNL_SRCS	=	get_next_line.c		\
 				get_next_line_utils.c
 
-SRCS	=	$(SRCS_DIR)parser.c			\
-			$(SRCS_DIR)parse_value.c	\
-			test.c
-
+SRCS	=	$(SRCS_DIR)parser.c					\
+			$(SRCS_DIR)parser_utils.c			\
+			$(SRCS_DIR)parse_configs.c			\
+			$(SRCS_DIR)parse_configs_utils.c	\
+			$(SRCS_DIR)s_scene.c				\
+			$(SRCS_DIR)map.c					\
+			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))
 OBJS_PATH		= $(addprefix $(OBJS_DIR), $(OBJS))
-LIBFT_OBJ_PATH	= $(addprefix $(LIBFT_DIR)$(OBJS_DIR), $(LIBFT_SRCS:.c=.o))
+LIBFT_OBJ_PATH	= $(addprefix $(LIBFT_DIR)$(OBJS_DIR), $(notdir $(LIBFT_SRCS:.c=.o)))
 GNL_OBJ_PATH	= $(addprefix $(GNL_DIR)$(OBJS_DIR), $(GNL_SRCS:.c=.o))
 
-# $(OBJS_DIR)%.o : $(SRCS_DIR)$(PROCESSOR_DIR)%.c ft_printf.h
-# 	@mkdir -p $(OBJS_DIR)
-# 	@echo "- Done : $<"
-# 	@$(CC) $(CC_FLAGS) -c $< -o $@
-
-# $(OBJS_DIR)%.o : $(SRCS_DIR)$(T_PH_DIR)%.c ft_printf.h
-# 	@mkdir -p $(OBJS_DIR)
-# 	@echo "- Done : $<"
-# 	@$(CC) $(CC_FLAGS) -c $< -o $@
-
 $(LIBFT_DIR)$(OBJS_DIR)%.o : $(LIBFT_DIR)%.c $(LIBFT_DIR)libft.h
+	@$(MAKE) bonus -C $(LIBFT_DIR)
+$(LIBFT_DIR)$(OBJS_DIR)%.o : $(LIBFT_DIR)ft_vec/%.c $(LIBFT_DIR)libft.h
 	@$(MAKE) bonus -C $(LIBFT_DIR)
 
 $(GNL_DIR)$(OBJS_DIR)%.o : $(GNL_DIR)%.c $(GNL_DIR)get_next_line.h
 	@mkdir -p $(GNL_DIR)$(OBJS_DIR)
-	@echo "- Done : $<"
+	@echo "\e[1;31m- Done :\e[0m $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
-$(OBJS_DIR)%.o : $(SRCS_DIR)%.c cub3D.h
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c cub3d.h
 	@mkdir -p $(OBJS_DIR)
-	@echo "- Done : $<"
+	@echo "\e[1;31m- Done :\e[0m $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)

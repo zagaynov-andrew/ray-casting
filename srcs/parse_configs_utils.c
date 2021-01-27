@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_value_utils.c                                :+:      :+:    :+:   */
+/*   parse_configs_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 14:40:02 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/26 16:15:28 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:23:56 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3d.h"
 
 int	is_valid_path(char *path)
 {
@@ -35,9 +35,10 @@ int	next_value(char **str, int value)
 		return (-1);
 	}
 	*str += ft_lli_len((int)value);
+	return (1);
 }
 
-int	color_component(char **str, int component, int *color)
+int	color_component(char **str, int component, unsigned int *color)
 {
 	int	value;
 

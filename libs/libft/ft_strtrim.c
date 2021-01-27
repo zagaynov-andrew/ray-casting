@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 16:25:12 by ngamora           #+#    #+#             */
-/*   Updated: 2020/11/20 16:39:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/01/27 12:58:19 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	int	ft_char_in_set(const char *set, char c)
+int			ft_char_in_set(const char *set, char c)
 {
 	int	i;
 
+	if (!set)
+		return (0);
 	i = 0;
 	while (set[i])
 	{

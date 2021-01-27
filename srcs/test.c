@@ -3,7 +3,7 @@
 #include <errno.h>
 
 #include <limits.h>
-#include "../cub3D.h"
+#include "../cub3d.h"
 
 void	print_scene(t_scene *scene)
 {
@@ -75,7 +75,28 @@ int main()
 	else
 	{
 		print_scene(scene);
+		printf("\n");
+		int i = 0;
+		while (i < (int)scene->map->size)
+		{
+			printf("%s\n", (char*)(scene->map->data)[i]);
+			i++;
+		}
 		free_scene(scene);
 	}
 	return (0);
 }
+
+// int main()
+// {
+// 	t_scene *scene = parse_cub("./configs.cub");
+// 	if (is_valid_map_line("    1 1 1 1 1 1N1 1 1 1 1 1      11 101 101 111 101               101 1     ", scene))
+// 		printf(":D GOOOD :D\n");
+// 	else
+// 		printf(":C :C :C\n");
+// 	if (is_valid_map_line("    1 1 1 1 1 1 1 1 1 1 1      11 101 101 111 101               1201 1     ", scene))
+// 		printf(":D GOOOD :D\n");
+// 	else
+// 		printf(":C :C :C\n");
+// 	return (0);
+// }

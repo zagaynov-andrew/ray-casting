@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 20:12:51 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 00:13:16 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 13:42:05 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_VEC_H
 
 # include "libft.h"
+# include <stddef.h>
 
 typedef	struct	s_vec
 {
@@ -25,6 +26,6 @@ typedef	struct	s_vec
 t_vec			*ft_vec_new(size_t capacity);
 void			ft_vec_data_free(void **data, size_t size);
 void			ft_vec_free(t_vec *vec);
-void			ft_vec_push(t_vec **vec, void *new);
+t_vec			*ft_vec_push(t_vec **vec, void *new);
 
 #endif
