@@ -6,13 +6,13 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 14:40:02 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:59:41 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 22:42:22 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	is_valid_path(char *path)
+int			is_valid_path(char *path)
 {
 	int	fd;
 
@@ -25,9 +25,9 @@ int	is_valid_path(char *path)
 	return (1);
 }
 
-int	next_value(char **str, int value)
+int			next_value(char **str, int value)
 {
-	while (**str && !ft_isdigit(**str) && **str != '-')
+	while (ft_is_whitespace(**str))
 		(*str)++;
 	if (!**str)
 	{
@@ -38,29 +38,7 @@ int	next_value(char **str, int value)
 	return (1);
 }
 
-int	color_component(char **str, int component, unsigned int *color)
-{
-	int	value;
-
-	value = ft_atoi(*str);
-	if (value < 0 || value > 255)
-	{
-		errno = 999;
-		return (-1);
-	}
-	if (next_value(str, value) == -1)
-		return (-1);
-	if (!ft_isdigit(*(*str - 1)))
-	{
-		errno = 999;
-		return (-1);
-	}
-	if (get_color(color, component, value) == -1)
-		return (-1);
-	return (1);
-}
-
-int	get_color(unsigned int *color, int component, int value)
+static int	get_color(unsigned int *color, int component, int value)
 {
 	if (value < 0 || value > 255)
 	{
@@ -85,5 +63,27 @@ int	get_color(unsigned int *color, int component, int value)
 		errno = 999;
 		return (-1);
 	}
+	return (1);
+}
+
+int			color_component(char **str, int component, unsigned int *color)
+{
+	int	value;
+
+	value = ft_atoi(*str);
+	if (value < 0 || value > 255)
+	{
+		errno = 999;
+		return (-1);
+	}
+	if (next_value(str, value) == -1)
+		return (-1);
+	if (!ft_isdigit(*(*str - 1)))
+	{
+		errno = 999;
+		return (-1);
+	}
+	if (get_color(color, component, value) == -1)
+		return (-1);
 	return (1);
 }

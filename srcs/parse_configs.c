@@ -6,13 +6,13 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 21:08:36 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:59:05 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 22:47:09 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	parse_r(char *str, t_scene *scene)
+int			parse_r(char *str, t_scene *scene)
 {
 	if (scene->width > 0 || scene->height > 0)
 	{
@@ -41,22 +41,43 @@ int	parse_r(char *str, t_scene *scene)
 	return (-1);
 }
 
-int	parse_fc(char *str, unsigned int *color)
+static int	parse_fc_main(char **str, unsigned int *color)
+{
+	if (color_component(str, RED, color) == -1)
+		return (-1);
+	while (ft_is_whitespace(**str))
+		(*str)++;
+	if (**str == ',')
+		(*str)++;
+	else
+	{
+		errno = 999;
+		return (-1);
+	}
+	if (color_component(str, GREEN, color) == -1)
+		return (-1);
+	while (ft_is_whitespace(**str))
+		(*str)++;
+	if (**str == ',')
+		(*str)++;
+	else
+	{
+		errno = 999;
+		return (-1);
+	}
+	if (color_component(str, BLUE, color) == -1)
+		return (-1);
+	return (1);
+}
+
+int			parse_fc(char *str, unsigned int *color)
 {
 	if (*color != 0x1000000)
 	{
 		errno = 999;
 		return (-1);
 	}
-	if (color_component(&str, RED, color) == -1)
-		return (-1);
-	if (*str == ',')
-		str++;
-	if (color_component(&str, GREEN, color) == -1)
-		return (-1);
-	if (*str == ',')
-		str++;
-	if (color_component(&str, BLUE, color) == -1)
+	if (parse_fc_main(&str, color) == -1)
 		return (-1);
 	while (*str == ' ' || *str == '\t')
 		str++;
@@ -66,11 +87,34 @@ int	parse_fc(char *str, unsigned int *color)
 	return (-1);
 }
 
-int	parse_texture_path(char *str, char **path)
+static int	parse_after_texture_path(char *begin, char *after, char **path)
 {
-	char	*ptr;
 	char	*end;
 
+	end = after;
+	while (*after == ' ' || *after == '\t')
+		after++;
+	if (!*after)
+	{
+		*end = '\0';
+		if ((is_valid_path(begin)) == -1)
+			return (-1);
+		*path = ft_strdup(begin);
+		return (1);
+	}
+	errno = 999;
+	return (-1);
+}
+
+int			parse_texture_path(char *str, char **path)
+{
+	char	*ptr;
+
+	if (*path)
+	{
+		errno = 999;
+		return (-1);
+	}
 	while (*str == ' ' || *str == '\t')
 		str++;
 	if (!(ptr = ft_strnstr(str, ".xpm", ft_strlen(str))))
@@ -79,17 +123,5 @@ int	parse_texture_path(char *str, char **path)
 		return (-1);
 	}
 	ptr += 4;
-	end = ptr;
-	while (*ptr == ' ' || *ptr == '\t')
-		ptr++;
-	if (!*ptr)
-	{
-		*end = '\0';
-		if ((is_valid_path(str)) == -1)
-			return (-1);
-		*path = ft_strdup(str);
-		return (1);
-	}
-	errno = 999;
-	return (-1);
+	return (parse_after_texture_path(str, ptr, path));
 }

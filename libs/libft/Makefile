@@ -6,7 +6,7 @@
 #    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/15 17:57:46 by ngamora           #+#    #+#              #
-#    Updated: 2021/01/27 00:26:15 by nforce           ###   ########.fr        #
+#    Updated: 2021/01/27 22:26:59 by nforce           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS	=	ft_memset.c		\
 			ft_strupcase.c	\
 			ft_str_is_empty.c		\
 			ft_lli_len.c			\
+			ft_is_whitespace.c		\
 			ft_vec/ft_vec_new.c		\
 			ft_vec/ft_vec_push.c	\
 			ft_vec/ft_vec_free.c

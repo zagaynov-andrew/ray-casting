@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 17:43:11 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:38:32 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 20:39:42 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,6 @@ t_scene	*scene_new(void)
 	if (!(scene->map = ft_vec_new(8)))
 		return (NULL);
 	return (scene);
-}
-
-void	ft_vec_data_free(void **data, size_t size)
-{
-	int	i;
-
-	if (!data)
-		return ;
-	i = 0;
-	while (i < (int)size)
-	{
-		free(data[i]);
-		i++;
-	}
-	free(data);
-}
-
-void	ft_vec_free(t_vec *vec)
-{
-	if (!vec)
-		return ;
-	ft_vec_data_free(vec->data, vec->size);
-	free(vec);
 }
 
 void	free_scene(t_scene *scene)

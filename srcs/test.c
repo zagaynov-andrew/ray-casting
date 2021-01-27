@@ -75,13 +75,17 @@ int main()
 	else
 	{
 		print_scene(scene);
-		printf("\n");
-		int i = 0;
-		while (i < (int)scene->map->size)
-		{
-			printf("%s\n", (char*)(scene->map->data)[i]);
-			i++;
-		}
+		// printf("\n");
+		// int i = 0;
+		// while (i < (int)scene->map->size)
+		// {
+		// 	printf("%s\n", (char*)(scene->map->data)[i]);
+		// 	i++;
+		// }
+		// if (is_valid_map(scene->map) == 1)
+		// 	printf(":D GOOOD :D\n");
+		// else
+		// 	printf(":C :C :C\n");
 		free_scene(scene);
 	}
 	return (0);

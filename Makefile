@@ -6,7 +6,7 @@
 #    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/01/27 15:24:22 by nforce           ###   ########.fr        #
+#    Updated: 2021/01/27 22:27:30 by nforce           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ LIBFT_SRCS	=	ft_memset.c		\
 				ft_strupcase.c	\
 				ft_str_is_empty.c	\
 				ft_lli_len.c		\
+				ft_is_whitespace.c	\
 				ft_lstnew.c			\
 				ft_lstadd_front.c	\
 				ft_lstsize.c		\
@@ -82,8 +83,9 @@ SRCS	=	$(SRCS_DIR)parser.c					\
 			$(SRCS_DIR)parser_utils.c			\
 			$(SRCS_DIR)parse_configs.c			\
 			$(SRCS_DIR)parse_configs_utils.c	\
-			$(SRCS_DIR)s_scene.c				\
 			$(SRCS_DIR)map.c					\
+			$(SRCS_DIR)map_utils.c				\
+			$(SRCS_DIR)s_scene.c				\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))

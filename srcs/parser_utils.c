@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 15:20:46 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:48:31 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 22:32:33 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,63 @@ int		push_new_map_line(char *line, t_scene *scene)
 		errno = 999;
 		return (-1);
 	}
+	return (1);
+}
+
+int		parse_line_two_letters(char *line, t_scene *scene)
+{
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (ft_strncmp(line, "NO", 2) == 0 && ft_is_whitespace(*(line + 2)))
+	{
+		if (parse_texture_path(line + 3, &(scene->no)) == -1)
+			return (-1);
+	}
+	else if (ft_strncmp(line, "SO", 2) == 0 && ft_is_whitespace(*(line + 2)))
+	{
+		if (parse_texture_path(line + 3, &(scene->so)) == -1)
+			return (-1);
+	}
+	else if (ft_strncmp(line, "WE", 2) == 0 && ft_is_whitespace(*(line + 2)))
+	{
+		if (parse_texture_path(line + 3, &(scene->we)) == -1)
+			return (-1);
+	}
+	else if (ft_strncmp(line, "EA", 2) == 0 && ft_is_whitespace(*(line + 2)))
+	{
+		if (parse_texture_path(line + 3, &(scene->ea)) == -1)
+			return (-1);
+	}
+	else
+		return (0);
+	return (1);
+}
+
+int		parse_line_one_letter(char *line, t_scene *scene)
+{
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (ft_strncmp(line, "R", 1) == 0 && ft_is_whitespace(*(line + 1)))
+	{
+		if (parse_r(line + 2, scene) == -1)
+			return (-1);
+	}
+	else if (ft_strncmp(line, "S", 1) == 0 && ft_is_whitespace(*(line + 1)))
+	{
+		if (parse_texture_path(line + 2, &(scene->s)) == -1)
+			return (-1);
+	}
+	else if (ft_strncmp(line, "F", 1) == 0 && ft_is_whitespace(*(line + 1)))
+	{
+		if (parse_fc(line + 2, &(scene->f)) == -1)
+			return (-1);
+	}
+	else if (ft_strncmp(line, "C", 1) == 0 && ft_is_whitespace(*(line + 1)))
+	{
+		if (parse_fc(line + 2, &(scene->c)) == -1)
+			return (-1);
+	}
+	else
+		return (0);
 	return (1);
 }

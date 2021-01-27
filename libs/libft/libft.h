@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 17:26:57 by ngamora           #+#    #+#             */
-/*   Updated: 2021/01/27 12:43:30 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 22:26:43 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ char				*ft_itoa_base(long long int value, int base);
 char				*ft_strupcase(char *str);
 int					ft_str_is_empty(char *str);
 int					ft_lli_len(long long int n);
+int					ft_is_whitespace(char c);
 
 #endif
