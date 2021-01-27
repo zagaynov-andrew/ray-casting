@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 15:20:46 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:24:02 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:48:31 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,26 @@ void	read_remain(int fd)
 		if (gnl_res == 0)
 			break ;
 	}
+}
+
+int		push_new_map_line(char *line, t_scene *scene)
+{
+	char	*line_copy;
+
+	if (scene->empty_line == 1)
+	{
+		errno = 999;
+		return (-1);
+	}
+	if (!(line_copy = ft_strdup(line)))
+	{
+		errno = 999;
+		return (-1);
+	}
+	if (!ft_vec_push(&(scene->map), (void*)line_copy))
+	{
+		errno = 999;
+		return (-1);
+	}
+	return (1);
 }

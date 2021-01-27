@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:25:11 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:47:22 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef	struct		s_scene
 	unsigned int	c;
 	t_vec			*map;
 	int				start_pos;
+	int				empty_line;
 }					t_scene;
 
 t_scene				*scene_new(void);
@@ -55,12 +56,13 @@ int					color_component(char **str, int component,
 int					get_color(unsigned int *color, int component, int value);
 int					parse_texture_path(char *str, char **path);
 int					is_valid_path(char *path);
-int					is_full_configs(t_scene *scene);
 int					parse_line_one_letter(char *line, t_scene *scene);
 int					parse_line_two_letters(char *line, t_scene *scene);
 
 int					is_valid_map_line(char *line, t_scene *scene);
 
 void				read_remain(int fd);
+int					is_full_configs(t_scene *scene);
+int					push_new_map_line(char *line, t_scene *scene);
 
 #endif

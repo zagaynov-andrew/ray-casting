@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:24:07 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:48:22 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int		parse_line(char *line, t_scene *scene)
 	if (!*tmp)
 	{
 		if (scene->map->size != 0)
-		{
-			errno = 999;
-			return (-1);
-		}
+			scene->empty_line = 1;
 		return (1);
 	}
 	if (parse_map_line(line, scene) != 1)
@@ -70,8 +67,6 @@ int		parse_line(char *line, t_scene *scene)
 
 int		parse_map_line(char *line, t_scene *scene)
 {
-	char	*line_copy;
-
 	if (!is_full_configs(scene))
 	{
 		errno = 999;
@@ -81,16 +76,8 @@ int		parse_map_line(char *line, t_scene *scene)
 	{
 		if (!is_valid_map_line(line, scene))
 			return (-1);
-		if (!(line_copy = ft_strdup(line)))
-		{
-			errno = 999;
+		if (!push_new_map_line(line, scene))
 			return (-1);
-		}
-		if (!ft_vec_push(&(scene->map), (void*)line_copy))
-		{
-			errno = 999;
-			return (-1);
-		}
 	}
 	return (1);
 }
