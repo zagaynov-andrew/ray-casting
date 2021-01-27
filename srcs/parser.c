@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:58:12 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 16:15:20 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		parse_map_line(char *line, t_scene *scene)
 	}
 	else
 	{
-		if (is_valid_map_line(line, scene) == -1)
+		if (is_valid_map_line(line, scene) == 0)
 			return (-1);
 		if (push_new_map_line(line, scene) == -1)
 			return (-1);
