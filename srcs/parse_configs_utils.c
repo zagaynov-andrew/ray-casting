@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 14:40:02 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:23:56 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:59:41 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ int	color_component(char **str, int component, unsigned int *color)
 		errno = 999;
 		return (-1);
 	}
-	if (!next_value(str, value))
+	if (next_value(str, value) == -1)
 		return (-1);
 	if (!ft_isdigit(*(*str - 1)))
 	{
 		errno = 999;
 		return (-1);
 	}
-	if (!get_color(color, component, value))
+	if (get_color(color, component, value) == -1)
 		return (-1);
 	return (1);
 }

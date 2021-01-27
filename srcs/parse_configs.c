@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 21:08:36 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:23:59 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:59:05 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	parse_r(char *str, t_scene *scene)
 		errno = 999;
 		return (-1);
 	}
-	if (!next_value(&str, scene->width))
+	if (next_value(&str, scene->width) == -1)
 		return (-1);
 	if ((scene->height = ft_atoi(str)) <= 0)
 	{
 		errno = 999;
 		return (-1);
 	}
-	if (!next_value(&str, scene->height))
+	if (next_value(&str, scene->height) == -1)
 		return (-1);
 	while (*str == ' ' || *str == '\t')
 		str++;

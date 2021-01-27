@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 15:48:22 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:58:12 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,23 @@ int		parse_line(char *line, t_scene *scene)
 			scene->empty_line = 1;
 		return (1);
 	}
-	if (parse_map_line(line, scene) != 1)
+	if (parse_map_line(line, scene) == -1)
 		return (-1);
 	return (1);
 }
 
 int		parse_map_line(char *line, t_scene *scene)
 {
-	if (!is_full_configs(scene))
+	if (is_full_configs(scene) != 1)
 	{
 		errno = 999;
 		return (-1);
 	}
 	else
 	{
-		if (!is_valid_map_line(line, scene))
+		if (is_valid_map_line(line, scene) == -1)
 			return (-1);
-		if (!push_new_map_line(line, scene))
+		if (push_new_map_line(line, scene) == -1)
 			return (-1);
 	}
 	return (1);
