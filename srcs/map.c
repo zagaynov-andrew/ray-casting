@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:36:34 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 20:47:24 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/29 19:16:19 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 
 static int	check_map_chars(char **line, t_scene *scene)
 {
+	if (!ft_char_in_set(MAP_SET, **line))
+	{
+		errno = ERR_EXTRA_MAP;
+		return (0);
+	}
 	while (**line && ft_char_in_set(MAP_SET, **line))
 	{
 		if (ft_char_in_set("NSEW", **line))
 		{
 			if (scene->start_pos)
 			{
-				errno = 999;
+				errno = ERR_REP_START_POS;
 				return (0);
 			}
 			scene->start_pos = 1;
 		}
 		(*line)++;
+		if (!ft_char_in_set(MAP_SET, **line) && **line && **line != ' ')
+		{
+			errno = ERR_EXTRA_MAP;
+			return (0);
+		}
 	}
 	return (1);
 }
@@ -40,14 +50,14 @@ int			is_valid_map_row(char *line, t_scene *scene)
 			return (1);
 		if (*line != WALL)
 		{
-			errno = 999;
+			errno = (!ft_char_in_set(MAP_SET, *line)) ? ERR_EXTRA_MAP : ERR_NO_WALL;
 			return (0);
 		}
 		if (!check_map_chars(&line, scene))
 			return (0);
 		if (*(line - 1) != WALL)
 		{
-			errno = 999;
+			errno = ERR_NO_WALL;
 			return (0);
 		}
 	}
@@ -69,14 +79,14 @@ static int	is_valid_map_column_main(t_vec *map, int column)
 			return (1);
 		if (array[i][column] != WALL)
 		{
-			errno = 999;
+			errno = ERR_NO_WALL;
 			return (0);
 		}
 		while (i < (int)map->size && ft_char_in_set(MAP_SET, array[i][column]))
 			i++;
 		if (array[i - 1][column] != WALL)
 		{
-			errno = 999;
+			errno = ERR_NO_WALL;
 			return (0);
 		}
 	}

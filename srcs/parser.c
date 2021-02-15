@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 21:45:17 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/29 15:23:57 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	parse_map_line(char *line, t_scene *scene)
 {
 	if (is_full_configs(scene) != 1)
 	{
-		errno = 999;
+		errno = ERR_EXTRA_CHAR_BETWEEN;
 		return (-1);
 	}
 	else
@@ -40,8 +40,7 @@ static int	parse_line(char *line, t_scene *scene)
 	if (res != 0)
 		return (res);
 	tmp = line;
-	while (*tmp == ' ' || *tmp == '\t')
-		tmp++;
+	pass_whitespaces(&tmp);
 	if (!*tmp)
 	{
 		if (scene->map->size != 0)
@@ -87,10 +86,10 @@ t_scene		*parse_cub(char *path)
 	if (parse_cub_main(&scene, fd) == 0)
 		return (NULL);
 	close(fd);
-	if (scene->start_pos == 0)
+	if (scene->map->size == 0 || scene->start_pos == 0)
 	{
+		errno = (scene->map->size == 0) ? ERR_NO_MAP : ERR_ABS_START_POS;
 		free_scene(scene);
-		errno = 999;
 		return (NULL);
 	}
 	if (is_valid_map_column(scene->map) != 1)

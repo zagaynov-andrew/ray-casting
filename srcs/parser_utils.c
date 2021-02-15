@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 15:20:46 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 22:32:33 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/29 15:23:43 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,19 @@ int		push_new_map_line(char *line, t_scene *scene)
 
 	if (scene->empty_line == 1)
 	{
-		errno = 999;
+		errno = ERR_EMPTY_LINE_MAP;
 		return (-1);
 	}
 	if (!(line_copy = ft_strdup(line)))
-	{
-		errno = 999;
 		return (-1);
-	}
 	if (!ft_vec_push(&(scene->map), (void*)line_copy))
-	{
-		errno = 999;
 		return (-1);
-	}
 	return (1);
 }
 
 int		parse_line_two_letters(char *line, t_scene *scene)
 {
-	while (*line == ' ' || *line == '\t')
-		line++;
+	pass_whitespaces(&line);
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_is_whitespace(*(line + 2)))
 	{
 		if (parse_texture_path(line + 3, &(scene->no)) == -1)
@@ -103,8 +96,7 @@ int		parse_line_two_letters(char *line, t_scene *scene)
 
 int		parse_line_one_letter(char *line, t_scene *scene)
 {
-	while (*line == ' ' || *line == '\t')
-		line++;
+	pass_whitespaces(&line);
 	if (ft_strncmp(line, "R", 1) == 0 && ft_is_whitespace(*(line + 1)))
 	{
 		if (parse_r(line + 2, scene) == -1)

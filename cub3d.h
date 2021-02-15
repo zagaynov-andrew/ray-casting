@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 20:49:26 by nforce           ###   ########.fr       */
+/*   Updated: 2021/01/29 15:28:40 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
+# include "cub3d_errors.h"
 # include <fcntl.h>
 # include <errno.h>
 
@@ -61,6 +62,7 @@ int					is_valid_path(char *path);
 int					next_value(char **str, int value);
 int					color_component(char **str, int component,
 													unsigned int *color);
+char				*pass_whitespaces(char **str);
 
 int					is_valid_map_row(char *line, t_scene *scene);
 int					is_valid_map_column(t_vec *map);
