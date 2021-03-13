@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/19 19:09:54 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:19:59 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
-# include "libs/minilibx-linux/mlx.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <errno.h>
+# include <math.h>
 
 # define RED 0
 # define GREEN 1
@@ -27,6 +28,8 @@
 # define SPACE '0'
 # define WALL '1'
 # define SPRITE '2'
+
+# define CUB_SIZE 32
 
 typedef	struct		s_scene
 {
@@ -85,7 +88,17 @@ typedef struct		s_point
 	int				y;
 }					t_point;
 
-void	draw_line(t_data *data, t_point* p0, t_point* p1, int color);
+typedef struct		s_vec2
+{
+	int				x;
+	int				y;
+}					t_vec2;
+
+
+
 void	pixel_put(t_data *data, int x, int y, int color);
+void	draw_line(t_data *data, t_point* p0, t_vec2* vec, int color);
+void	draw_square(t_data *data, t_point *p0, int size, int color);
+void	rotate(t_vec2 *vec, float angle);
 
 #endif

@@ -69,7 +69,7 @@ void	print_scene(t_scene *scene)
 // int main()
 // {
 // 	t_scene *scene = parse_cub("./configs.cub");
-// 	printf("scene\t= %p\n", scene);
+// 	// printf("scene\t= %p\n", scene);
 // 	if (!scene)
 // 		print_error();
 // 	else
@@ -126,10 +126,47 @@ void	print_scene(t_scene *scene)
 //     img.img = mlx_new_image(mlx, 500, 700);
 //     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
 //                                  &img.endian);
-//     my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+//     pixel_put(&img, 5, 5, 0x00FF0000);
 //     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 //     mlx_loop(mlx);
 // }
+
+void	draw_map(t_data *data, t_vec *map)
+{
+	int		i;
+	int		j;
+	int		line_len;
+	char	*line;
+	t_point	p;
+
+	i = 0;
+	while (i < (int)map->size)
+	{
+		line = (char*)((map->data)[i]);
+		line_len = ft_strlen(line);
+		j = 0;
+		while (j < line_len)
+		{
+			printf("%c", line[j]);
+			if (line[j] == WALL)
+			{
+				p.x = j * CUB_SIZE;
+				p.y = i * CUB_SIZE;
+				draw_square(data, &p, CUB_SIZE, 0x0000FF00);
+			}
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	data = 0;
+}
+
+int	key_hook(int key_code, char *msg)
+{
+	printf("%s %i", msg, key_code);
+	return (key_code);
+}
 
 int             main(void)
 {
@@ -138,59 +175,23 @@ int             main(void)
     t_data  img;
 
     mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 400, 200, "Hello world!");
-    img.img = mlx_new_image(mlx, 400, 200);
+    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+    img.img = mlx_new_image(mlx, 1920, 1080);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
                                  &img.endian);
-    // my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	t_point begin;
-	t_point end;
 
-	// begin.x = 0;
-	// begin.y = 0;
-	// end.x = 100;
-	// end.y = 200;
+	t_scene *scene = parse_cub("./configs.cub");
+	if (!scene)
+		print_error();
+	else
+	{
+		print_scene(scene);
+		draw_map(&img, scene->map);
+		free_scene(scene);
+	}
 
-	end.x = 0;
-	end.y = 0;
-	begin.x = 100;
-	begin.y = 200;
-
-	// begin.x = 0;
-	// begin.y = 200;
-	// end.x = 100;
-	// end.y = 0;
-	
-	// end.x = 0;
-	// end.y = 200;
-	// begin.x = 100;
-	// begin.y = 0;
-
-	// begin.x = 0;
-	// begin.y = 0;
-	// end.x = 200;
-	// end.y = 100;
-
-	// end.x = 0;
-	// end.y = 0;
-	// begin.x = 200;
-	// begin.y = 100;
-
-	// begin.x = 0;
-	// begin.y = 100;
-	// end.x = 200;
-	// end.y = 0;
-	
-	// end.x = 0;
-	// end.y = 100;
-	// begin.x = 200;
-	// begin.y = 0;
-
-	// end.x = 0;
-	// end.y = 0;
-	// begin.x = 199;
-	// begin.y = 199;
-	draw_line(&img, &begin, &end, 0x00FF0000);
-    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-    mlx_loop(mlx);
+	// draw_line(&img, &begin, &vec, 0x00FF0000);
+	mlx_key_hook(mlx_win, key_hook, "message");
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
 }

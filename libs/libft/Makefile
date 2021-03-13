@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
+#    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/15 17:57:46 by ngamora           #+#    #+#              #
-#    Updated: 2021/01/27 22:26:59 by nforce           ###   ########.fr        #
+#    Updated: 2021/03/13 11:47:12 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,17 +80,17 @@ OBJS_BONUS_PATH = $(addprefix $(OBJS_DIR), $(OBJS_BONUS))
 
 $(OBJS_DIR)%.o : %.c libft.h
 	@mkdir -p $(OBJS_DIR)
-	@echo "\e[1;31m- Done :\e[0m $<"
+	@echo "\033[1;31m- Done :\033[0m $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(OBJS_DIR)%.o : ft_vec/%.c libft.h
 	@mkdir -p $(OBJS_DIR)
-	@echo "\e[1;31m- Done :\e[0m $<"
+	@echo "\033[1;31m- Done :\033[0m $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_PATH)
 	@ar r $(NAME) $(OBJS_PATH)
-	@echo "\e[1;31;42m=====LIBFT IS COMPLETED======\e[0m"
+	@echo "\033[1;31;42m=====LIBFT IS COMPLETED======\033[0m"
 
 all: $(NAME)
 
@@ -104,6 +104,6 @@ re: fclean all
 
 bonus: $(OBJS_BONUS_PATH)
 	@ar r $(NAME) $(OBJS_BONUS_PATH)
-	@echo "\e[1;31;42m=====FULL LIBFT IS COMPLETED======\e[0m"
+	@echo "\033[1;31;42m=====FULL LIBFT IS COMPLETED======\033[0m"
 
 .PHONY : $(NAME) all clean fclean re
