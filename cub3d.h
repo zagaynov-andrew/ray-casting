@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/29 15:28:40 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/19 19:09:54 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
+# include "libs/minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <errno.h>
 
@@ -68,5 +69,23 @@ int					is_valid_map_row(char *line, t_scene *scene);
 int					is_valid_map_column(t_vec *map);
 
 t_vec				*get_rectangular_map(t_vec *map);
+
+typedef struct		s_data
+{
+	void			*img;
+	char			*addr;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+}					t_data;
+
+typedef struct		s_point
+{
+	int				x;
+	int				y;
+}					t_point;
+
+void	draw_line(t_data *data, t_point* p0, t_point* p1, int color);
+void	pixel_put(t_data *data, int x, int y, int color);
 
 #endif

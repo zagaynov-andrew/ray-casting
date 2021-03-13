@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/29 15:23:57 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:35:51 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 static int	parse_map_line(char *line, t_scene *scene)
 {

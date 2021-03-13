@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 21:08:36 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/29 18:38:26 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:35:47 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 int			parse_r(char *str, t_scene *scene)
 {

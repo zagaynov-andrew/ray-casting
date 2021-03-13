@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 17:43:11 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 20:39:42 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:35:54 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 t_scene	*scene_new(void)
 {

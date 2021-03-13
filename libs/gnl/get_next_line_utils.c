@@ -6,13 +6,13 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:01:17 by ngamora           #+#    #+#             */
-/*   Updated: 2021/01/24 16:06:42 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/15 23:20:16 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_gnl_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	int	src_len;
 	int	i;
@@ -51,14 +51,14 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 	newstr = malloc((s1_len + s2_len + 1) * sizeof(char));
 	if (!newstr)
 		return (NULL);
-	ft_strlcpy(newstr, s1, s1_len + s2_len + 1);
-	ft_strlcpy(&newstr[s1_len], s2, s2_len + 1);
+	ft_gnl_strlcpy(newstr, s1, s1_len + s2_len + 1);
+	ft_gnl_strlcpy(&newstr[s1_len], s2, s2_len + 1);
 	free(s1);
 	s1 = NULL;
 	return (newstr);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_gnl_strdup(const char *s1)
 {
 	char	*s2;
 	int		s1_len;
@@ -69,11 +69,11 @@ char	*ft_strdup(const char *s1)
 	s2 = (char*)malloc(s1_len + 1);
 	if (!s2)
 		return (NULL);
-	ft_strlcpy(s2, s1, s1_len + 1);
+	ft_gnl_strlcpy(s2, s1, s1_len + 1);
 	return (s2);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_gnl_strchr(const char *s, int c)
 {
 	int	i;
 	int	s_len;

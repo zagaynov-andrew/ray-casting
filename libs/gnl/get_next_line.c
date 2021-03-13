@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 17:34:29 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/26 18:06:30 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/15 23:20:18 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ int		processing_remainder(char **remainder, char **line)
 	char	*p_endl;
 	char	*tmp;
 
-	if (!(*line = ft_strdup("")))
+	if (!(*line = ft_gnl_strdup("")))
 		return (-1);
-	if ((p_endl = ft_strchr(*remainder, '\n')))
+	if ((p_endl = ft_gnl_strchr(*remainder, '\n')))
 	{
 		*p_endl = '\0';
 		if (!(*line = ft_strjoin_free(*line, *remainder)))
 			return (-1);
 		tmp = *remainder;
-		if (!(*remainder = ft_strdup(p_endl + 1)))
+		if (!(*remainder = ft_gnl_strdup(p_endl + 1)))
 			return (-1);
 		free(tmp);
 		return (0);
@@ -51,12 +51,12 @@ int		get_next_line_main(int fd, char **line, char *buf)
 	while ((ret = read(fd, buf, BUFFER_SIZE)))
 	{
 		buf[ret] = '\0';
-		if ((p_endl = ft_strchr(buf, '\n')))
+		if ((p_endl = ft_gnl_strchr(buf, '\n')))
 		{
 			*p_endl = '\0';
 			if (!(*line = ft_strjoin_free(*line, buf)))
 				return (-1);
-			if (!(remainder = ft_strdup(p_endl + 1)))
+			if (!(remainder = ft_gnl_strdup(p_endl + 1)))
 				return (-1);
 			return (1);
 		}

@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 14:40:02 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/29 16:12:04 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:35:44 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 int			is_valid_path(char *path)
 {

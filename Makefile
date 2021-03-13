@@ -6,7 +6,7 @@
 #    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/01/29 16:05:43 by nforce           ###   ########.fr        #
+#    Updated: 2021/02/19 16:48:16 by nforce           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,33 @@ PROCESSOR_DIR	= processor/
 T_PH_DIR		= t_ph/
 LIBFT_DIR		= ./libs/libft/
 GNL_DIR			= ./libs/gnl/
+PARSER_DIR		= parser/
+ENGINE_DIR		= engine/
 SRCS_DIR		= ./srcs/
 OBJS_DIR		= objs/
 CC				= gcc
-CC_FLAGS		= -Wall -Wextra -Werror
+CC_FLAGS		= -g -Wall -Wextra -Werror
+
+OSFLAG 				:=
+ifeq ($(OS),Windows_NT)
+	OSFLAG += -D WIN32
+	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+		OSFLAG += -D AMD64
+	endif
+	ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+		OSFLAG += -D IA32
+	endif
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		OSFLAG += LINUX
+		MLX_FLAGS = -L./libs/minilibx-linux -lmlx -L%%%%/lib -lXext -lX11 -lm -lbsd
+	else
+	    ($(UNAME_S),Darwin)
+		OSFLAG += MACOS
+		MLX_FLAGS = 0
+	endif
+endif
 
 LIBFT_SRCS	=	ft_memset.c		\
 				ft_bzero.c		\
@@ -79,13 +102,15 @@ LIBFT_SRCS	=	ft_memset.c		\
 GNL_SRCS	=	get_next_line.c		\
 				get_next_line_utils.c
 
-SRCS	=	$(SRCS_DIR)parser.c					\
-			$(SRCS_DIR)parser_utils.c			\
-			$(SRCS_DIR)parse_configs.c			\
-			$(SRCS_DIR)parse_configs_utils.c	\
-			$(SRCS_DIR)map.c					\
-			$(SRCS_DIR)map_utils.c				\
-			$(SRCS_DIR)s_scene.c				\
+SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c					\
+			$(SRCS_DIR)$(PARSER_DIR)parser_utils.c			\
+			$(SRCS_DIR)$(PARSER_DIR)parse_configs.c			\
+			$(SRCS_DIR)$(PARSER_DIR)parse_configs_utils.c	\
+			$(SRCS_DIR)$(PARSER_DIR)map.c					\
+			$(SRCS_DIR)$(PARSER_DIR)map_utils.c				\
+			$(SRCS_DIR)$(PARSER_DIR)s_scene.c				\
+			$(SRCS_DIR)errors.c					\
+			$(SRCS_DIR)$(ENGINE_DIR)/drawer.c	\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))
@@ -108,8 +133,18 @@ $(OBJS_DIR)%.o : $(SRCS_DIR)%.c cub3d.h
 	@echo "\e[1;31m- Done :\e[0m $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
+$(OBJS_DIR)%.o : $(SRCS_DIR)$(PARSER_DIR)%.c cub3d.h
+	@mkdir -p $(OBJS_DIR)
+	@echo "\e[1;31m- Done :\e[0m $<"
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(OBJS_DIR)%.o : $(SRCS_DIR)$(ENGINE_DIR)%.c cub3d.h
+	@mkdir -p $(OBJS_DIR)
+	@echo "\e[1;31m- Done :\e[0m $<"
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
 $(NAME): $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)
-	@ar r $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)
+	@gcc -g -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(MLX_FLAGS)
 	@echo "\e[1;31;42m=====cub3D IS COMPLETED======\e[0m\n"
 	@echo "\e[1;33m __   __    ______    ______    __    __    ______    ______    ______    "
 	@echo "/\ \`-.\ \  /\  ___\  /\  __ \  /\ \`-./  \  /\  __ \  /\  == \  /\  __ \   "
@@ -133,7 +168,7 @@ re: fclean all
 
 #####################################################################
 g:
-	@gcc -g srcs/*.c libs/gnl/*.c libs/libft/libft.a
+	@gcc -g srcs/*.c libs/gnl/*.c libs/libft/libft.a $(MLX_FLAGS)
 #####################################################################
 
 .PHONY : all clean fclean re

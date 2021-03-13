@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 12:23:33 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/29 19:00:04 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/16 10:35:24 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-void	print_error()
+void	print_error(void)
 {
 	if (errno == 0)
 		return ;

@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 19:25:03 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 20:30:34 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:35:40 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 static int	max_map_row_len(t_vec *map)
 {

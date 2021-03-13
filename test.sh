@@ -1,2 +1,3 @@
+make
 clear
-valgrind --leak-check=full ./a.out
+valgrind --leak-check=full ./cub3D

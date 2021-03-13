@@ -6,11 +6,11 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 12:36:34 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/29 19:16:19 by nforce           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:35:42 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 static int	check_map_chars(char **line, t_scene *scene)
 {
