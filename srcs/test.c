@@ -184,8 +184,6 @@ void				set_start_position(t_player *player, t_vec *map)
 		{
 			if (ft_char_in_set("NSEW", line[x]))
 			{
-				int a = x * CUB_SIZE + CUB_SIZE / 2;
-				a = a;
 				player->pos.x = x * CUB_SIZE + CUB_SIZE / 2;
 				player->pos.y = y * CUB_SIZE + CUB_SIZE / 2;
 				return ;
@@ -215,7 +213,6 @@ void			draw_rays(t_data *data, t_player *player, int color)
 	int		i;
 	t_vec2	dir;
 	float	angle;
-	float	test;
 
 	i = 0;
 	dir.x = RAY_LEN;
@@ -226,26 +223,32 @@ void			draw_rays(t_data *data, t_player *player, int color)
 	{
 		draw_line(data, &player->pos, &dir, color);
 		rotate(&dir, FOV / NUM_RAYS);
-		test = FOV / NUM_RAYS;
-		test = test;
 		i++;
 	}
 }
 
-int             main(void)
+// int				side_dist_x(t_player *player, t_vec2 *dir, int delta_dist_x)
+// {
+// 	player->pos.x / CUB_SIZE
+// }
+
+int				main(void)
 {
     void    *mlx;
     void    *mlx_win;
     t_data  img;
 	t_player	player;
 
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1100, 500, "Hello world!");
-    img.img = mlx_new_image(mlx, 1100, 500);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
-                                 &img.endian);
-
 	t_scene *scene = parse_cub("./configs.cub");
+
+
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, scene->width, scene->height, "Hello world!");
+	img.img = mlx_new_image(mlx, scene->width, scene->height);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
+							&img.endian);
+	img.width = scene->width;
+	img.height = scene->height;
 	if (!scene)
 	{
 		print_error();

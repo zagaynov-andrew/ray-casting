@@ -1,4 +1,4 @@
-#include "libs/minilibx-linux/mlx.h"
+#include "mlx.h"
 #include <stdlib.h>
 
 typedef struct  s_vars {

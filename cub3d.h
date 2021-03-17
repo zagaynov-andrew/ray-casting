@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/16 17:27:01 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/17 11:53:27 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
-# include "libs/minilibx-linux/mlx.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
+
+# include <stdio.h> //
 
 # define RED 0
 # define GREEN 1
@@ -88,6 +90,8 @@ typedef struct		s_data
 	char			*addr;
 	int				bits_per_pixel;
 	int				size_line;
+	int				width;
+	int				height;
 	int				endian;
 }					t_data;
 

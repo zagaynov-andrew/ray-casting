@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/16 17:29:04 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/17 12:25:26 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 
 void	pixel_put(t_data *data, int x, int y, int color)
 {
-    char    *dst;
+	char	*dst;
 
-    dst = data->addr + (y * data->size_line + x * (data->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
+	if (x >= data->width || y >= data->height)
+		return ;
+	if (x < 0 || y < 0)
+		return ;
+	dst = data->addr + (y * data->size_line + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
@@ -66,8 +70,6 @@ void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
 		point.x = p0.x;
 		while (point.x != p1.x)
 		{
-			if (point.x < 0 || point.y < 0)
-				return ;
 			pixel_put(data, point.x, point.y, color);
 			error += delta_err;
 			if (error >= (delta.x + 1))
@@ -97,8 +99,6 @@ void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
 			dir_y = -1;
 		while (point.y != p1.y)
 		{
-			if (point.x < 0 || point.y < 0)
-				return ;
 			pixel_put(data, point.x, point.y, color);
 			error += delta_err;
 			if (error >= (delta.y + 1))
