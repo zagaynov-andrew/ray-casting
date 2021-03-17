@@ -152,7 +152,7 @@ void	draw_map(t_data *data, t_vec *map)
 			{
 				p.x = j * CUB_SIZE;
 				p.y = i * CUB_SIZE;
-				draw_square(data, &p, CUB_SIZE, 0x0000FF00);
+				draw_square(data, &p, CUB_SIZE, 0x00FF0000);
 			}
 			j++;
 		}
@@ -162,10 +162,74 @@ void	draw_map(t_data *data, t_vec *map)
 	data = 0;
 }
 
+
 int	key_hook(int key_code, char *msg)
 {
 	printf("%s %i", msg, key_code);
 	return (key_code);
+}
+
+void				set_start_position(t_player *player, t_vec *map)
+{
+	int		x;
+	int		y;
+	char	*line;
+
+	y = 0;
+	while (y < (int)map->size)
+	{
+		line = (char*)((map->data)[y]);
+		x = 0;
+		while (line[x])
+		{
+			if (ft_char_in_set("NSEW", line[x]))
+			{
+				int a = x * CUB_SIZE + CUB_SIZE / 2;
+				a = a;
+				player->pos.x = x * CUB_SIZE + CUB_SIZE / 2;
+				player->pos.y = y * CUB_SIZE + CUB_SIZE / 2;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	init_player(t_player *player, t_scene *scene)
+{
+	set_start_position(player, scene->map);
+	if (scene->start_pos_flag == 'N')
+		player->cam_angle = M_PI_2;
+	else if (scene->start_pos_flag == 'S')
+		player->cam_angle = 3 * M_PI_2;
+	else if (scene->start_pos_flag == 'E')
+		player->cam_angle = 0;
+	else if (scene->start_pos_flag == 'W')
+		player->cam_angle = M_PI;
+
+}
+
+void			draw_rays(t_data *data, t_player *player, int color)
+{
+	int		i;
+	t_vec2	dir;
+	float	angle;
+	float	test;
+
+	i = 0;
+	dir.x = RAY_LEN;
+	dir.y = 0;
+	angle = player->cam_angle - FOV / 2;
+	rotate(&dir, angle);
+	while (i < NUM_RAYS)
+	{
+		draw_line(data, &player->pos, &dir, color);
+		rotate(&dir, FOV / NUM_RAYS);
+		test = FOV / NUM_RAYS;
+		test = test;
+		i++;
+	}
 }
 
 int             main(void)
@@ -173,25 +237,51 @@ int             main(void)
     void    *mlx;
     void    *mlx_win;
     t_data  img;
+	t_player	player;
 
     mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    img.img = mlx_new_image(mlx, 1920, 1080);
+    mlx_win = mlx_new_window(mlx, 1100, 500, "Hello world!");
+    img.img = mlx_new_image(mlx, 1100, 500);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
                                  &img.endian);
 
 	t_scene *scene = parse_cub("./configs.cub");
 	if (!scene)
+	{
 		print_error();
+		exit(0);
+	}
 	else
 	{
 		print_scene(scene);
 		draw_map(&img, scene->map);
-		free_scene(scene);
 	}
+	init_player(&player, scene);
+	free_scene(scene);
+	printf("\npos = [%d, %d]\n", player.pos.x, player.pos.y);
+	draw_square_centre(&img, &player.pos, CUB_SIZE, 0x0000FF00);
+	// t_point p0;
+	// p0.x = 200;
+	// p0.y = 200;
+	draw_rays(&img, &player, 0x0000FFFF);
+	// t_vec2 dir;
+	// dir.x = 173;
+	// dir.y = 100;
+	// draw_line(&img, &player.pos, &dir, 0x0000FFFF);
+
+	// draw_square_centre(&img, &p0, CUB_SIZE, 0x0000FF00);
+
+
+	t_vec2 vec;
+	vec.x = 500;
+	vec.y = 0;
+
+	rotate(&vec, player.cam_angle);
+	// draw_line(&img, &player.pos, &vec, 0x0000FFFF);
+	// draw_line()
 
 	// draw_line(&img, &begin, &vec, 0x00FF0000);
-	mlx_key_hook(mlx_win, key_hook, "message");
+	// mlx_key_hook(mlx_win, key_hook, "message");
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }

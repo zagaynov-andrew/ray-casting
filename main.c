@@ -1,4 +1,4 @@
-#include <mlx.h>
+#include "libs/minilibx-linux/mlx.h"
 #include <stdlib.h>
 
 typedef struct  s_vars {
@@ -19,7 +19,9 @@ int             main(void)
 
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
-    mlx_hook(vars.win, 2, 1L<<0, close, &vars);
+    // mlx_hook(vars.win, 2, 1L<<0, close, &vars);
+    mlx_destroy_window(vars.mlx, vars.win);
+    mlx_des
     mlx_loop(vars.mlx);
 	return (0);
 }

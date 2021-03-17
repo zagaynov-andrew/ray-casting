@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 17:43:11 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/18 18:35:54 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/15 13:16:26 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_scene	*scene_new(void)
 	scene->s = NULL;
 	scene->f = 0x1000000;
 	scene->c = 0x1000000;
-	scene->start_pos = 0;
+	scene->start_pos_flag = ' ';
 	scene->empty_line = 0;
 	if (!(scene->map = ft_vec_new(8)))
 		return (NULL);

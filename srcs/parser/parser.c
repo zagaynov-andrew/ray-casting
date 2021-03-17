@@ -6,7 +6,7 @@
 /*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/18 18:35:51 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/15 13:16:18 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_scene		*parse_cub(char *path)
 	if (parse_cub_main(&scene, fd) == 0)
 		return (NULL);
 	close(fd);
-	if (scene->map->size == 0 || scene->start_pos == 0)
+	if (scene->map->size == 0 || scene->start_pos_flag == ' ')
 	{
 		errno = (scene->map->size == 0) ? ERR_NO_MAP : ERR_ABS_START_POS;
 		free_scene(scene);
