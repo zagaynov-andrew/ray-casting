@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/17 12:25:26 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/17 19:05:46 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,31 @@ void	pixel_put(t_data *data, int x, int y, int color)
 		return ;
 	dst = data->addr + (y * data->size_line + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+void	draw_grid(t_data *data, int color)
+{
+	t_point	begin;
+	t_vec2	vec;
+
+	begin.x = 0;
+	begin.y = 0;
+	vec.x = 0;
+	vec.y = data->height;
+	while (begin.x < data->width)
+	{
+		draw_line(data, &begin, &vec, color);
+		begin.x += CUB_SIZE;
+	}
+	begin.x = 0;
+	begin.y = 0;
+	vec.x = data->width;
+	vec.y = 0;
+	while (begin.y < data->height)
+	{
+		draw_line(data, &begin, &vec, color);
+		begin.y += CUB_SIZE;
+	}
 }
 
 void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)

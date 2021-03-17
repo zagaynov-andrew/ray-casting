@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/17 11:53:27 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/17 19:02:00 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ typedef struct		s_vec2
 	int				y;
 }					t_vec2;
 
+typedef struct		s_vec2f
+{
+	float			x;
+	float			y;
+}					t_vec2f;
+
 typedef struct		s_player
 {
 	t_point			pos;
@@ -114,5 +120,18 @@ void	draw_square(t_data *data, t_point *p0, int size, int color);
 void	rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_data *data, t_point *p0, int size, int color);
+void			cut_line(t_data *data, t_player *player, t_vec2 *ray_dir);
+void			draw_rays(t_data *data, t_player *player, int color);
+float			get_side_dist_x(t_player *player, t_vec2 *ray_dir, float delta_dist_x);
+float			get_side_dist_y(t_player *player, t_vec2 *ray_dir, float delta_dist_y);
+float			get_delta_dist_x(t_vec2 *ray_dir);
+float			get_delta_dist_y(t_vec2 *ray_dir);
+float			lenght(t_vec2f *vec);
+void			normalize(t_vec2f *vec);
+void			multiply(t_vec2f *vec, float num);
+void			vec2_change_length(t_vec2 *vec, float length);
+void			to_vec2(t_vec2 *vec2, t_vec2f *vec2f, float length);
+void			vec2_cpy(t_vec2 *dst, const t_vec2 *src);
+void	draw_grid(t_data *data, int color);
 
 #endif
