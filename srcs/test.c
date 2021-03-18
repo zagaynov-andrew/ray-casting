@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 10:45:24 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 14:29:15 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,16 @@ void	draw_map(t_img *img, t_vec *map)
 	}
 }
 
+// int             key_hook(int key_code, char *vars)
+// {
+// 	key_code = key_code;
+// 	vars = vars;
+//     printf("Hello from key_hook!\n");
+// 	return (0);
+// }
 int	key_hook(int key_code, char *msg)
 {
-	printf("%s %i", msg, key_code);
+	printf("%s %i\n", msg, key_code);
 	return (key_code);
 }
 
@@ -192,6 +199,34 @@ int				is_wall(t_game *game, t_vec2 *ray_dir)
 	{
 		cur.x = begin.x;
 		while (cur.x < begin.x + 3)
+		{
+			line = (char*)((map->data)[cur.y / CUB_SIZE]);
+			char c = line[cur.x / CUB_SIZE];
+			c = c;
+			if (line[cur.x / CUB_SIZE] == WALL)
+				return (1);
+			cur.x++;
+		}
+		cur.y++;
+	}
+	return (0);
+}
+
+int				is_wall_around_point(t_game *game, int x, int y)
+{
+	t_vec	*map;
+	char	*line;
+	t_vec2	cur;
+	t_vec2	begin;
+
+	cur.x = x - EPSILON;
+	cur.y = y - EPSILON;
+	vec2_cpy(&begin, &cur);
+	map = game->scene->map;
+	while (cur.y < begin.y + 2 * EPSILON + 1)
+	{
+		cur.x = begin.x;
+		while (cur.x < begin.x + 2 * EPSILON + 1)
 		{
 			line = (char*)((map->data)[cur.y / CUB_SIZE]);
 			char c = line[cur.x / CUB_SIZE];
@@ -255,11 +290,18 @@ void			draw_rays(t_game *game, int color)
 	}
 }
 
-void			init_game(t_game *game, t_scene *scene, t_player *player, t_img *img)
+void			init_game(t_game *game, t_scene **scene, t_player *player, t_img *img)
 {
-	game->scene = scene;
+	printf("%p\n", (*scene)->map);
+	game->scene = *scene;
 	game->player = player;
 	game->img = img;
+}
+
+void			init_mlx(t_game *game, void **mlx, void **mlx_win)
+{
+	game->mlx = *mlx;
+	game->win = *mlx_win;
 }
 
 int				main(void)
@@ -285,21 +327,26 @@ int				main(void)
 							&img.endian);
 	img.width = scene->width;
 	img.height = scene->height;
+	init_mlx(&game, &mlx, &mlx_win);
 
-	print_scene(scene);
-	draw_map(&img, scene->map);
-	draw_grid(&img, 0x00FFFFFF);
+	// print_scene(scene);
+	
+	printf("%p\n", scene->map);
+	init_game(&game, &scene, &player, &img);
+
+	// draw_map(&img, scene->map);
+	// draw_grid(&img, 0x00FFFFFF);
 
 	init_player(&player, scene);
 
-	init_game(&game, scene, &player, &img);
-
 	draw_square_centre(&img, &player.pos, CUB_SIZE, 0x0000FF00);
 	draw_rays(&game, 0x0000FFFF);
-
+	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_released, &game);
+	mlx_loop_hook(game.mlx, &render_frame, &game);
 
 	// mlx_key_hook(mlx_win, key_hook, "message");
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	free_scene(scene);
+	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// free_scene(scene);
 	mlx_loop(mlx);
 }

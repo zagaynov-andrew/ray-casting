@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 10:45:37 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 12:57:26 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ void	draw_grid(t_img *img, int color)
 	{
 		draw_line(img, &begin, &vec, color);
 		begin.y += CUB_SIZE;
+	}
+}
+
+void	img_clear(t_img *img)
+{
+	int	x;
+	int y;
+	
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			pixel_put(img, x, y, 0x00000000);		
+			x++;
+		}
+		y++;
 	}
 }
 

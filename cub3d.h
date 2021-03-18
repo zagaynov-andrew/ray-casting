@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 10:47:08 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 14:29:30 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,24 @@
 # define WALL '1'
 # define SPRITE '2'
 
-# define CUB_SIZE 32
+# define CUB_SIZE 45
 # define NUM_RAYS 50
 # define FOV 1.05
 # define RAY_LEN 200
+
+# define KEY_W 13
+
+# define STOP 0
+
+# define TOWARD 1
+# define BACKWARD 2
+# define LEFT 3
+# define RIGHT 4
+
+# define COUNTERCLOCKWISE 1
+# define CLOCKWISE 2
+
+# define EPSILON 1
 
 typedef	struct		s_scene
 {
@@ -105,12 +119,16 @@ typedef struct		s_player
 {
 	t_vec2			pos;
 	float			cam_angle;
+	int				movement;
+	int				rotation;
 }					t_player;
 
 typedef struct		s_game
 {
 	t_scene			*scene;
 	t_player		*player;
+	void			*mlx;
+	void			*win;
 	t_img			*img;
 }					t_game;
 
@@ -144,5 +162,11 @@ void	vec2_cpy(t_vec2 *dst, const t_vec2 *src);
 void	draw_grid(t_img *img, int color);
 void	init_dda(t_dda *dda, const t_game *game, const t_vec2 *ray_dir);
 void	init_player(t_player *player, t_scene *scene);
+void	draw_map(t_img *img, t_vec *map);
+int		key_pressed(int key_code, t_game *game);
+int		key_released(int key_code, t_game *game);
+int		render_frame(t_game *game);
+void	img_clear(t_img *img);
+int		is_wall_around_point(t_game *game, int x, int y);
 
 #endif
