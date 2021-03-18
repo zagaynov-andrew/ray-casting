@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 14:29:30 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 15:18:29 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@
 
 # define STOP 0
 
-# define TOWARD 1
-# define BACKWARD 2
-# define LEFT 3
-# define RIGHT 4
+# define TOWARD 0b0001
+# define BACKWARD 0b0010
+# define LEFT 0b0100
+# define RIGHT 0b1000
 
-# define COUNTERCLOCKWISE 1
-# define CLOCKWISE 2
+# define COUNTERCLOCKWISE 0b01
+# define CLOCKWISE 0b10
 
 # define EPSILON 1
 
@@ -119,8 +119,8 @@ typedef struct		s_player
 {
 	t_vec2			pos;
 	float			cam_angle;
-	int				movement;
-	int				rotation;
+	unsigned char	movement;
+	unsigned char	rotation;
 }					t_player;
 
 typedef struct		s_game

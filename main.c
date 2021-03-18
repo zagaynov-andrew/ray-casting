@@ -1,22 +1,17 @@
-#include "libs/minilibx-linux/mlx.h"
 #include <stdio.h>
-
-typedef struct  s_vars {
-    void        *mlx;
-    void        *win;
-}               t_vars;
-
-int             key_hook(int keycode, t_vars *vars)
-{
-    printf("Hello from key_hook!\n");
-}
 
 int             main(void)
 {
-    t_vars      vars;
+    unsigned char a = 0b00001001;
+    unsigned char b = 0b00000001;
+    unsigned char c = 0b00000001;
 
-    vars.mlx = mlx_init();
-    vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello world!");
-    mlx_key_hook(vars.win, key_hook, &vars);
-    mlx_loop(vars.mlx);
+    // a = a & 0b0111;
+    c = (0b11111111 - b);
+    c |= a;
+    if (c == 0b00001000)
+        printf("yes, %i\n", (int)c);
+    else
+        printf("no, %i\n", (int)c);
+    printf("%i\n", 0b00001000);
 } 
