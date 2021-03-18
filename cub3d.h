@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 15:18:29 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 15:42:41 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define WALL '1'
 # define SPRITE '2'
 
-# define CUB_SIZE 45
+# define CUB_SIZE 64
 # define NUM_RAYS 50
 # define FOV 1.05
 # define RAY_LEN 200
