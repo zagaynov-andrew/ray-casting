@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
+#    Updated: 2021/03/15 11:24:24 by nforce           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME			= cub3D
 GNL_NAME		= gnl.a
 PROCESSOR_DIR	= processor/
@@ -10,6 +22,27 @@ SRCS_DIR		= ./srcs/
 OBJS_DIR		= objs/
 CC				= gcc
 CC_FLAGS		= -g -Wall -Wextra -Werror
+
+OSFLAG 				:=
+ifeq ($(OS),Windows_NT)
+	OSFLAG += -D WIN32
+	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+		OSFLAG += -D AMD64
+	endif
+	ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+		OSFLAG += -D IA32
+	endif
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		OSFLAG += LINUX
+		MLX_FLAGS = -L./libs/minilibx-linux -lmlx -L%%%%/lib -lXext -lX11 -lm -lbsd
+	else
+	    ($(UNAME_S),Darwin)
+		OSFLAG += MACOS
+		MLX_FLAGS = 0
+	endif
+endif
 
 LIBFT_SRCS	=	ft_memset.c		\
 				ft_bzero.c		\
@@ -108,10 +141,10 @@ $(OBJS_DIR)%.o : $(SRCS_DIR)$(PARSER_DIR)%.c cub3d.h
 $(OBJS_DIR)%.o : $(SRCS_DIR)$(ENGINE_DIR)%.c cub3d.h
 	@mkdir -p $(OBJS_DIR)
 	@echo "\033[1;31m- Done :\033[0m $<"
-	@$(CC) $(CC_FLAGS) -Imlx -c $< -o $@
+	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)
-	@gcc -g -Imlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)
+	@gcc -g -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(MLX_FLAGS)
 	@echo "\033[1;31;42m=====cub3D IS COMPLETED======\033[0m\n"
 	@echo "\033[1;33m __   __    ______    ______    __    __    ______    ______    ______    "
 	@echo "/\ \`-.\ \  /\  ___\  /\  __ \  /\ \`-./  \  /\  __ \  /\  == \  /\  __ \   "
@@ -128,9 +161,14 @@ clean:
 
 fclean: clean
 	@$(MAKE) fclean -C $(LIBFT_DIR)
-	rm -f $(GNL_NAME)
+	rm -f $(GNL_NAME)										
 	rm -f $(NAME)
 
 re: fclean all
+
+#####################################################################
+g:
+	@gcc -g srcs/*.c libs/gnl/*.c libs/libft/libft.a $(MLX_FLAGS)
+#####################################################################
 
 .PHONY : all clean fclean re

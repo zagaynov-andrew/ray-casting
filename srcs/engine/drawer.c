@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   drawer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/17 19:05:46 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 09:04:43 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 #include <math.h>
 
-void	pixel_put(t_data *data, int x, int y, int color)
+void	pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x >= data->width || y >= data->height)
+	if (x >= img->width || y >= img->height)
 		return ;
 	if (x < 0 || y < 0)
 		return ;
-	dst = data->addr + (y * data->size_line + x * (data->bits_per_pixel / 8));
+	dst = img->addr + (y * img->size_line + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
-void	draw_grid(t_data *data, int color)
+void	draw_grid(t_img *img, int color)
 {
 	t_point	begin;
 	t_vec2	vec;
@@ -33,24 +33,24 @@ void	draw_grid(t_data *data, int color)
 	begin.x = 0;
 	begin.y = 0;
 	vec.x = 0;
-	vec.y = data->height;
-	while (begin.x < data->width)
+	vec.y = img->height;
+	while (begin.x < img->width)
 	{
-		draw_line(data, &begin, &vec, color);
+		draw_line(img, &begin, &vec, color);
 		begin.x += CUB_SIZE;
 	}
 	begin.x = 0;
 	begin.y = 0;
-	vec.x = data->width;
+	vec.x = img->width;
 	vec.y = 0;
-	while (begin.y < data->height)
+	while (begin.y < img->height)
 	{
-		draw_line(data, &begin, &vec, color);
+		draw_line(img, &begin, &vec, color);
 		begin.y += CUB_SIZE;
 	}
 }
 
-void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
+void	draw_line(t_img *img, t_point* begin, t_vec2* vec, int color)
 {
 	t_point	delta;
 	t_point	point;
@@ -95,7 +95,7 @@ void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
 		point.x = p0.x;
 		while (point.x != p1.x)
 		{
-			pixel_put(data, point.x, point.y, color);
+			pixel_put(img, point.x, point.y, color);
 			error += delta_err;
 			if (error >= (delta.x + 1))
 			{
@@ -104,7 +104,7 @@ void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
 			}
 			point.x += dir_x;
 		}
-		pixel_put(data, point.x, point.y, color);
+		pixel_put(img, point.x, point.y, color);
 	}
 	else
 	{
@@ -124,7 +124,7 @@ void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
 			dir_y = -1;
 		while (point.y != p1.y)
 		{
-			pixel_put(data, point.x, point.y, color);
+			pixel_put(img, point.x, point.y, color);
 			error += delta_err;
 			if (error >= (delta.y + 1))
 			{
@@ -133,7 +133,7 @@ void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color)
 			}
 			point.y += dir_y;
 		}
-		pixel_put(data, point.x, point.y, color);
+		pixel_put(img, point.x, point.y, color);
 	}
 
 }
@@ -148,7 +148,7 @@ void	rotate(t_vec2 *vec, float angle)
 	vec->y = tmp.y;
 }
 
-void	draw_square(t_data *data, t_point *p0, int size, int color)
+void	draw_square(t_img *img, t_point *p0, int size, int color)
 {
 	int	x;
 	int	y;
@@ -161,14 +161,14 @@ void	draw_square(t_data *data, t_point *p0, int size, int color)
 		y = p0->y;
 		while (y < size + p0->y)
 		{
-			pixel_put(data, x, y, color);
+			pixel_put(img, x, y, color);
 			y++;
 		}
 		x++;
 	}
 }
 
-void	draw_square_centre(t_data *data, t_point *p0, int size, int color)
+void	draw_square_centre(t_img *img, t_point *p0, int size, int color)
 {
 	int	x;
 	int	y;
@@ -181,7 +181,7 @@ void	draw_square_centre(t_data *data, t_point *p0, int size, int color)
 		y = p0->y - size / 2;
 		while (y < size / 2 + p0->y)
 		{
-			pixel_put(data, x, y, color);
+			pixel_put(img, x, y, color);
 			y++;
 		}
 		x++;

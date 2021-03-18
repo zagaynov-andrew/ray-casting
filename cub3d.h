@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/17 19:02:00 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 09:24:14 by nforce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
-# include "mlx.h"
+# include "libs/minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
@@ -32,7 +32,7 @@
 # define SPRITE '2'
 
 # define CUB_SIZE 32
-# define NUM_RAYS 30
+# define NUM_RAYS 50
 # define FOV 1.05
 # define RAY_LEN 200
 
@@ -84,7 +84,7 @@ int					is_valid_map_column(t_vec *map);
 
 t_vec				*get_rectangular_map(t_vec *map);
 
-typedef struct		s_data
+typedef struct		s_img
 {
 	void			*img;
 	char			*addr;
@@ -93,7 +93,7 @@ typedef struct		s_data
 	int				width;
 	int				height;
 	int				endian;
-}					t_data;
+}					t_img;
 
 typedef struct		s_vec2
 {
@@ -113,25 +113,32 @@ typedef struct		s_player
 	float			cam_angle;
 }					t_player;
 
+typedef struct		s_game
+{
+	t_scene			*scene;
+	t_player		*player;
+	t_img			*img;
+}					t_game;
 
-void	pixel_put(t_data *data, int x, int y, int color);
-void	draw_line(t_data *data, t_point* begin, t_vec2* vec, int color);
-void	draw_square(t_data *data, t_point *p0, int size, int color);
+
+void	pixel_put(t_img *img, int x, int y, int color);
+void	draw_line(t_img *img, t_point* begin, t_vec2* vec, int color);
+void	draw_square(t_img *img, t_point *p0, int size, int color);
 void	rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
-void	draw_square_centre(t_data *data, t_point *p0, int size, int color);
-void			cut_line(t_data *data, t_player *player, t_vec2 *ray_dir);
-void			draw_rays(t_data *data, t_player *player, int color);
-float			get_side_dist_x(t_player *player, t_vec2 *ray_dir, float delta_dist_x);
-float			get_side_dist_y(t_player *player, t_vec2 *ray_dir, float delta_dist_y);
-float			get_delta_dist_x(t_vec2 *ray_dir);
-float			get_delta_dist_y(t_vec2 *ray_dir);
-float			lenght(t_vec2f *vec);
+void	draw_square_centre(t_img *img, t_point *p0, int size, int color);
+void			cut_line(t_game *game, t_vec2 *ray_dir);
+void			draw_rays(t_game *game, int color);
+float			get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x);
+float			get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y);
+float			get_delta_dist_x(const t_vec2 *ray_dir);
+float			get_delta_dist_y(const t_vec2 *ray_dir);
+float			lenght(const t_vec2f *vec);
 void			normalize(t_vec2f *vec);
 void			multiply(t_vec2f *vec, float num);
 void			vec2_change_length(t_vec2 *vec, float length);
 void			to_vec2(t_vec2 *vec2, t_vec2f *vec2f, float length);
 void			vec2_cpy(t_vec2 *dst, const t_vec2 *src);
-void	draw_grid(t_data *data, int color);
+void	draw_grid(t_img *img, int color);
 
 #endif
