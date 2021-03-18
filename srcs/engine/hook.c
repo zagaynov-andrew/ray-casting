@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 23:08:20 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 23:19:37 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int		render_frame(t_game *game)
 	move_player(game);
 	rotate_player(game);
 	img_clear(game->img);
-	draw_map(game->img, game->scene->map);
-	draw_square_centre(game->img, &game->player->pos, CUB_SIZE, 0x0000FF00);
+	// draw_map(game->img, game->scene->map);
+	// draw_square_centre(game->img, &game->player->pos, CUB_SIZE, 0x0000FF00);
 	draw_rays(game);
 	// t_vec2 begin;
 	// t_vec2 end;

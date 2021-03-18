@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 23:12:12 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/19 00:00:00 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,23 +277,24 @@ void			draw_rays(t_game *game)
 	angle = game->player->cam_angle - FOV / 2;
 	vec2_cpy(&const_dir, &ray_dir); 
 	rotate(&ray_dir, angle);
-	// t_vec2 begin;
-	// t_vec2 end;
-	// begin.x = game->img->width;
-	// end.x = game->img->width - game->img->width / (NUM_RAYS - 1);
+	t_vec2 begin;
+	t_vec2 end;
+	begin.x = game->img->width;
+	end.x = game->img->width - game->img->width / (NUM_RAYS - 1);
 	i = 0;
 	while (i < NUM_RAYS)
 	{
 		cut_line(game, &ray_dir);
-		// int depth = vec2_length(&ray_dir);
-		// int hight = (int)round(((float)NUM_RAYS) / (2 * tan(FOV / 2)) * 3 * CUB_SIZE / depth);
-		// begin.y = game->img->height / 2 - hight / 2;
-		// end.y = game->img->height / 2 + hight / 2;
-		// int c = 255 / (1 + depth * depth * 0.0001);
-		// draw_rectangle(game->img, &end, &begin, c << 16 | c << 8 | c);
-		draw_line(game->img, &game->player->pos, &ray_dir, 0x0000FFFF);
-		// end.x -= game->img->width / (NUM_RAYS - 1);
-		// begin.x -= game->img->width / (NUM_RAYS - 1);
+		// int depth = vec2_length(&ray_dir) - (((float)NUM_RAYS) / (2 * tan(FOV / 2))) / cos(ft_abs(game->player->cam_angle - angle));
+		int depth = vec2_length(&ray_dir) * cos(game->player->cam_angle - angle);
+		int hight = (int)round(((float)NUM_RAYS) / (2 * tan(FOV / 2)) * 3 * CUB_SIZE / depth);
+		begin.y = game->img->height / 2 - hight / 2;
+		end.y = game->img->height / 2 + hight / 2;
+		int c = 255 / (1 + depth * depth * 0.0001);
+		draw_rectangle(game->img, &end, &begin, c << 16 | c << 8 | c);
+		// draw_line(game->img, &game->player->pos, &ray_dir, 0x0000FFFF);
+		end.x -= game->img->width / (NUM_RAYS - 1);
+		begin.x -= game->img->width / (NUM_RAYS - 1);
 		angle += FOV / (NUM_RAYS - 1);
 		vec2_cpy(&ray_dir, &const_dir);
 		rotate(&ray_dir, angle);

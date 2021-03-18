@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 23:08:15 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 23:39:38 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define SPRITE '2'
 
 # define CUB_SIZE 64
+# define EPSILON 20
 # define NUM_RAYS 301
 # define FOV 1.15
 # define RAY_LEN 200
@@ -47,8 +48,6 @@
 
 # define COUNTERCLOCKWISE 0b01
 # define CLOCKWISE 0b10
-
-# define EPSILON 1
 
 typedef	struct		s_scene
 {

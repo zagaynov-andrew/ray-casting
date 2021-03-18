@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:24:56 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 22:36:33 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 23:36:31 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	move_straight(t_game *game, int where)
 	t_vec2	dir;
 	t_vec2	*cur_pos;
 
-	dir.x = 6;
+	dir.x = 2;
 	dir.y = 0;
 	cur_pos = &game->player->pos;
 	rotate(&dir, game->player->cam_angle);
@@ -42,7 +42,7 @@ void	move_sidewise(t_game *game, int where)
 	t_vec2	dir;
 	t_vec2	*cur_pos;
 
-	dir.x = 10;
+	dir.x = 2;
 	dir.y = 0;
 	cur_pos = &game->player->pos;
 	rotate(&dir, game->player->cam_angle);
@@ -77,7 +77,7 @@ void	move_player(t_game *game)
 void	rotate_player(t_game *game)
 {
 	if (game->player->rotation & COUNTERCLOCKWISE)
-		game->player->cam_angle += 0.01;
+		game->player->cam_angle += 0.015;
 	else if (game->player->rotation & CLOCKWISE)
-		game->player->cam_angle -= 0.01;
+		game->player->cam_angle -= 0.015;
 }
