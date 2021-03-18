@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 14:29:15 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 23:12:12 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,26 +266,37 @@ void			cut_line(t_game *game, t_vec2 *ray_dir)
 	}
 }
 
-void			draw_rays(t_game *game, int color)
+void			draw_rays(t_game *game)
 {
 	int		i;
+	t_vec2	const_dir;
 	t_vec2	ray_dir;
-	t_vec2	dir;
 	float	angle;
-
-	i = 0;
-	ray_dir.x = RAY_LEN;
-	ray_dir.y = 0;
+	
+	vec2_init(&ray_dir, RAY_LEN, 0);
 	angle = game->player->cam_angle - FOV / 2;
+	vec2_cpy(&const_dir, &ray_dir); 
 	rotate(&ray_dir, angle);
-	vec2_cpy(&dir, &ray_dir);
+	// t_vec2 begin;
+	// t_vec2 end;
+	// begin.x = game->img->width;
+	// end.x = game->img->width - game->img->width / (NUM_RAYS - 1);
+	i = 0;
 	while (i < NUM_RAYS)
 	{
 		cut_line(game, &ray_dir);
-		draw_line(game->img, &game->player->pos, &ray_dir, color);
-		vec2_cpy(&ray_dir, &dir);
-		rotate(&ray_dir, FOV / (NUM_RAYS - 1));
-		vec2_cpy(&dir, &ray_dir);
+		// int depth = vec2_length(&ray_dir);
+		// int hight = (int)round(((float)NUM_RAYS) / (2 * tan(FOV / 2)) * 3 * CUB_SIZE / depth);
+		// begin.y = game->img->height / 2 - hight / 2;
+		// end.y = game->img->height / 2 + hight / 2;
+		// int c = 255 / (1 + depth * depth * 0.0001);
+		// draw_rectangle(game->img, &end, &begin, c << 16 | c << 8 | c);
+		draw_line(game->img, &game->player->pos, &ray_dir, 0x0000FFFF);
+		// end.x -= game->img->width / (NUM_RAYS - 1);
+		// begin.x -= game->img->width / (NUM_RAYS - 1);
+		angle += FOV / (NUM_RAYS - 1);
+		vec2_cpy(&ray_dir, &const_dir);
+		rotate(&ray_dir, angle);
 		i++;
 	}
 }
@@ -339,8 +350,6 @@ int				main(void)
 
 	init_player(&player, scene);
 
-	draw_square_centre(&img, &player.pos, CUB_SIZE, 0x0000FF00);
-	draw_rays(&game, 0x0000FFFF);
 	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_released, &game);
 	mlx_loop_hook(game.mlx, &render_frame, &game);

@@ -6,7 +6,7 @@
 #    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/18 11:28:02 by ngamora          ###   ########.fr        #
+#    Updated: 2021/03/18 17:26:15 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,6 +115,7 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)vec2.c	\
 			$(SRCS_DIR)$(ENGINE_DIR)player.c	\
 			$(SRCS_DIR)$(ENGINE_DIR)hook.c	\
+			$(SRCS_DIR)$(ENGINE_DIR)movement.c	\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))

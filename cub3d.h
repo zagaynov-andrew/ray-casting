@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 15:42:41 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/18 23:08:15 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define SPRITE '2'
 
 # define CUB_SIZE 64
-# define NUM_RAYS 50
-# define FOV 1.05
+# define NUM_RAYS 301
+# define FOV 1.15
 # define RAY_LEN 200
 
 # define KEY_W 13
@@ -147,8 +147,9 @@ void	draw_square(t_img *img, t_vec2 *p0, int size, int color);
 void	rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
+void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
 void	cut_line(t_game *game, t_vec2 *ray_dir);
-void	draw_rays(t_game *game, int color);
+void	draw_rays(t_game *game);
 float	get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x);
 float	get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y);
 float	get_delta_dist_x(const t_vec2 *ray_dir);
@@ -168,5 +169,9 @@ int		key_released(int key_code, t_game *game);
 int		render_frame(t_game *game);
 void	img_clear(t_img *img);
 int		is_wall_around_point(t_game *game, int x, int y);
+void	move_player(t_game *game);
+void	rotate_player(t_game *game);
+float	vec2_length(const t_vec2 *vec);
+void	vec2_init(t_vec2 *vec, int x, int y);
 
 #endif
