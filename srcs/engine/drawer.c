@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   drawer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/16 10:30:55 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 09:04:43 by nforce           ###   ########.fr       */
+/*   Created: 2021/02/16 10:30:55 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/18 10:45:37 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
-#include <math.h>
 
 void	pixel_put(t_img *img, int x, int y, int color)
 {
@@ -27,7 +26,7 @@ void	pixel_put(t_img *img, int x, int y, int color)
 
 void	draw_grid(t_img *img, int color)
 {
-	t_point	begin;
+	t_vec2	begin;
 	t_vec2	vec;
 
 	begin.x = 0;
@@ -50,12 +49,12 @@ void	draw_grid(t_img *img, int color)
 	}
 }
 
-void	draw_line(t_img *img, t_point* begin, t_vec2* vec, int color)
+void	draw_line(t_img *img, t_vec2* begin, t_vec2* vec, int color)
 {
-	t_point	delta;
-	t_point	point;
-	t_point	p1;
-	t_point	p0;
+	t_vec2	delta;
+	t_vec2	point;
+	t_vec2	p1;
+	t_vec2	p0;
 	int	error;
 	int	delta_err;
 	int	dir_y;
@@ -148,7 +147,7 @@ void	rotate(t_vec2 *vec, float angle)
 	vec->y = tmp.y;
 }
 
-void	draw_square(t_img *img, t_point *p0, int size, int color)
+void	draw_square(t_img *img, t_vec2 *p0, int size, int color)
 {
 	int	x;
 	int	y;
@@ -168,7 +167,7 @@ void	draw_square(t_img *img, t_point *p0, int size, int color)
 	}
 }
 
-void	draw_square_centre(t_img *img, t_point *p0, int size, int color)
+void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color)
 {
 	int	x;
 	int	y;

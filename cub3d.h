@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 09:24:14 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/18 10:47:08 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@
 # define NUM_RAYS 50
 # define FOV 1.05
 # define RAY_LEN 200
-
-typedef struct		s_point
-{
-	int				x;
-	int				y;
-}					t_point;
 
 typedef	struct		s_scene
 {
@@ -109,7 +103,7 @@ typedef struct		s_vec2f
 
 typedef struct		s_player
 {
-	t_point			pos;
+	t_vec2			pos;
 	float			cam_angle;
 }					t_player;
 
@@ -120,25 +114,35 @@ typedef struct		s_game
 	t_img			*img;
 }					t_game;
 
+typedef struct		s_dda
+{
+	float			delta_dist_x;
+	float			delta_dist_y;
+	float			side_dist_x;
+	float			side_dist_y;
+}					t_dda;
+
 
 void	pixel_put(t_img *img, int x, int y, int color);
-void	draw_line(t_img *img, t_point* begin, t_vec2* vec, int color);
-void	draw_square(t_img *img, t_point *p0, int size, int color);
+void	draw_line(t_img *img, t_vec2* begin, t_vec2* vec, int color);
+void	draw_square(t_img *img, t_vec2 *p0, int size, int color);
 void	rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
-void	draw_square_centre(t_img *img, t_point *p0, int size, int color);
-void			cut_line(t_game *game, t_vec2 *ray_dir);
-void			draw_rays(t_game *game, int color);
-float			get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x);
-float			get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y);
-float			get_delta_dist_x(const t_vec2 *ray_dir);
-float			get_delta_dist_y(const t_vec2 *ray_dir);
-float			lenght(const t_vec2f *vec);
-void			normalize(t_vec2f *vec);
-void			multiply(t_vec2f *vec, float num);
-void			vec2_change_length(t_vec2 *vec, float length);
-void			to_vec2(t_vec2 *vec2, t_vec2f *vec2f, float length);
-void			vec2_cpy(t_vec2 *dst, const t_vec2 *src);
+void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
+void	cut_line(t_game *game, t_vec2 *ray_dir);
+void	draw_rays(t_game *game, int color);
+float	get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x);
+float	get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y);
+float	get_delta_dist_x(const t_vec2 *ray_dir);
+float	get_delta_dist_y(const t_vec2 *ray_dir);
+float	lenght(const t_vec2f *vec);
+void	normalize(t_vec2f *vec);
+void	multiply(t_vec2f *vec, float num);
+void	vec2_change_length(t_vec2 *vec, float length);
+void	to_vec2(t_vec2 *vec2, t_vec2f *vec2f, float length);
+void	vec2_cpy(t_vec2 *dst, const t_vec2 *src);
 void	draw_grid(t_img *img, int color);
+void	init_dda(t_dda *dda, const t_game *game, const t_vec2 *ray_dir);
+void	init_player(t_player *player, t_scene *scene);
 
 #endif

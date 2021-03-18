@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/18 10:45:24 by ngamora          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -137,7 +149,7 @@ void	draw_map(t_img *img, t_vec *map)
 	int		j;
 	int		line_len;
 	char	*line;
-	t_point	p;
+	t_vec2	p;
 
 	i = 0;
 	while (i < (int)map->size)
@@ -159,56 +171,10 @@ void	draw_map(t_img *img, t_vec *map)
 	}
 }
 
-
 int	key_hook(int key_code, char *msg)
 {
 	printf("%s %i", msg, key_code);
 	return (key_code);
-}
-
-void				set_start_position(t_player *player, t_vec *map)
-{
-	int		x;
-	int		y;
-	char	*line;
-
-	y = 0;
-	while (y < (int)map->size)
-	{
-		line = (char*)((map->data)[y]);
-		x = 0;
-		while (line[x])
-		{
-			if (ft_char_in_set("NSEW", line[x]))
-			{
-				player->pos.x = x * CUB_SIZE + CUB_SIZE / 2;
-				player->pos.y = y * CUB_SIZE + CUB_SIZE / 2;
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
-void	init_player(t_player *player, t_scene *scene)
-{
-	set_start_position(player, scene->map);
-	if (scene->start_pos_flag == 'N')
-		player->cam_angle = M_PI_2;
-	else if (scene->start_pos_flag == 'S')
-		player->cam_angle = 3 * M_PI_2;
-	else if (scene->start_pos_flag == 'E')
-		player->cam_angle = 0;
-	else if (scene->start_pos_flag == 'W')
-		player->cam_angle = M_PI;
-
-}
-
-void			vec2_cpy(t_vec2 *dst, const t_vec2 *src)
-{
-	dst->x = src->x;
-	dst->y = src->y;
 }
 
 int				is_wall(t_game *game, t_vec2 *ray_dir)
@@ -241,40 +207,26 @@ int				is_wall(t_game *game, t_vec2 *ray_dir)
 
 void			cut_line(t_game *game, t_vec2 *ray_dir)
 {
-	float	delta_dist_x;
-	float	delta_dist_y;
-	float	side_dist_x;
-	float	side_dist_y;
+	t_dda	dda;
 	t_vec2	dir;
 
-	delta_dist_x = get_delta_dist_x(ray_dir);
-	side_dist_x = get_side_dist_x(game->player, ray_dir, delta_dist_x);
-	delta_dist_y = get_delta_dist_y(ray_dir);
-	side_dist_y = get_side_dist_y(game->player, ray_dir, delta_dist_y);
-
+	init_dda(&dda, game, ray_dir);
 	vec2_cpy(&dir, ray_dir);
 	while (1)
 	{
-		if (side_dist_x < side_dist_y)
-		{
-			vec2_change_length(&dir, side_dist_x);
-			if (is_wall(game, &dir) == 1)
-			{
-				vec2_cpy(ray_dir, &dir);
-				return ;
-			}
-			side_dist_x += delta_dist_x;
-		}
+		if (dda.side_dist_x < dda.side_dist_y)
+			vec2_change_length(&dir, dda.side_dist_x);
 		else
+			vec2_change_length(&dir, dda.side_dist_y);
+		if (is_wall(game, &dir) == 1)
 		{
-			vec2_change_length(&dir, side_dist_y);
-			if (is_wall(game, &dir) == 1)
-			{
-				vec2_cpy(ray_dir, &dir);
-				return ;
-			}
-			side_dist_y += delta_dist_y;
+			vec2_cpy(ray_dir, &dir);
+			return ;
 		}
+		if (dda.side_dist_x < dda.side_dist_y)
+			dda.side_dist_x += dda.delta_dist_x;
+		else
+			dda.side_dist_y += dda.delta_dist_y;
 		vec2_cpy(&dir, ray_dir);
 	}
 }
@@ -301,76 +253,6 @@ void			draw_rays(t_game *game, int color)
 		vec2_cpy(&dir, &ray_dir);
 		i++;
 	}
-}
-
-float			get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x)
-{
-	int		num_line;
-	int		line_x;
-	float	similarity_coeff;
-
-	num_line = player->pos.x / CUB_SIZE;
-	if (ray_dir->x < 0)
-		num_line++;
-	line_x = num_line * CUB_SIZE;
-	similarity_coeff = (float)ft_abs(player->pos.x - line_x) / CUB_SIZE;
-	return ((1. - similarity_coeff) * delta_dist_x);
-}
-
-float			get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y)
-{
-	int		num_line;
-	int		line_y;
-	float	similarity_coeff;
-
-	num_line = player->pos.y / CUB_SIZE;
-	if (ray_dir->y < 0)
-		num_line++;
-	line_y = num_line * CUB_SIZE;
-	similarity_coeff = (float)ft_abs(player->pos.y - line_y) / CUB_SIZE;
-	return ((1. - similarity_coeff) * delta_dist_y);
-}
-
-float			get_delta_dist_x(const t_vec2 *ray_dir)
-{
-	return (CUB_SIZE * sqrtf(1 + ((float)(ray_dir->y * ray_dir->y)) / (ray_dir->x * ray_dir->x)));
-}
-
-float			get_delta_dist_y(const t_vec2 *ray_dir)
-{
-	return (CUB_SIZE * sqrtf(1 + ((float)(ray_dir->x * ray_dir->x)) / (ray_dir->y * ray_dir->y)));
-}
-
-float			lenght(const t_vec2f *vec)
-{
-	return (sqrtf(vec->x * vec->x + vec->y * vec->y));
-}
-
-void			normalize(t_vec2f *vec)
-{
-	float len;
-
-	len = lenght(vec);
-	vec->x = vec->x / len;
-	vec->y = vec->y / len;
-}
-
-void			multiply(t_vec2f *vec, float num)
-{
-	vec->x *= num;
-	vec->y *= num;
-}
-
-void			vec2_change_length(t_vec2 *vec, float length)
-{
-	t_vec2f	vec2f;
-
-	vec2f.x = (float)vec->x;
-	vec2f.y = (float)vec->y;
-	normalize(&vec2f);
-	multiply(&vec2f, length);
-	vec->x = (int)round(vec2f.x);
-	vec->y = (int)round(vec2f.y);
 }
 
 void			init_game(t_game *game, t_scene *scene, t_player *player, t_img *img)

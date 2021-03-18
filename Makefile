@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nforce <nforce@student.42.fr>              +#+  +:+       +#+         #
+#    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/15 11:24:24 by nforce           ###   ########.fr        #
+#    Updated: 2021/03/18 10:47:35 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,7 +110,10 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c					\
 			$(SRCS_DIR)$(PARSER_DIR)map_utils.c				\
 			$(SRCS_DIR)$(PARSER_DIR)s_scene.c				\
 			$(SRCS_DIR)errors.c					\
-			$(SRCS_DIR)$(ENGINE_DIR)/drawer.c	\
+			$(SRCS_DIR)$(ENGINE_DIR)drawer.c	\
+			$(SRCS_DIR)$(ENGINE_DIR)dda.c	\
+			$(SRCS_DIR)$(ENGINE_DIR)vec2.c	\
+			$(SRCS_DIR)$(ENGINE_DIR)player.c	\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))
