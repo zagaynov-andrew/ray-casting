@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/18 23:39:38 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/19 22:25:40 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,21 @@
 # define WALL '1'
 # define SPRITE '2'
 
-# define CUB_SIZE 64
+# define CUB_SIZE 128
 # define EPSILON 20
 # define NUM_RAYS 301
 # define FOV 1.15
 # define RAY_LEN 200
 
-# define KEY_W 13
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65362
+# define KEY_ESC 65307
 
 # define STOP 0
 
