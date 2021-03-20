@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:24:56 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/19 20:32:57 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/20 16:21:36 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,7 @@ void	rotate_player(t_game *game)
 		game->player->cam_angle -= 0.015;
 	if (game->player->cam_angle >= 2 * M_PI)
 		game->player->cam_angle -= 2 * M_PI;
+	if (game->player->cam_angle < 0)
+		game->player->cam_angle += 2 * M_PI;
+	// printf("%f\n", game->player->cam_angle * 180 / M_PI);
 }

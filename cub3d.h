@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/19 22:25:40 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/20 18:30:57 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
-# include "libs/minilibx-linux/mlx.h"
+# include "mlx.h"
+// # include "libs/minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
@@ -31,21 +32,31 @@
 # define WALL '1'
 # define SPRITE '2'
 
-# define CUB_SIZE 128
-# define EPSILON 20
-# define NUM_RAYS 301
+# define CUB_SIZE 64
+# define EPSILON 5
+# define NUM_RAYS 2001
 # define FOV 1.15
 # define RAY_LEN 200
 
-# define KEY_W 119
-# define KEY_S 115
-# define KEY_A 97
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_UP 65362
-# define KEY_DOWN 65362
-# define KEY_ESC 65307
+// # define KEY_W 119
+// # define KEY_S 115
+// # define KEY_A 97
+// # define KEY_D 100
+// # define KEY_LEFT 65361
+// # define KEY_RIGHT 65363
+// # define KEY_UP 65362
+// # define KEY_DOWN 65362
+// # define KEY_ESC 65307
+
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_A 0
+# define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_ESC 53
 
 # define STOP 0
 
@@ -56,6 +67,16 @@
 
 # define COUNTERCLOCKWISE 0b01
 # define CLOCKWISE 0b10
+
+# define NOTHING 0
+
+# define HORIZONTAL 1
+# define VERTICAL 2
+
+# define NO 1
+# define SO 2
+# define WE 3
+# define EA 4
 
 typedef	struct		s_scene
 {
@@ -137,6 +158,10 @@ typedef struct		s_game
 	void			*mlx;
 	void			*win;
 	t_img			*img;
+	int				last_side;
+	int				last_depth;
+	int				cur_depth;
+	float			cur_ray_angle;
 }					t_game;
 
 typedef struct		s_dda
@@ -155,7 +180,7 @@ void	rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
 void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
-void	cut_line(t_game *game, t_vec2 *ray_dir);
+int		cut_line(t_game *game, t_vec2 *ray_dir);
 void	draw_rays(t_game *game);
 float	get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x);
 float	get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y);
@@ -180,5 +205,8 @@ void	move_player(t_game *game);
 void	rotate_player(t_game *game);
 float	vec2_length(const t_vec2 *vec);
 void	vec2_init(t_vec2 *vec, int x, int y);
+int		get_side(t_game *game, t_vec2 *point);
+void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
+int		is_corner(t_game *game, t_vec2 *point);
 
 #endif

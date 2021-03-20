@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/19 10:21:40 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/20 13:27:55 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		key_pressed(int key_code, t_game *game)
 {
-	printf("Key pressed: %i!\n", key_code);
+	// printf("Key pressed: %i!\n", key_code);
 	if (key_code == KEY_W || key_code == KEY_UP)
 		game->player->movement |= TOWARD;
 	else if (key_code == KEY_S || key_code == KEY_DOWN)
@@ -60,19 +60,19 @@ int		render_frame(t_game *game)
 	// img_clear(game->img);
 
 	// t_img img;
-	
+
 	// img.img = mlx_xpm_file_to_image(game->mlx, "./WALL33.xpm", &img.width, &img.height);
 	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
 	// 						&img.endian);
 	// printf("%i\t%i\n", img.width, img.height);
-	
-	
+
+
 	t_vec2 begin;
 	vec2_init(&begin, 0, 0);
 	t_vec2 end;
 	vec2_init(&end, game->img->width, game->img->height / 2);
 	draw_rectangle(game->img, &begin, &end, 0 << 16 | 186 << 8 | 255);
-	
+
 	vec2_init(&begin, 0, game->img->height / 2);
 	vec2_init(&end, game->img->width, game->img->height);
 	draw_rectangle(game->img, &begin, &end, 40 << 16 | 40 << 8 | 40);
@@ -87,7 +87,7 @@ int		render_frame(t_game *game)
 	// end.x = 1764;
 	// end.y = 458;
 	// draw_rectangle(game->img, &begin, &end, 0x00FFFFFF);
-	
+
 	mlx_put_image_to_window(game->mlx, game->win, game->img->img, 0, 0);
 	// mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
 	return (0);
