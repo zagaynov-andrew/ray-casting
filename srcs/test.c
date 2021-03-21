@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 13:43:59 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/21 14:34:33 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,30 +245,31 @@ int				is_wall_around_point(t_game *game, int x, int y)
 	return (0);
 }
 
-int			cut_line(t_game *game, t_vec2 *ray_dir)
+int			cut_line(t_game *game, t_vec2f *ray_dir)
 {
 	t_dda	dda;
-	t_vec2	dir;
+	t_vec2f	dir;
 	int		side;
+	t_vec2	vec2_dir;
 
-	init_dda(&dda, game, ray_dir);
-	vec2_cpy(&dir, ray_dir);
+	init_dda(&dda, game, ray_dir); //!!!!!
+	vec2f_cpy(&dir, ray_dir);
 	while (1)
 	{
 		if (dda.side_dist_x < dda.side_dist_y)
-			vec2_change_length(&dir, dda.side_dist_x);
+			vec2f_change_length(&dir, dda.side_dist_x);
 		else
-			vec2_change_length(&dir, dda.side_dist_y);
-		if ((side = is_wall(game, &dir)) != 0)
+			vec2f_change_length(&dir, dda.side_dist_y);
+		if ((side = is_wall(game, vec2f_to_vec2(&vec2_dir, &dir))) != 0)
 		{
-			vec2_cpy(ray_dir, &dir);
+			vec2f_cpy(ray_dir, &dir);
 			return (side);
 		}
 		if (dda.side_dist_x < dda.side_dist_y)
 			dda.side_dist_x += dda.delta_dist_x;
 		else
 			dda.side_dist_y += dda.delta_dist_y;
-		vec2_cpy(&dir, ray_dir);
+		vec2f_cpy(&dir, ray_dir);
 	}
 	return (side);
 }
@@ -276,14 +277,14 @@ int			cut_line(t_game *game, t_vec2 *ray_dir)
 void			draw_rays(t_game *game)
 {
 	int		i;//
-	t_vec2	const_dir;//
-	t_vec2	ray_dir;//
+	t_vec2f	const_dir;//
+	t_vec2f	ray_dir;//
 	float	angle;//
 
-	vec2_init(&ray_dir, RAY_LEN, 0);
+	vec2f_init(&ray_dir, RAY_LEN, 0);
 	angle = game->player->cam_angle + FOV / 2;
-	vec2_cpy(&const_dir, &ray_dir);
-	rotate(&ray_dir, angle);
+	vec2f_cpy(&const_dir, &ray_dir);
+	vec2f_rotate(&ray_dir, angle);
 	t_vec2 begin;
 	t_vec2 end;
 	begin.x = 0;
@@ -293,11 +294,11 @@ void			draw_rays(t_game *game)
 	while (i < game->scene->width + 1)
 	{
 		set_cur_ray_angle(game, angle);
-		int side = cut_line(game, &ray_dir);
+		int side = cut_line(game, &ray_dir); //!!!!!
 		side = side + 0;
-		int depth = round((float)vec2_length(&ray_dir) * cos(game->player->cam_angle - angle));
+		int depth = round((float)vec2f_length(&ray_dir) * cos(game->player->cam_angle - angle));
 
-		int hight = ((NUM_RAYS) / (2 * tan(FOV / 2)) * CUB_SIZE / depth);
+		int hight = ((game->scene->width + 1) / (2 * tan(FOV / 2)) * CUB_SIZE / depth);
 		begin.y = game->img->height / 2 - hight / 2;
 		end.y = game->img->height / 2 + hight / 2;
 		int c;
@@ -321,8 +322,8 @@ void			draw_rays(t_game *game)
 		end.x++;
 		begin.x++;
 		angle -= FOV / game->scene->width;
-		vec2_cpy(&ray_dir, &const_dir);
-		rotate(&ray_dir, angle);
+		vec2f_cpy(&ray_dir, &const_dir);
+		vec2f_rotate(&ray_dir, angle);
 		i++;
 	}
 	game->last_side = NOTHING;

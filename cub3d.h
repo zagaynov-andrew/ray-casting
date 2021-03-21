@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/21 12:40:59 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/21 14:33:57 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,20 +178,20 @@ void	rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
 void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
-int		cut_line(t_game *game, t_vec2 *ray_dir);
+int		cut_line(t_game *game, t_vec2f *ray_dir);
 void	draw_rays(t_game *game);
-float	get_side_dist_x(const t_player *player, const t_vec2 *ray_dir, float delta_dist_x);
-float	get_side_dist_y(const t_player *player, const t_vec2 *ray_dir, float delta_dist_y);
-float	get_delta_dist_x(const t_vec2 *ray_dir);
-float	get_delta_dist_y(const t_vec2 *ray_dir);
-float	lenght(const t_vec2f *vec);
+float	get_side_dist_x(const t_player *player, const t_vec2f *ray_dir, float delta_dist_x);
+float	get_side_dist_y(const t_player *player, const t_vec2f *ray_dir, float delta_dist_y);
+float	get_delta_dist_x(const t_vec2f *ray_dir);
+float	get_delta_dist_y(const t_vec2f *ray_dir);
+float	vec2f_length(const t_vec2f *vec);
 void	normalize(t_vec2f *vec);
 void	multiply(t_vec2f *vec, float num);
-void	vec2_change_length(t_vec2 *vec, float length);
+void	vec2f_change_length(t_vec2f *vec, float length);
 void	to_vec2(t_vec2 *vec2, t_vec2f *vec2f, float length);
 void	vec2_cpy(t_vec2 *dst, const t_vec2 *src);
 void	draw_grid(t_img *img, int color);
-void	init_dda(t_dda *dda, const t_game *game, const t_vec2 *ray_dir);
+void	init_dda(t_dda *dda, const t_game *game, const t_vec2f *ray_dir);
 void	init_player(t_player *player, t_scene *scene);
 void	draw_map(t_img *img, t_vec *map);
 int		key_pressed(int key_code, t_game *game);
@@ -207,5 +207,9 @@ int		get_side(t_game *game, t_vec2 *point);
 void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
 int		is_corner(t_game *game, t_vec2 *point);
 void	draw_vertical_line(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
+t_vec2	*vec2f_to_vec2(t_vec2 *dst, const t_vec2f *src);
+t_vec2f	*vec2f_init(t_vec2f *vec, float x, float y);
+t_vec2f	*vec2f_cpy(t_vec2f *dst, const t_vec2f *src);
+t_vec2f	*vec2f_rotate(t_vec2f *vec, float angle);
 
 #endif
