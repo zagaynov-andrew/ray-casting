@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 14:34:33 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/21 19:20:53 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,11 +203,11 @@ int				is_wall(t_game *game, t_vec2 *ray_dir)
 		while (cur.x < begin.x + 3)
 		{
 			line = (char*)((game->scene->map->data)[cur.y / CUB_SIZE]);
-			if ((int)game->scene->map->size <= cur.y / CUB_SIZE)
-			{
-				printf("ERROOOOOOOOOR\n");
-				return (0);
-			}
+			// if ((int)game->scene->map->size <= cur.y / CUB_SIZE)
+			// {
+			// 	printf("ERROOOOOOOOOR\n");
+			// 	return (0);
+			// }
 			if (line[cur.x / CUB_SIZE] == WALL)
 				flag = 1;
 			if ((cur.x % CUB_SIZE == 0 || cur.y % CUB_SIZE == 0) && flag == 1)
@@ -252,7 +252,7 @@ int			cut_line(t_game *game, t_vec2f *ray_dir)
 	int		side;
 	t_vec2	vec2_dir;
 
-	init_dda(&dda, game, ray_dir); //!!!!!
+	init_dda(&dda, game, ray_dir);
 	vec2f_cpy(&dir, ray_dir);
 	while (1)
 	{
@@ -272,6 +272,47 @@ int			cut_line(t_game *game, t_vec2f *ray_dir)
 		vec2f_cpy(&dir, ray_dir);
 	}
 	return (side);
+}
+
+unsigned int	get_pixel_color(t_img *img, int x, int y)
+{
+	char *dst;
+
+	if (x < 0 || y < 0)
+		return (0);
+	if (x >= img->width || y >= img->height)
+		return (0);
+	dst = img->addr + (y * img->size_line + x * (img->bits_per_pixel / 8));
+	return (*(unsigned int*)dst);
+}
+
+void			draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info)
+{
+	t_vec2f	tex_pos;
+	int		height;
+	float	step;
+	int		i;
+	t_img	tex;
+
+	tex_pos.x = (float)info.x;
+	tex_pos.y = 0;
+	height = info.y;
+	printf("%i\n",  game->img->height);
+	win_point.y -= height / 2;
+	step = (float)CUB_SIZE / height;
+
+	tex.img = mlx_xpm_file_to_image(game->mlx, "./WALL33.xpm", &tex.width, &tex.height);
+	tex.addr = mlx_get_data_addr(tex.img, &tex.bits_per_pixel, &tex.size_line,
+							&tex.endian);
+
+	i = 0;
+	while (i < height)
+	{
+		pixel_put(game->img, win_point.x, win_point.y + i,
+						get_pixel_color(&tex, (int)tex_pos.x, (int)tex_pos.y));
+		tex_pos.y += step;
+		i++;
+	}
 }
 
 void			draw_rays(t_game *game)
@@ -294,11 +335,23 @@ void			draw_rays(t_game *game)
 	while (i < game->scene->width + 1)
 	{
 		set_cur_ray_angle(game, angle);
-		int side = cut_line(game, &ray_dir); //!!!!!
+		int side = cut_line(game, &ray_dir);
 		side = side + 0;
 		int depth = round((float)vec2f_length(&ray_dir) * cos(game->player->cam_angle - angle));
 
 		int hight = ((game->scene->width + 1) / (2 * tan(FOV / 2)) * CUB_SIZE / depth);
+
+
+
+		t_vec2	win_point;
+		t_vec2	info;
+		win_point.x = 5; // сдвиг на экране по x
+		win_point.y = game->img->height / 2; //центр экрана по y
+		info.x = (game->player->pos.x + (int)round(ray_dir.x)) % CUB_SIZE; // сдвиг в текстуре
+		info.y = hight; // реальная высота
+		// draw_texture_line(game, win_point, info);
+
+
 		begin.y = game->img->height / 2 - hight / 2;
 		end.y = game->img->height / 2 + hight / 2;
 		int c;
@@ -313,12 +366,16 @@ void			draw_rays(t_game *game)
 		else
 			c = 0x00FFFFFF;
 
+
 		// int c = 255 / (1 + depth * depth * 0.000002);
 		// draw_rectangle(game->img, &end, &begin, c << 16 | c / 2 << 8 | c / 3);
 		// draw_line(game->img, &begin, &end, c);
+
 		draw_vertical_line(game->img, &end, &begin, c);
-		draw_rectangle(game->img, &end, &begin, c);
-		// draw_line(game->img, &game->player->pos, &ray_dir, c);
+
+		// draw_rectangle(game->img, &end, &begin, c);
+		// t_vec2 end_dir;
+		// draw_line(game->img, &game->player->pos, vec2f_to_vec2(&end_dir, &ray_dir), c);
 		end.x++;
 		begin.x++;
 		angle -= FOV / game->scene->width;
@@ -388,6 +445,8 @@ int				main(void)
 	// draw_grid(&img, 0x00FFFFFF);
 
 	init_player(&player, scene);
+	// vec2_init(&player.pos, 1613, 608);
+	// player.cam_angle = 4.6158042;
 
 	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_released, &game);

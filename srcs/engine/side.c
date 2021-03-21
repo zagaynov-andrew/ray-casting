@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/20 09:34:52 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 12:58:50 by ngamora          ###   ########.fr       */
+/*   Created: 2021/03/20 09:34:22 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/21 17:27:13 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ int	is_vertical(t_game *game, t_vec2 *point)
 	int	count;
 
 	count = 0;
-	if (is_wall_no_epsilon(game, point->x + 5, point->y + 5) == 1)
+	if (is_wall_no_epsilon(game, point->x + 2, point->y + 2) == 1)
 		count++;
-	if (is_wall_no_epsilon(game, point->x - 5, point->y + 5) == 1)
+	if (is_wall_no_epsilon(game, point->x - 2, point->y + 2) == 1)
 		count++;
-	if (is_wall_no_epsilon(game, point->x - 5, point->y - 5) == 1)
+	if (is_wall_no_epsilon(game, point->x - 2, point->y - 2) == 1)
 		count++;
-	if (is_wall_no_epsilon(game, point->x + 5, point->y - 5) == 1)
+	if (is_wall_no_epsilon(game, point->x + 2, point->y - 2) == 1)
 		count++;
 	if (count == 2)
-		if (is_wall_no_epsilon(game, point->x - 5, point->y + 5) ==
-				is_wall_no_epsilon(game, point->x - 5, point->y - 5))
+		if (is_wall_no_epsilon(game, point->x - 2, point->y + 2) ==
+				is_wall_no_epsilon(game, point->x - 2, point->y - 2))
 			return (1);
 	return (0);
 }
@@ -49,13 +49,13 @@ int	is_corner(t_game *game, t_vec2 *point)
 	int	count;
 
 	count = 0;
-	if (is_wall_no_epsilon(game, point->x + 5, point->y + 5) == 1)
+	if (is_wall_no_epsilon(game, point->x + 2, point->y + 2) == 1)
 		count++;
-	if (is_wall_no_epsilon(game, point->x - 5, point->y + 5) == 1)
+	if (is_wall_no_epsilon(game, point->x - 2, point->y + 2) == 1)
 		count++;
-	if (is_wall_no_epsilon(game, point->x - 5, point->y - 5) == 1)
+	if (is_wall_no_epsilon(game, point->x - 2, point->y - 2) == 1)
 		count++;
-	if (is_wall_no_epsilon(game, point->x + 5, point->y - 5) == 1)
+	if (is_wall_no_epsilon(game, point->x + 2, point->y - 2) == 1)
 		count++;
 	if (count == 1)
 		return (1);
@@ -65,7 +65,7 @@ int	is_corner(t_game *game, t_vec2 *point)
 int	is_left_down_corner(t_game *game, t_vec2 *point)
 {
 	if (is_corner(game, point) == 1 &&
-			is_wall_no_epsilon(game, point->x - 5, point->y + 5) == 1)
+			is_wall_no_epsilon(game, point->x - 2, point->y + 2) == 1)
 		return (1);
 	return (0);
 }
@@ -73,7 +73,7 @@ int	is_left_down_corner(t_game *game, t_vec2 *point)
 int	is_right_down_corner(t_game *game, t_vec2 *point)
 {
 	if (is_corner(game, point) == 1 &&
-			is_wall_no_epsilon(game, point->x + 5, point->y + 5) == 1)
+			is_wall_no_epsilon(game, point->x + 2, point->y + 2) == 1)
 		return (1);
 	return (0);
 }
@@ -81,7 +81,7 @@ int	is_right_down_corner(t_game *game, t_vec2 *point)
 int	is_right_up_corner(t_game *game, t_vec2 *point)
 {
 	if (is_corner(game, point) == 1 &&
-			is_wall_no_epsilon(game, point->x + 5, point->y - 5) == 1)
+			is_wall_no_epsilon(game, point->x + 2, point->y - 2) == 1)
 		return (1);
 	return (0);
 }
@@ -89,7 +89,7 @@ int	is_right_up_corner(t_game *game, t_vec2 *point)
 int	is_left_up_corner(t_game *game, t_vec2 *point)
 {
 	if (is_corner(game, point) == 1 &&
-			is_wall_no_epsilon(game, point->x - 5, point->y - 5) == 1)
+			is_wall_no_epsilon(game, point->x - 2, point->y - 2) == 1)
 		return (1);
 	return (0);
 }
@@ -108,45 +108,55 @@ int	check_corner(t_game *game, t_vec2 *point)
 	if (is_left_up_corner(game, point) == 1)
 		if (M_PI < game->cur_ray_angle && game->cur_ray_angle < 3 * M_PI_2)
 			return (VERTICAL);
+	// if (is_vertical(game, point) == 1)
+	// 	return (VERTICAL);
+	// return (HORIZONTAL);
 	return (NOTHING);
 }
 
+// static	int	get_line_direction(t_game *game, t_vec2 *point)
+// {
+// 	if (game->last_side == NOTHING && is_vertical(game, point) == 1)
+// 		return (VERTICAL);
+// 	if (point->x % CUB_SIZE == 0 && point->y % CUB_SIZE == 0)
+// 	{
+// 		int	chk_corner;
+// 		if ((chk_corner = check_corner(game, point)) != NOTHING)
+// 			return (chk_corner);
+// 		return (game->last_side);
+// 	}
+// 	if (point->x % CUB_SIZE == 0)
+// 	{
+// 		int	chk_corner;
+// 		if ((chk_corner = check_corner(game, point)) != NOTHING)
+// 			return (chk_corner);
+// 		if (((float)(point->y % CUB_SIZE)) / CUB_SIZE > 0.98 &&
+// 						game->last_side == HORIZONTAL)
+// 		{
+// 			return (HORIZONTAL);
+// 		}
+// 		return (VERTICAL);
+// 	}
+// 	if (point->y % CUB_SIZE == 0)
+// 	{
+// 		int	chk_corner;
+// 		if ((chk_corner = check_corner(game, point)) != NOTHING)
+// 			return (chk_corner);
+// 		if (((float)(point->x % CUB_SIZE)) / CUB_SIZE > 0.98 &&
+// 						game->last_side == VERTICAL)
+// 		{
+// 			return (VERTICAL);
+// 		}
+// 		return (HORIZONTAL);
+// 	}
+// 	return (NOTHING);
+// }
+
 static	int	get_line_direction(t_game *game, t_vec2 *point)
 {
-	if (game->last_side == NOTHING && is_vertical(game, point) == 1)
+	if (is_vertical(game, point) == 1)
 		return (VERTICAL);
-	if (point->x % CUB_SIZE == 0 && point->y % CUB_SIZE == 0)
-	{
-		int	chk_corner;
-		if ((chk_corner = check_corner(game, point)) != NOTHING)
-			return (chk_corner);
-		return (game->last_side);
-	}
-	if (point->x % CUB_SIZE == 0)
-	{
-		int	chk_corner;
-		if ((chk_corner = check_corner(game, point)) != NOTHING)
-			return (chk_corner);
-		if (((float)(point->y % CUB_SIZE)) / CUB_SIZE > 0.98 &&
-						game->last_side == HORIZONTAL)
-		{
-			return (HORIZONTAL);
-		}
-		return (VERTICAL);
-	}
-	if (point->y % CUB_SIZE == 0)
-	{
-		int	chk_corner;
-		if ((chk_corner = check_corner(game, point)) != NOTHING)
-			return (chk_corner);
-		if (((float)(point->x % CUB_SIZE)) / CUB_SIZE > 0.98 &&
-						game->last_side == VERTICAL)
-		{
-			return (VERTICAL);
-		}
-		return (HORIZONTAL);
-	}
-	return (NOTHING);
+	return (HORIZONTAL);
 }
 
 int			get_side(t_game *game, t_vec2 *point)
