@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/20 22:23:30 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/21 12:40:59 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
-// # include "mlx.h"
-# include "libs/minilibx-linux/mlx.h"
+# include "mlx.h"
+// # include "libs/minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
@@ -38,25 +38,25 @@
 # define FOV 1.15
 # define RAY_LEN 200
 
-# define KEY_W 119
-# define KEY_S 115
-# define KEY_A 97
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_UP 65362
-# define KEY_DOWN 65362
-# define KEY_ESC 65307
+// # define KEY_W 119
+// # define KEY_S 115
+// # define KEY_A 97
+// # define KEY_D 100
+// # define KEY_LEFT 65361
+// # define KEY_RIGHT 65363
+// # define KEY_UP 65362
+// # define KEY_DOWN 65362
+// # define KEY_ESC 65307
 
-// # define KEY_W 13
-// # define KEY_S 1
-// # define KEY_A 0
-// # define KEY_D 2
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
-// # define KEY_UP 126
-// # define KEY_DOWN 125
-// # define KEY_ESC 53
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_A 0
+# define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_ESC 53
 
 # define STOP 0
 
@@ -159,8 +159,6 @@ typedef struct		s_game
 	void			*win;
 	t_img			*img;
 	int				last_side;
-	int				last_depth;
-	int				cur_depth;
 	float			cur_ray_angle;
 }					t_game;
 

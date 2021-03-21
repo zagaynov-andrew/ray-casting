@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 09:34:52 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/20 22:12:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/21 12:58:50 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,17 @@ int	is_left_up_corner(t_game *game, t_vec2 *point)
 int	check_corner(t_game *game, t_vec2 *point)
 {
 	if (is_left_down_corner(game, point) == 1)
-		if (M_PI_2 < game->cur_ray_angle && game->cur_ray_angle < M_PI)
-			return (VERTICAL);
-	if (is_right_down_corner(game, point) == 1)
-		if (M_PI < game->cur_ray_angle && game->cur_ray_angle < 3 * M_PI_2)
-			return (HORIZONTAL);
-	if (is_right_up_corner(game, point) == 1)
 		if (3 * M_PI_2 < game->cur_ray_angle && game->cur_ray_angle < 2 * M_PI)
-			return (VERTICAL);
-	if (is_left_up_corner(game, point) == 1)
-		if (0 < game->cur_ray_angle && game->cur_ray_angle < M_PI_2)
 			return (HORIZONTAL);
+	if (is_right_down_corner(game, point) == 1)
+		if (0 < game->cur_ray_angle && game->cur_ray_angle < M_PI_2)
+			return (VERTICAL);
+	if (is_right_up_corner(game, point) == 1)
+		if (M_PI_2 < game->cur_ray_angle && game->cur_ray_angle < M_PI)
+			return (HORIZONTAL);
+	if (is_left_up_corner(game, point) == 1)
+		if (M_PI < game->cur_ray_angle && game->cur_ray_angle < 3 * M_PI_2)
+			return (VERTICAL);
 	return (NOTHING);
 }
 

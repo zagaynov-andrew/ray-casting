@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/20 22:23:45 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/21 13:43:59 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,13 +171,6 @@ void	draw_map(t_img *img, t_vec *map)
 	}
 }
 
-// int             key_hook(int key_code, char *vars)
-// {
-// 	key_code = key_code;
-// 	vars = vars;
-//     printf("Hello from key_hook!\n");
-// 	return (0);
-// }
 int	key_hook(int key_code, char *msg)
 {
 	printf("%s %i\n", msg, key_code);
@@ -194,13 +187,13 @@ int				is_wall(t_game *game, t_vec2 *ray_dir)
 	cur.x = game->player->pos.x + ray_dir->x;
 	cur.y = game->player->pos.y + ray_dir->y;
 	flag = 0;
-	line = (char*)((game->scene->map->data)[cur.y / CUB_SIZE]);
-	if (line[cur.x / CUB_SIZE] == WALL)
-		flag = 1;
-	if ((cur.x % CUB_SIZE == 0 || cur.y % CUB_SIZE == 0) && flag == 1)
-	{
-		return (get_side(game, &cur));
-	}
+	// line = (char*)((game->scene->map->data)[cur.y / CUB_SIZE]);
+	// if (line[cur.x / CUB_SIZE] == WALL)
+	// 	flag = 1;
+	// if ((cur.x % CUB_SIZE == 0 || cur.y % CUB_SIZE == 0) && flag == 1)
+	// {
+	// 	return (get_side(game, &cur));
+	// }
 	cur.x = game->player->pos.x + ray_dir->x - 1;
 	cur.y = game->player->pos.y + ray_dir->y - 1;
 	vec2_cpy(&begin, &cur);
@@ -210,6 +203,11 @@ int				is_wall(t_game *game, t_vec2 *ray_dir)
 		while (cur.x < begin.x + 3)
 		{
 			line = (char*)((game->scene->map->data)[cur.y / CUB_SIZE]);
+			if ((int)game->scene->map->size <= cur.y / CUB_SIZE)
+			{
+				printf("ERROOOOOOOOOR\n");
+				return (0);
+			}
 			if (line[cur.x / CUB_SIZE] == WALL)
 				flag = 1;
 			if ((cur.x % CUB_SIZE == 0 || cur.y % CUB_SIZE == 0) && flag == 1)
@@ -261,7 +259,6 @@ int			cut_line(t_game *game, t_vec2 *ray_dir)
 			vec2_change_length(&dir, dda.side_dist_x);
 		else
 			vec2_change_length(&dir, dda.side_dist_y);
-		game->cur_depth = vec2_length(&dir);
 		if ((side = is_wall(game, &dir)) != 0)
 		{
 			vec2_cpy(ray_dir, &dir);
@@ -278,29 +275,29 @@ int			cut_line(t_game *game, t_vec2 *ray_dir)
 
 void			draw_rays(t_game *game)
 {
-	int		i;
-	t_vec2	const_dir;
-	t_vec2	ray_dir;
-	float	angle;
+	int		i;//
+	t_vec2	const_dir;//
+	t_vec2	ray_dir;//
+	float	angle;//
 
 	vec2_init(&ray_dir, RAY_LEN, 0);
-	angle = game->player->cam_angle - FOV / 2;
+	angle = game->player->cam_angle + FOV / 2;
 	vec2_cpy(&const_dir, &ray_dir);
 	rotate(&ray_dir, angle);
 	t_vec2 begin;
 	t_vec2 end;
-	begin.x = game->img->width;
-	end.x = begin.x;
+	begin.x = 0;
+	end.x = 0;
 	i = 0;
-	while (i < NUM_RAYS)
+
+	while (i < game->scene->width + 1)
 	{
 		set_cur_ray_angle(game, angle);
 		int side = cut_line(game, &ray_dir);
 		side = side + 0;
 		int depth = round((float)vec2_length(&ray_dir) * cos(game->player->cam_angle - angle));
-		// int depth = vec2_length(&ray_dir);
-		game->last_depth = depth;
-		int hight = (NUM_RAYS / (2 * tan(FOV / 2)) * CUB_SIZE / depth);
+
+		int hight = ((NUM_RAYS) / (2 * tan(FOV / 2)) * CUB_SIZE / depth);
 		begin.y = game->img->height / 2 - hight / 2;
 		end.y = game->img->height / 2 + hight / 2;
 		int c;
@@ -314,21 +311,16 @@ void			draw_rays(t_game *game)
 			c = 0x004B0082;
 		else
 			c = 0x00FFFFFF;
-		// t_vec2 p;
-		// p.x = ray_dir.x + game->player->pos.x;
-		// p.y = ray_dir.y + game->player->pos.y;
-		// if (is_corner(game, &p))
-		// 	c = 0x00000000;
+
 		// int c = 255 / (1 + depth * depth * 0.000002);
-		c += 0;
 		// draw_rectangle(game->img, &end, &begin, c << 16 | c / 2 << 8 | c / 3);
 		// draw_line(game->img, &begin, &end, c);
 		draw_vertical_line(game->img, &end, &begin, c);
 		draw_rectangle(game->img, &end, &begin, c);
 		// draw_line(game->img, &game->player->pos, &ray_dir, c);
-		end.x--;
-		begin.x--;
-		angle += FOV / (NUM_RAYS - 1);
+		end.x++;
+		begin.x++;
+		angle -= FOV / game->scene->width;
 		vec2_cpy(&ray_dir, &const_dir);
 		rotate(&ray_dir, angle);
 		i++;
@@ -390,13 +382,11 @@ int				main(void)
 	init_game(&game, &scene, &player, &img);
 	game.player->movement = STOP;
 	game.last_side = VERTICAL;
-	game.last_depth = 0;
 
 	// draw_map(&img, scene->map);
 	// draw_grid(&img, 0x00FFFFFF);
 
 	init_player(&player, scene);
-	// game.player->cam_angle = 1.22;
 
 	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_released, &game);
