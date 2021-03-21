@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 18:11:37 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/20 22:27:10 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,18 @@ void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color)
 			y++;
 		}
 		x++;
+	}
+}
+
+void	draw_vertical_line(t_img *img, t_vec2 *begin, t_vec2 *end, int color)
+{
+	int	y;
+
+	y = end->y;
+	while (y <= begin->y)
+	{
+		pixel_put(img, end->x, y, color);
+		y++;
 	}
 }
 

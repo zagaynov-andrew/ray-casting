@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/20 18:30:15 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/20 22:23:45 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,6 @@ void			draw_rays(t_game *game)
 	t_vec2	ray_dir;
 	float	angle;
 
-	int delta = (int)ceil(((float)game->img->width) / (NUM_RAYS - 1));
 	vec2_init(&ray_dir, RAY_LEN, 0);
 	angle = game->player->cam_angle - FOV / 2;
 	vec2_cpy(&const_dir, &ray_dir);
@@ -291,8 +290,7 @@ void			draw_rays(t_game *game)
 	t_vec2 begin;
 	t_vec2 end;
 	begin.x = game->img->width;
-	// begin.x = delta * NUM_RAYS / 2 + game->img->width / 2;
-	end.x = begin.x - delta;
+	end.x = begin.x;
 	i = 0;
 	while (i < NUM_RAYS)
 	{
@@ -324,10 +322,12 @@ void			draw_rays(t_game *game)
 		// int c = 255 / (1 + depth * depth * 0.000002);
 		c += 0;
 		// draw_rectangle(game->img, &end, &begin, c << 16 | c / 2 << 8 | c / 3);
+		// draw_line(game->img, &begin, &end, c);
+		draw_vertical_line(game->img, &end, &begin, c);
 		draw_rectangle(game->img, &end, &begin, c);
 		// draw_line(game->img, &game->player->pos, &ray_dir, c);
-		end.x -= delta;
-		begin.x -= delta;
+		end.x--;
+		begin.x--;
 		angle += FOV / (NUM_RAYS - 1);
 		vec2_cpy(&ray_dir, &const_dir);
 		rotate(&ray_dir, angle);

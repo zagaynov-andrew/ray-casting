@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 09:34:52 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/20 18:21:25 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/20 22:12:43 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ int		is_wall_no_epsilon(t_game *game, int x, int y)
 int	is_vertical(t_game *game, t_vec2 *point)
 {
 	int	count;
-	int	flag;
 
 	count = 0;
-	flag = 0;
 	if (is_wall_no_epsilon(game, point->x + 5, point->y + 5) == 1)
 		count++;
 	if (is_wall_no_epsilon(game, point->x - 5, point->y + 5) == 1)
@@ -115,9 +113,6 @@ int	check_corner(t_game *game, t_vec2 *point)
 
 static	int	get_line_direction(t_game *game, t_vec2 *point)
 {
-	float	angle;
-
-	angle = game->cur_ray_angle;
 	if (game->last_side == NOTHING && is_vertical(game, point) == 1)
 		return (VERTICAL);
 	if (point->x % CUB_SIZE == 0 && point->y % CUB_SIZE == 0)
