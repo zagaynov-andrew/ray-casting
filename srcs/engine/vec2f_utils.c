@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec2.c                                             :+:      :+:    :+:   */
+/*   vec2f_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 10:26:30 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 21:26:36 by ngamora          ###   ########.fr       */
+/*   Created: 2021/03/22 21:28:00 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/22 21:28:47 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-float	vec2_length(const t_vec2 *vec)
+void			vec2f_normalize(t_vec2f *vec)
 {
-	return (sqrtf(vec->x * vec->x + vec->y * vec->y));
+	float len;
+
+	len = vec2f_length(vec);
+	vec->x = vec->x / len;
+	vec->y = vec->y / len;
 }
 
-void	vec2_cpy(t_vec2 *dst, const t_vec2 *src)
+void			vec2f_multiply(t_vec2f *vec, float num)
 {
-	dst->x = src->x;
-	dst->y = src->y;
+	vec->x *= num;
+	vec->y *= num;
 }
 
-void	vec2_init(t_vec2 *vec, int x, int y)
+t_vec2f			*vec2f_rotate(t_vec2f *vec, float angle)
 {
-	vec->x = x;
-	vec->y = y;
-}
+	t_vec2f	tmp;
 
-void	vec2_rotate(t_vec2 *vec, float angle)
-{
-	t_vec2	tmp;
-
-	tmp.x = (int)round(vec->x * cos(angle) + vec->y * sin(angle));
-	tmp.y = (int)round(-vec->x * sin(angle) + vec->y * cos(angle));
+	tmp.x = vec->x * cos(angle) + vec->y * sin(angle);
+	tmp.y = -vec->x * sin(angle) + vec->y * cos(angle);
 	vec->x = tmp.x;
 	vec->y = tmp.y;
+	return (vec);
 }

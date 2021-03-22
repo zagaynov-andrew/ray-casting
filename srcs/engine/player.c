@@ -6,13 +6,13 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:45:09 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/18 10:45:40 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/22 21:21:53 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-void				set_start_position(t_player *player, t_vec *map)
+void	set_start_position(t_player *player, t_vec *map)
 {
 	int		x;
 	int		y;
@@ -48,5 +48,4 @@ void	init_player(t_player *player, t_scene *scene)
 		player->cam_angle = 0;
 	else if (scene->start_pos_flag == 'W')
 		player->cam_angle = M_PI;
-
 }

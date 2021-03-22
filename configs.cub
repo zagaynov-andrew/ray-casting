@@ -1,9 +1,9 @@
-R 2000 1000
-NO ./texture.xpm
-SO ./texture.xpm
-WE ./texture.xpm
-EA ./texture.xpm
-S ./texture.xpm
+R 1500 1000
+NO ./textures/WALL33.xpm
+SO ./textures/greystone.xpm
+WE ./textures/bluestone.xpm
+EA ./textures/colorstone.xpm
+S ./textures/greystone.xpm
 F 220,100,0
 C 225,30,0
 

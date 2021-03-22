@@ -6,23 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 09:34:22 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 17:27:13 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/22 21:11:18 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
-
-int		is_wall_no_epsilon(t_game *game, int x, int y)
-{
-	t_vec	*map;
-	char	*line;
-
-	map = game->scene->map;
-	line = (char*)((map->data)[y / CUB_SIZE]);
-	if (line[x / CUB_SIZE] == WALL)
-		return (1);
-	return (-1);
-}
 
 int	is_vertical(t_game *game, t_vec2 *point)
 {

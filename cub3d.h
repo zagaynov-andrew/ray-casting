@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/21 14:33:57 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/22 22:02:32 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "libs/gnl/get_next_line.h"
 # include "libs/libft/libft.h"
 # include "cub3d_errors.h"
-# include "mlx.h"
-// # include "libs/minilibx-linux/mlx.h"
+// # include "mlx.h"
+# include "libs/minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
@@ -38,25 +38,25 @@
 # define FOV 1.15
 # define RAY_LEN 200
 
-// # define KEY_W 119
-// # define KEY_S 115
-// # define KEY_A 97
-// # define KEY_D 100
-// # define KEY_LEFT 65361
-// # define KEY_RIGHT 65363
-// # define KEY_UP 65362
-// # define KEY_DOWN 65362
-// # define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_ESC 65307
 
-# define KEY_W 13
-# define KEY_S 1
-# define KEY_A 0
-# define KEY_D 2
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_ESC 53
+// # define KEY_W 13
+// # define KEY_S 1
+// # define KEY_A 0
+// # define KEY_D 2
+// # define KEY_LEFT 123
+// # define KEY_RIGHT 124
+// # define KEY_UP 126
+// # define KEY_DOWN 125
+// # define KEY_ESC 53
 
 # define STOP 0
 
@@ -160,6 +160,10 @@ typedef struct		s_game
 	t_img			*img;
 	int				last_side;
 	float			cur_ray_angle;
+	t_img			no;
+	t_img			so;
+	t_img			we;
+	t_img			ea;
 }					t_game;
 
 typedef struct		s_dda
@@ -174,7 +178,7 @@ typedef struct		s_dda
 void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_line(t_img *img, t_vec2* begin, t_vec2* vec, int color);
 void	draw_square(t_img *img, t_vec2 *p0, int size, int color);
-void	rotate(t_vec2 *vec, float angle);
+void	vec2_rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
 void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
@@ -198,18 +202,27 @@ int		key_pressed(int key_code, t_game *game);
 int		key_released(int key_code, t_game *game);
 int		render_frame(t_game *game);
 void	img_clear(t_img *img);
+int		is_wall(t_game *game, t_vec2 *ray_dir);
+int		is_wall_no_epsilon(t_game *game, int x, int y);
 int		is_wall_around_point(t_game *game, int x, int y);
 void	move_player(t_game *game);
 void	rotate_player(t_game *game);
 float	vec2_length(const t_vec2 *vec);
 void	vec2_init(t_vec2 *vec, int x, int y);
 int		get_side(t_game *game, t_vec2 *point);
-void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
 int		is_corner(t_game *game, t_vec2 *point);
 void	draw_vertical_line(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
 t_vec2	*vec2f_to_vec2(t_vec2 *dst, const t_vec2f *src);
 t_vec2f	*vec2f_init(t_vec2f *vec, float x, float y);
 t_vec2f	*vec2f_cpy(t_vec2f *dst, const t_vec2f *src);
 t_vec2f	*vec2f_rotate(t_vec2f *vec, float angle);
+void	vec2f_normalize(t_vec2f *vec);
+void	vec2f_multiply(t_vec2f *vec, float num);
+void	draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info, 
+														int texture_code);
+void	init_game(t_game *game, t_scene **scene, t_player *player, t_img *img);
+void	init_mlx(t_game *game, void **mlx, void **mlx_win);
+void	init_textures(t_game *game);
+void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
 
 #endif

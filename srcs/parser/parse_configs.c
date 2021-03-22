@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_configs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 21:08:36 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/18 18:35:47 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/22 22:12:24 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,11 @@ int			parse_texture_path(char *str, char **path)
 	pass_whitespaces(&str);
 	if (!(ptr = ft_strnstr(str, ".xpm", ft_strlen(str))))
 	{
-		errno = ERR_EXTEN_TEXTURE;
-		return (-1);
+		if (!(ptr = ft_strnstr(str, ".png", ft_strlen(str))))
+		{
+			errno = ERR_EXTEN_TEXTURE;
+			return (-1);
+		}
 	}
 	ptr += 4;
 	return (parse_after_texture_path(str, ptr, path));

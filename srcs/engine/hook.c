@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 17:29:47 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/22 21:41:22 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		key_pressed(int key_code, t_game *game)
 {
-	// printf("Key pressed: %i!\n", key_code);
 	if (key_code == KEY_W || key_code == KEY_UP)
 		game->player->movement |= TOWARD;
 	else if (key_code == KEY_S || key_code == KEY_DOWN)
@@ -32,7 +31,6 @@ int		key_pressed(int key_code, t_game *game)
 
 int		key_released(int key_code, t_game *game)
 {
-	// printf("Key released: %i!\n", key_code);
 	if (key_code == KEY_W || key_code == KEY_UP)
 		game->player->movement &= (0b11111111 - TOWARD);
 	else if (key_code == KEY_S || key_code == KEY_DOWN)
@@ -59,12 +57,6 @@ int		render_frame(t_game *game)
 	rotate_player(game);
 	// img_clear(game->img);
 
-	// t_img img;
-
-	// img.img = mlx_xpm_file_to_image(game->mlx, "./WALL33.xpm", &img.width, &img.height);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
-	// 						&img.endian);
-	// printf("%i\t%i\n", img.width, img.height);
 
 
 	t_vec2 begin;

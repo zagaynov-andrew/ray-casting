@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:24:56 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/20 16:21:36 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/22 21:20:57 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	move_straight(t_game *game, int where)
 	dir.x = 2;
 	dir.y = 0;
 	cur_pos = &game->player->pos;
-	rotate(&dir, game->player->cam_angle);
+	vec2_rotate(&dir, game->player->cam_angle);
 	if (where == TOWARD)
 	{
 		if (is_wall_around_point(game, cur_pos->x + dir.x, cur_pos->y + dir.y))
@@ -45,7 +45,7 @@ void	move_sidewise(t_game *game, int where)
 	dir.x = 2;
 	dir.y = 0;
 	cur_pos = &game->player->pos;
-	rotate(&dir, game->player->cam_angle);
+	vec2_rotate(&dir, game->player->cam_angle);
 	if (where == LEFT)
 	{
 		if (is_wall_around_point(game, cur_pos->x + dir.y, cur_pos->y - dir.x))
@@ -84,5 +84,4 @@ void	rotate_player(t_game *game)
 		game->player->cam_angle -= 2 * M_PI;
 	if (game->player->cam_angle < 0)
 		game->player->cam_angle += 2 * M_PI;
-	// printf("%f\n", game->player->cam_angle * 180 / M_PI);
 }
