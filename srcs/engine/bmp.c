@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 14:35:13 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 15:51:12 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 16:12:28 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	save_bmp(t_game *game)
 		write(1, "Impossible to create screenshot.bmp\n", 31);
 	write_header(game, fd);
 	y = game->scene->height;
-	while (y >= 0)
+	while (y > 0)
 	{
 		write(fd, game->img->addr + y * game->img->width * 4,
 											4 * game->scene->width);

@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/24 15:34:57 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 16:22:54 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,5 +244,7 @@ void	init_sprites(t_game *game);
 void	save_bmp(t_game *game);
 void	draw_floor(t_game *game);
 void	draw_ceiling(t_game *game);
+
+void	print_scene(t_scene *scene);//
 
 #endif
