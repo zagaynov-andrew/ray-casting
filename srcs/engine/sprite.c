@@ -6,13 +6,13 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:07:37 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 15:30:38 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:47:18 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-t_sprite	*create_sprite(int map_x, int map_y)
+t_sprite		*create_sprite(int map_x, int map_y)
 {
 	t_sprite	*spr;
 
@@ -52,44 +52,7 @@ void		init_sprites(t_game *game)
 	}
 }
 
-void merge(t_vec *A, int p, int q, int r)
-{
-	int	n1 = q - p;
-	int	n2 = r - q;
-	int i, j, k;
-
-	t_vec *L = ft_vec_new(n1);
-	t_vec *R = ft_vec_new(n2);
-    for (i=0; i < n1; i++)
-        L->data[i] = A->data[p + i];
-    for (j=0; j<n2; j++)
-        R->data[j]= A->data[q + j];
-    i = 0;
-	j = 0;
-    for (k = p; k < r; k++)
-	{
-        if(j >= n2 || (i < n1 && ((t_sprite*)(L->data[i]))->depth <= ((t_sprite*)(R->data[i]))->depth))
-            A->data[k] = L->data[i++];
-        else
-            A->data[k] = R->data[j++];
-	}
-	ft_vec_free(L);
-	ft_vec_free(R);
-}
-
-void part(t_vec *A, int p, int r)
-{
-	int q;
-	
-    if ((r - p) < 2)
-        return;
-    q = (p + r) / 2;
-    part(A, p, q);
-    part(A, q, r);
-    merge(A, p, q, r);
-}
-
-t_sprite	*sprite_cpy(t_sprite *dst, const t_sprite *src)
+t_sprite		*sprite_cpy(t_sprite *dst, const t_sprite *src)
 {
 	vec2_cpy(&dst->pos, &src->pos);
 	dst->depth = src->depth;
@@ -97,18 +60,6 @@ t_sprite	*sprite_cpy(t_sprite *dst, const t_sprite *src)
 	dst->visible = src->visible;
 	vec2_cpy(&dst->dir, &src->dir);
 	return (dst);
-}
-
-void	ft_swap(void *a, void *b)
-{
-	t_sprite	tmp;
-
-	sprite_cpy(&tmp, (t_sprite*)a);
-	sprite_cpy((t_sprite*)a, (t_sprite*)b);
-	sprite_cpy((t_sprite*)b, &tmp);
-	// tmp = *a;
-	// *a = *b;
-	// *b = tmp;
 }
 
 void			sprites_sort(t_vec *sprites)
@@ -125,10 +76,9 @@ void			sprites_sort(t_vec *sprites)
 		{
 			if (((t_sprite*)(sprites->data[j]))->depth >
 					((t_sprite*)(sprites->data[j + 1]))->depth)
-				// ft_swap(sprites->data[j], sprites->data[j + 1]);
 			{
 				tmp = sprites->data[j];
-				sprites->data[j] = 
+				sprites->data[j] =
 						sprites->data[j + 1];
 				sprites->data[j + 1] = tmp;
 			}
@@ -142,7 +92,7 @@ void			sprite_set_data(t_game *game)
 {
 	int			i;
 	t_sprite	*spr;
-	
+
 	i = 0;
 	while (i < (int)game->sprites->size)
 	{
@@ -185,19 +135,17 @@ void			set_visible(t_game *game)
 		spr->dir.y = spr->pos.y - game->player->pos.y;
 		sprite_delta_angle(game, spr);
 		spr->depth = vec2_length(&spr->dir);
-		if ((spr->delta_angle < FOV / 2 + 0.33 && spr->delta_angle > -FOV / 2 - 0.33) &&
-				spr->depth > 0.8 *CUB_SIZE)
-		{
+		if ((spr->delta_angle < FOV / 2 + 0.33 && spr->delta_angle >
+				-FOV / 2 - 0.33) && spr->depth > 0.8 * CUB_SIZE)
 			spr->visible = 1;
-			
-		}
 		else
 			spr->visible = 0;
 		i++;
 	}
 }
 
-void			draw_sprite(t_game *game, t_sprite *spr, int win_offset_x, int size)
+void			draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
+																	int size)
 {
 	t_vec2	win_point;
 	t_vec2	info;
@@ -212,8 +160,9 @@ void			draw_sprite(t_game *game, t_sprite *spr, int win_offset_x, int size)
 	offset = 0;
 	while (info.x < game->s.width)
 	{
-		if (spr->depth * cos(game->player->cam_angle - game->angle[win_point.x]) < 
-													game->wall_depth[win_point.x])
+		if (spr->depth * cos(game->player->cam_angle -
+										game->angle[win_point.x]) <
+											game->wall_depth[win_point.x])
 			draw_texture_line(game, win_point, info, SPRITE);
 		offset += step;
 		info.x = (int)offset;
@@ -235,9 +184,11 @@ void			draw_sprites_util(t_game *game)
 		spr = (t_sprite*)(game->sprites->data[i]);
 		if (spr->visible == 1)
 		{
-			size = ((game->scene->width + 1) / (2 * tan(FOV / 2)) * CUB_SIZE / spr->depth);
-			win_offset_x = game->img->width / 2 + (int)round(spr->delta_angle / FOV * game->img->width) -
-				size / 2;
+			size = ((game->scene->width + 1) / (2 * tan(FOV / 2)) *
+												CUB_SIZE / spr->depth);
+			win_offset_x = game->img->width / 2 +
+					(int)round(spr->delta_angle / FOV * game->img->width) -
+																	size / 2;
 			draw_sprite(game, spr, win_offset_x, size);
 		}
 		i--;
@@ -246,6 +197,6 @@ void			draw_sprites_util(t_game *game)
 
 void			draw_sprites(t_game *game)
 {
-    set_visible(game);
+	set_visible(game);
 	draw_sprites_util(game);
 }

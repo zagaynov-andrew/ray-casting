@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 15:14:32 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:49:24 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	draw_floor(t_game *game)
 {
 	t_vec2 begin;
 	t_vec2 end;
-	
+
 	vec2_init(&begin, 0, 0);
 	vec2_init(&end, game->img->width, game->img->height / 2);
 	draw_rectangle(game->img, &begin, &end, 0 << 16 | 186 << 8 | 255);
@@ -56,7 +56,7 @@ void	draw_ceiling(t_game *game)
 {
 	t_vec2 begin;
 	t_vec2 end;
-	
+
 	vec2_init(&begin, 0, game->img->height / 2);
 	vec2_init(&end, game->img->width, game->img->height);
 	draw_rectangle(game->img, &begin, &end, game->scene->c);

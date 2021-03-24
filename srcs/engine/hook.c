@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 15:32:03 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:48:26 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,6 @@ int		render_frame(t_game *game)
 	draw_ceiling(game);
 	draw_walls(game);
 	draw_sprites(game);
-
-
 	mlx_put_image_to_window(game->mlx, game->win, game->img->img, 0, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
 	return (0);
 }

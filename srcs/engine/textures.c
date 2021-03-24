@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:31:48 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 11:10:38 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:39:40 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void			draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info,
 	i = 0;
 	while (i < height)
 	{
-		if (!(texture_code == SPRITE && 
-				get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y) == 0x0))
+		if (!(texture_code == SPRITE &&
+				get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y) ==
+																		0x0))
 			pixel_put(game->img, win_point.x, win_point.y + i,
 					get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y));
 		tex_pos.y += step;
@@ -90,5 +91,4 @@ void			init_textures(t_game *game)
 								&game->s.width, &game->s.height);
 	game->s.addr = mlx_get_data_addr(game->s.img,
 		&game->s.bits_per_pixel, &game->s.size_line, &game->s.endian);
-	
 }
