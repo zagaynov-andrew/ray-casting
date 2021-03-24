@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 22:11:05 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:14:32 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,47 @@ void	img_clear(t_img *img)
 			x++;
 		}
 		y++;
+	}
+}
+
+void	draw_floor(t_game *game)
+{
+	t_vec2 begin;
+	t_vec2 end;
+	
+	vec2_init(&begin, 0, 0);
+	vec2_init(&end, game->img->width, game->img->height / 2);
+	draw_rectangle(game->img, &begin, &end, 0 << 16 | 186 << 8 | 255);
+}
+
+void	draw_ceiling(t_game *game)
+{
+	t_vec2 begin;
+	t_vec2 end;
+	
+	vec2_init(&begin, 0, game->img->height / 2);
+	vec2_init(&end, game->img->width, game->img->height);
+	draw_rectangle(game->img, &begin, &end, game->scene->c);
+}
+
+void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color)
+{
+	int	x;
+	int	x_begin;
+	int	y;
+	int	y_begin;
+
+	x = (begin->x <= end->x ? begin->x : end->x);
+	x_begin = x;
+	while (x < x_begin + ft_abs(begin->x - end->x))
+	{
+		y = (begin->y <= end->y ? begin->y : end->y);
+		y_begin = y;
+		while (y < y_begin + ft_abs(begin->y - end->y))
+		{
+			pixel_put(img, x, y, color);
+			y++;
+		}
+		x++;
 	}
 }

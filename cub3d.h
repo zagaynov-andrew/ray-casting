@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/24 11:51:41 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:34:57 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
 void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
 int		cut_line(t_game *game, t_vec2f *ray_dir);
-void	draw_rays(t_game *game);
+void	draw_walls(t_game *game);
 float	get_side_dist_x(const t_player *player, const t_vec2f *ray_dir, float delta_dist_x);
 float	get_side_dist_y(const t_player *player, const t_vec2f *ray_dir, float delta_dist_y);
 float	get_delta_dist_x(const t_vec2f *ray_dir);
@@ -241,5 +241,8 @@ void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
 void	sprite_set_data(t_game *game);
 void	draw_sprites(t_game *game);
 void	init_sprites(t_game *game);
+void	save_bmp(t_game *game);
+void	draw_floor(t_game *game);
+void	draw_ceiling(t_game *game);
 
 #endif

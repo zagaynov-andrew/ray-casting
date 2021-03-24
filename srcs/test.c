@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 12:19:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:37:03 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int			cut_line(t_game *game, t_vec2f *ray_dir)
 	return (side);
 }
 
-void			draw_rays(t_game *game)
+void			draw_walls(t_game *game)
 {
-	int		i;//
-	t_vec2f	const_dir;//
-	t_vec2f	ray_dir;//
-	float	angle;//
+	int		i;
+	t_vec2f	const_dir;
+	t_vec2f	ray_dir;
+	float	angle;
 
 	vec2f_init(&ray_dir, RAY_LEN, 0);
 	angle = game->player->cam_angle + FOV / 2;
@@ -103,11 +103,6 @@ void			draw_rays(t_game *game)
 	win_point.y = game->img->height / 2; //центр экрана по y
 	while (i < game->scene->width + 1)
 	{
-		if (i == 387)
-		{
-			i+=1;
-			i--;
-		}
 		set_cur_ray_angle(game, angle);
 		int side = cut_line(game, &ray_dir);
 		int depth = round((float)vec2f_length(&ray_dir) * cos(game->player->cam_angle - angle)); //wal_depth
@@ -213,19 +208,29 @@ int				main(void)
 
 	init_player(&player, scene);
 	
-	
+	init_textures(&game);
+
+	draw_floor(&game);
+	draw_ceiling(&game);
+	draw_walls(&game);
+	draw_sprites(&game);
+	save_bmp(&game);
+	// exit_game(&game);
+	// return (0);
 	// vec2_init(&player.pos, 1613, 608);
 	// player.cam_angle = 5.93;
+
+	
+
+	// t_img	no;
+	
+
 
 	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_released, &game);
 	mlx_hook(game.win, 33, 1L << 17, exit_game, &game);
 	// mlx_hook(game.win, 17, 1L << 17, exit_game, &game);
 	mlx_loop_hook(game.mlx, render_frame, &game);
-	
-
-	// t_img	no;
-	init_textures(&game);
 	// no.img = mlx_xpm_file_to_image(game.mlx, "./WALL33.xpm", &no.width, &no.height);
 	// no.addr = mlx_get_data_addr(no.img, &no.bits_per_pixel, &no.size_line,
 	// 						&no.endian);

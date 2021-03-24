@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 12:52:10 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:32:03 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,31 +62,11 @@ int		render_frame(t_game *game)
 {
 	move_player(game);
 	rotate_player(game);
-	// img_clear(game->img);
-
-
-
-	t_vec2 begin;
-	vec2_init(&begin, 0, 0);
-	t_vec2 end;
-	vec2_init(&end, game->img->width, game->img->height / 2);
-	draw_rectangle(game->img, &begin, &end, 0 << 16 | 186 << 8 | 255);
-
-	vec2_init(&begin, 0, game->img->height / 2);
-	vec2_init(&end, game->img->width, game->img->height);
-	draw_rectangle(game->img, &begin, &end, 40 << 16 | 40 << 8 | 40);
-
-	// draw_map(game->img, game->scene->map);
-	// draw_square_centre(game->img, &game->player->pos, CUB_SIZE, 0x0000FF00);
-	draw_rays(game);
+	draw_floor(game);
+	draw_ceiling(game);
+	draw_walls(game);
 	draw_sprites(game);
-	// t_vec2 begin;
-	// t_vec2 end;
-	// begin.x = 1800;
-	// begin.y = 442;
-	// end.x = 1764;
-	// end.y = 458;
-	// draw_rectangle(game->img, &begin, &end, 0x00FFFFFF);
+
 
 	mlx_put_image_to_window(game->mlx, game->win, game->img->img, 0, 0);
 	// mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);

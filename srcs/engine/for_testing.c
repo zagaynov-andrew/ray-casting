@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:15:36 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 21:35:31 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:15:59 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,28 +137,6 @@ void	draw_square(t_img *img, t_vec2 *p0, int size, int color)
 	{
 		y = p0->y;
 		while (y < size + p0->y)
-		{
-			pixel_put(img, x, y, color);
-			y++;
-		}
-		x++;
-	}
-}
-
-void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color)
-{
-	int	x;
-	int	x_begin;
-	int	y;
-	int	y_begin;
-
-	x = (begin->x <= end->x ? begin->x : end->x);
-	x_begin = x;
-	while (x < x_begin + ft_abs(begin->x - end->x))
-	{
-		y = (begin->y <= end->y ? begin->y : end->y);
-		y_begin = y;
-		while (y < y_begin + ft_abs(begin->y - end->y))
 		{
 			pixel_put(img, x, y, color);
 			y++;

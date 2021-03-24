@@ -6,7 +6,7 @@
 #    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/23 14:24:45 by ngamora          ###   ########.fr        #
+#    Updated: 2021/03/24 14:41:19 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,6 +124,7 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)textures.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)game.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)sprite.c				\
+			$(SRCS_DIR)$(ENGINE_DIR)bmp.c					\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:07:37 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 12:51:36 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 15:30:38 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,16 +212,12 @@ void			draw_sprite(t_game *game, t_sprite *spr, int win_offset_x, int size)
 	offset = 0;
 	while (info.x < game->s.width)
 	{
-		// spr->depth *= cos(game->player->cam_angle - game->angle[win_offset_x]);
-		printf("%f\n", game->wall_depth[win_offset_x]);
-		// for (int i = 0; i < 1000; i++)
-			// printf("%f\n", game->wall_depth[i]);
-		if (spr->depth * cos(game->player->cam_angle - game->angle[win_point.x]) < game->wall_depth[win_point.x])
+		if (spr->depth * cos(game->player->cam_angle - game->angle[win_point.x]) < 
+													game->wall_depth[win_point.x])
 			draw_texture_line(game, win_point, info, SPRITE);
 		offset += step;
 		info.x = (int)offset;
 		win_point.x++;
-		// info.x++;
 	}
 }
 
@@ -232,7 +228,6 @@ void			draw_sprites_util(t_game *game)
 	int			size;
 	int			win_offset_x;
 
-	// part(game->sprites, 0, game->sprites->size);
 	sprites_sort(game->sprites);
 	i = game->sprites->size - 1;
 	while (i >= 0)
@@ -244,12 +239,6 @@ void			draw_sprites_util(t_game *game)
 			win_offset_x = game->img->width / 2 + (int)round(spr->delta_angle / FOV * game->img->width) -
 				size / 2;
 			draw_sprite(game, spr, win_offset_x, size);
-			// p0.y = game->img->height / 2 - size / 2;
-			
-			// int c = 255 / (1 + spr->depth * spr->depth * 0.000002);
-			// draw_square(game->img, &p0, size, (c << 16 | c << 8 | c));
-
-			
 		}
 		i--;
 	}
@@ -259,5 +248,4 @@ void			draw_sprites(t_game *game)
 {
     set_visible(game);
 	draw_sprites_util(game);
-	
 }
