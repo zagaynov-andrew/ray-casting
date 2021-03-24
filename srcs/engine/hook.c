@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/23 14:29:24 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 12:52:10 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int		key_released(int key_code, t_game *game)
 int		exit_game(t_game *game)
 {
 	free_scene(game->scene);
-	ft_lstclear(&game->sprites, free);
+	ft_vec_free(game->sprites);
+	free(game->wall_depth);
+	free(game->angle);
 	exit(0);
 	return (0);
 }

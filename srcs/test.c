@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/23 14:31:03 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 12:19:43 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,45 +52,6 @@
 // 		printf("0\n");
 // }
 
-void		add_sprite(t_game *game, int map_x, int map_y)
-{
-	t_sprite	*spr;
-	t_list		*new;
-
-	spr = (t_sprite*)malloc(sizeof(t_sprite));
-	if (!spr)
-		return ;
-	spr->pos.x = map_x * CUB_SIZE + CUB_SIZE / 2;
-	spr->pos.y = map_y * CUB_SIZE + CUB_SIZE / 2;
-	new = ft_lstnew((void*)spr);
-	if (!new)
-		return ;
-	ft_lstadd_back(&game->sprites, new);
-}
-
-void		init_sprites(t_game *game)
-{
-	t_vec		*map;
-	char		*line;
-	int			x;
-	int			y;
-
-	map = game->scene->map;
-	y = 0;
-	while (y < (int)map->size)
-	{
-		line = (char*)((map->data)[y]);
-		x = 0;
-		while (line[x])
-		{
-			if (line[x] == SPRITE)
-				add_sprite(game, x, y);
-			x++;
-		}
-		y++;
-	}
-}
-
 int			cut_line(t_game *game, t_vec2f *ray_dir)
 {
 	t_dda	dda;
@@ -110,13 +71,11 @@ int			cut_line(t_game *game, t_vec2f *ray_dir)
 		{
 			vec2f_cpy(ray_dir, &dir);
 			return (side);
-		}
-		
+		}	
 		if (dda.side_dist_x < dda.side_dist_y)
 			dda.side_dist_x += dda.delta_dist_x;
 		else
 			dda.side_dist_y += dda.delta_dist_y;
-		// check_sprite(game, &dda, &dir);
 		vec2f_cpy(&dir, ray_dir);
 	}
 	return (side);
@@ -144,11 +103,16 @@ void			draw_rays(t_game *game)
 	win_point.y = game->img->height / 2; //центр экрана по y
 	while (i < game->scene->width + 1)
 	{
+		if (i == 387)
+		{
+			i+=1;
+			i--;
+		}
 		set_cur_ray_angle(game, angle);
 		int side = cut_line(game, &ray_dir);
-		side = side + 0;
-		int depth = round((float)vec2f_length(&ray_dir) * cos(game->player->cam_angle - angle));
-
+		int depth = round((float)vec2f_length(&ray_dir) * cos(game->player->cam_angle - angle)); //wal_depth
+		game->wall_depth[i] = depth;
+		game->angle[i] = angle;
 		int hight = ((game->scene->width + 1) / (2 * tan(FOV / 2)) * CUB_SIZE / depth);
 
 
@@ -161,7 +125,8 @@ void			draw_rays(t_game *game)
 		else
 			info.x = (game->player->pos.y + (int)round(ray_dir.y)) % CUB_SIZE; // сдвиг в текстуре
 		info.y = hight; // реальная высота
-		draw_texture_line(game, win_point, info, side);
+		if (side != NOTHING)
+			draw_texture_line(game, win_point, info, side);
 
 
 		begin.y = game->img->height / 2 - hight / 2;
@@ -233,9 +198,10 @@ int				main(void)
 	// print_scene(scene);
 	// printf("%p\n", scene->map);
 	init_game(&game, &scene, &player, &img);
-	game.sprites = NULL;
 	game.player->movement = STOP;
 	game.last_side = VERTICAL;
+	game.wall_depth = (float*)malloc((game.img->width + 1) * sizeof(float)); //!!!!!!!!!!!malloc
+	game.angle = (float*)malloc((game.img->width + 1) * sizeof(float)); //!!!!!!!!!!!malloc
 	init_sprites(&game);
 	// ft_lstiter(game.sprites, iter);//
 	
@@ -247,8 +213,9 @@ int				main(void)
 
 	init_player(&player, scene);
 	
+	
 	// vec2_init(&player.pos, 1613, 608);
-	// player.cam_angle = 4.6158042;
+	// player.cam_angle = 5.93;
 
 	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_released, &game);

@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/23 17:27:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 11:51:41 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,10 @@ typedef struct		s_game
 	t_img			so;
 	t_img			we;
 	t_img			ea;
-	t_list			*sprites;
+	t_img			s;
+	t_vec			*sprites;
+	float			*wall_depth;
+	float			*angle;
 }					t_game;
 
 typedef struct		s_dda
@@ -237,5 +240,6 @@ void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
 
 void	sprite_set_data(t_game *game);
 void	draw_sprites(t_game *game);
+void	init_sprites(t_game *game);
 
 #endif

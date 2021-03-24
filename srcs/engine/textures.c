@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:31:48 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 22:06:00 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 11:10:38 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_img			*get_texture(t_game *game, int texture_code)
 		texture = &game->we;
 	else if (texture_code == EA)
 		texture = &game->ea;
+	else if (texture_code == SPRITE)
+		texture = &game->s;
 	return (texture);
 }
 
@@ -52,13 +54,15 @@ void			draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info,
 	tex_pos.y = 0;
 	height = info.y;
 	win_point.y -= height / 2;
-	step = (float)CUB_SIZE / height;
 	texture = get_texture(game, texture_code);
+	step = (float)texture->width / height;
 	i = 0;
 	while (i < height)
 	{
-		pixel_put(game->img, win_point.x, win_point.y + i,
-				get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y));
+		if (!(texture_code == SPRITE && 
+				get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y) == 0x0))
+			pixel_put(game->img, win_point.x, win_point.y + i,
+					get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y));
 		tex_pos.y += step;
 		i++;
 	}
@@ -82,4 +86,9 @@ void			init_textures(t_game *game)
 								&game->ea.width, &game->ea.height);
 	game->ea.addr = mlx_get_data_addr(game->ea.img,
 		&game->ea.bits_per_pixel, &game->ea.size_line, &game->ea.endian);
+	game->s.img = mlx_xpm_file_to_image(game->mlx, game->scene->s,
+								&game->s.width, &game->s.height);
+	game->s.addr = mlx_get_data_addr(game->s.img,
+		&game->s.bits_per_pixel, &game->s.size_line, &game->s.endian);
+	
 }

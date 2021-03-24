@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 12:36:22 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 07:49:30 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/24 11:28:17 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,23 +112,44 @@ void part(t_vec *A,int p,int r);
 
 int main()
 {
-	int a1 = 10;
-	int a2 = 5;
-	int a3 = 4;
-	int a4 = 0;
-	int a5 = 11;
-	int a6 = 7;
+	int *a1 = (int*)malloc(sizeof(int));
+	*a1 = 10;
+	int *a2 = (int*)malloc(sizeof(int));
+	*a2 = 4;
+	int *a3 = (int*)malloc(sizeof(int));
+	*a3 = 7;
+	int *a4 = (int*)malloc(sizeof(int));
+	*a4 = 11;
+	int *a5 = (int*)malloc(sizeof(int));
+	*a5 = 8;
+	int *a6 = (int*)malloc(sizeof(int));
+	*a6 = -1;
+	int *a7 = (int*)malloc(sizeof(int));
+	*a7 = 9;
+	int *a8 = (int*)malloc(sizeof(int));
+	*a8 = -1;
+	int *a9 = (int*)malloc(sizeof(int));
+	*a9 = 7;
+	int *a10 = (int*)malloc(sizeof(int));
+	*a10 = 100;
+	int *a11 = (int*)malloc(sizeof(int));
+	*a11 = -2;
 	
-	t_vec *A = ft_vec_new(6);
-	ft_vec_push(&A, &a1);
-	ft_vec_push(&A, &a2);
-	ft_vec_push(&A, &a3);
-	ft_vec_push(&A, &a4);
-	ft_vec_push(&A, &a5);
-	ft_vec_push(&A, &a6);
+	t_vec *A = ft_vec_new(11);
+	ft_vec_push(&A, a1);
+	ft_vec_push(&A, a2);
+	ft_vec_push(&A, a3);
+	ft_vec_push(&A, a4);
+	ft_vec_push(&A, a5);
+	ft_vec_push(&A, a6);
+	ft_vec_push(&A, a7);
+	ft_vec_push(&A, a8);
+	ft_vec_push(&A, a9);
+	ft_vec_push(&A, a10);
+	ft_vec_push(&A, a11);
 	int	n,y,z;
-    y=0;
-	z = 6;
+    y = 0;
+	z = 11;
     part(A,y,z);
     for(n=0;n<z;n++)
 	{
@@ -136,12 +157,14 @@ int main()
 		p = (int*)A->data[n];
         printf("%d\n", *p);
 	}
+	ft_vec_free(A);
     return 0;
 }
 
 void part(t_vec *A, int p, int r)
 {
-int q;
+	int q;
+	
     if ((r - p) < 2)
         return;
     q = (p + r) / 2;
@@ -162,10 +185,13 @@ void merge(t_vec *A, int p, int q, int r)
         L->data[i] = A->data[p + i];
     for (j=0; j<n2; j++)
         R->data[j]= A->data[q + j];
-    i=0;j=0;
+    i = 0;
+	j = 0;
     for(k = p; k < r; k++)
-        if(j >= n2 || i < n1 && *(int*)(L->data[i]) <= *(int*)(R->data[j]))
+        if(j >= n2 || (i < n1 && *(int*)(L->data[i]) <= *(int*)(R->data[j])))
             A->data[k] = L->data[i++];
         else
             A->data[k] = R->data[j++];
+	ft_vec_free(L);
+	ft_vec_free(R);
 }
