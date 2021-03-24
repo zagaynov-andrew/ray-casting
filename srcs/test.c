@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:23:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 22:02:56 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/23 14:31:03 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,80 @@
 
 #include <limits.h>
 #include "../cub3d.h"
+
+// int			is_sprite(t_game *game, int x, int y)
+// {
+// 	t_vec	*map;
+// 	char	*line;
+
+// 	map = game->scene->map;
+// 	line = (char*)((map->data)[y / CUB_SIZE]);
+// 	if (line[x / CUB_SIZE] == SPRITE)
+// 		return (1);
+// 	return (0);
+// }
+
+// void		check_sprite(t_game *game, t_dda *dda, const t_vec2f *dir)
+// {
+// 	float	dir_len;
+// 	t_vec2f check_dir;
+// 	// t_vec2f check_dir;
+
+// 	dir_len = vec2f_length(dir);
+// 	if (ft_abs(dir->x) >= ft_abs(dir->y))
+// 		dir_len -= dda->delta_dist_x / 2;
+// 	else
+// 		dir_len -= dda->delta_dist_y / 2;
+// 	if (dir_len <= 0)
+// 		return ;
+// 	vec2f_cpy(&check_dir, dir);
+// 	vec2f_change_length(&check_dir, dir_len);
+// 	if (is_sprite(game,
+// 		game->player->pos.x + (int)round(check_dir.x),
+// 		game->player->pos.y + (int)round(check_dir.y)) == 1)
+// 		printf("1\n");
+// 	else
+// 		printf("0\n");
+// }
+
+void		add_sprite(t_game *game, int map_x, int map_y)
+{
+	t_sprite	*spr;
+	t_list		*new;
+
+	spr = (t_sprite*)malloc(sizeof(t_sprite));
+	if (!spr)
+		return ;
+	spr->pos.x = map_x * CUB_SIZE + CUB_SIZE / 2;
+	spr->pos.y = map_y * CUB_SIZE + CUB_SIZE / 2;
+	new = ft_lstnew((void*)spr);
+	if (!new)
+		return ;
+	ft_lstadd_back(&game->sprites, new);
+}
+
+void		init_sprites(t_game *game)
+{
+	t_vec		*map;
+	char		*line;
+	int			x;
+	int			y;
+
+	map = game->scene->map;
+	y = 0;
+	while (y < (int)map->size)
+	{
+		line = (char*)((map->data)[y]);
+		x = 0;
+		while (line[x])
+		{
+			if (line[x] == SPRITE)
+				add_sprite(game, x, y);
+			x++;
+		}
+		y++;
+	}
+}
 
 int			cut_line(t_game *game, t_vec2f *ray_dir)
 {
@@ -37,10 +111,12 @@ int			cut_line(t_game *game, t_vec2f *ray_dir)
 			vec2f_cpy(ray_dir, &dir);
 			return (side);
 		}
+		
 		if (dda.side_dist_x < dda.side_dist_y)
 			dda.side_dist_x += dda.delta_dist_x;
 		else
 			dda.side_dist_y += dda.delta_dist_y;
+		// check_sprite(game, &dda, &dir);
 		vec2f_cpy(&dir, ray_dir);
 	}
 	return (side);
@@ -122,6 +198,13 @@ void			draw_rays(t_game *game)
 	game->last_side = NOTHING;
 }
 
+// void			iter(void *data)
+// {
+// 	printf("%i\t%i\n", ((t_sprite*)data)->pos.x, ((t_sprite*)data)->pos.y);
+// }
+
+
+
 int				main(void)
 {
 	void		*mlx;
@@ -148,22 +231,31 @@ int				main(void)
 	init_mlx(&game, &mlx, &mlx_win);
 
 	// print_scene(scene);
-
-	printf("%p\n", scene->map);
+	// printf("%p\n", scene->map);
 	init_game(&game, &scene, &player, &img);
+	game.sprites = NULL;
 	game.player->movement = STOP;
 	game.last_side = VERTICAL;
+	init_sprites(&game);
+	// ft_lstiter(game.sprites, iter);//
+	
+	
+	
 
 	// draw_map(&img, scene->map);
 	// draw_grid(&img, 0x00FFFFFF);
 
 	init_player(&player, scene);
+	
 	// vec2_init(&player.pos, 1613, 608);
 	// player.cam_angle = 4.6158042;
 
 	mlx_hook(game.win, 2, 1L << 0, key_pressed, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_released, &game);
-	mlx_loop_hook(game.mlx, &render_frame, &game);
+	mlx_hook(game.win, 33, 1L << 17, exit_game, &game);
+	// mlx_hook(game.win, 17, 1L << 17, exit_game, &game);
+	mlx_loop_hook(game.mlx, render_frame, &game);
+	
 
 	// t_img	no;
 	init_textures(&game);

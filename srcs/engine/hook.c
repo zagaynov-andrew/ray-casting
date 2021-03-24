@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 21:41:22 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/23 14:29:24 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,15 @@ int		key_released(int key_code, t_game *game)
 	else if (key_code == KEY_RIGHT)
 		game->player->rotation &= (0b11111111 - CLOCKWISE);
 	if (key_code == KEY_ESC)
-	{
-		free_scene(game->scene);
-		exit(0);
-	}
+		exit_game(game);
+	return (0);
+}
+
+int		exit_game(t_game *game)
+{
+	free_scene(game->scene);
+	ft_lstclear(&game->sprites, free);
+	exit(0);
 	return (0);
 }
 
@@ -72,6 +77,7 @@ int		render_frame(t_game *game)
 	// draw_map(game->img, game->scene->map);
 	// draw_square_centre(game->img, &game->player->pos, CUB_SIZE, 0x0000FF00);
 	draw_rays(game);
+	draw_sprites(game);
 	// t_vec2 begin;
 	// t_vec2 end;
 	// begin.x = 1800;

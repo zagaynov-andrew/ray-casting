@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/22 22:02:32 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/23 17:27:43 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ typedef struct		s_game
 	t_img			so;
 	t_img			we;
 	t_img			ea;
+	t_list			*sprites;
 }					t_game;
 
 typedef struct		s_dda
@@ -174,6 +175,14 @@ typedef struct		s_dda
 	float			side_dist_y;
 }					t_dda;
 
+typedef struct		s_sprite
+{
+	t_vec2			pos;
+	float			depth;
+	float			delta_angle;
+	int				visible;
+	t_vec2			dir;
+}					t_sprite;
 
 void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_line(t_img *img, t_vec2* begin, t_vec2* vec, int color);
@@ -200,6 +209,7 @@ void	init_player(t_player *player, t_scene *scene);
 void	draw_map(t_img *img, t_vec *map);
 int		key_pressed(int key_code, t_game *game);
 int		key_released(int key_code, t_game *game);
+int		exit_game(t_game *game);
 int		render_frame(t_game *game);
 void	img_clear(t_img *img);
 int		is_wall(t_game *game, t_vec2 *ray_dir);
@@ -224,5 +234,8 @@ void	init_game(t_game *game, t_scene **scene, t_player *player, t_img *img);
 void	init_mlx(t_game *game, void **mlx, void **mlx_win);
 void	init_textures(t_game *game);
 void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
+
+void	sprite_set_data(t_game *game);
+void	draw_sprites(t_game *game);
 
 #endif
