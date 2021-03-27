@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vec_push.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 00:08:40 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 13:53:03 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/27 10:26:43 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static t_vec	*ft_vec_realloc(t_vec *vec)
 	if (!vec)
 		return (NULL);
 	if (!(new = ft_calloc(vec->capacity * 2, sizeof(void*))))
+	{
+		errno = ENOMEM;
 		return (NULL);
+	}
 	i = 0;
 	while (i < (int)vec->size)
 	{

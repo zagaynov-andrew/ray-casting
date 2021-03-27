@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:26:53 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 14:32:30 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/26 19:42:14 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void			init_dda(t_dda *dda, const t_game *game, const t_vec2f *ray_dir)
 {
 	dda->delta_dist_x = get_delta_dist_x(ray_dir);
-	dda->side_dist_x = get_side_dist_x(game->player, ray_dir,
+	dda->side_dist_x = get_side_dist_x(&game->player, ray_dir,
 													dda->delta_dist_x);
 	dda->delta_dist_y = get_delta_dist_y(ray_dir);
-	dda->side_dist_y = get_side_dist_y(game->player, ray_dir,
+	dda->side_dist_y = get_side_dist_y(&game->player, ray_dir,
 													dda->delta_dist_y);
 }
 

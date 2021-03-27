@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:31:48 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 15:39:40 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/26 19:33:20 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,20 @@ void			draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info,
 	float	step;
 	int		i;
 
-	tex_pos.x = (float)info.x;
-	tex_pos.y = 0;
 	height = info.y;
 	win_point.y -= height / 2;
 	texture = get_texture(game, texture_code);
+	tex_pos.x = (float)info.x;
+	tex_pos.y = 0;
 	step = (float)texture->width / height;
 	i = 0;
 	while (i < height)
 	{
 		if (!(texture_code == SPRITE &&
-				get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y) ==
+				get_pixel_color(texture, (int)tex_pos.x, (int)(tex_pos.y)) ==
 																		0x0))
-			pixel_put(game->img, win_point.x, win_point.y + i,
-					get_pixel_color(texture, (int)tex_pos.x, (int)tex_pos.y));
+			pixel_put(&game->img, win_point.x, win_point.y + i,
+					get_pixel_color(texture, (int)tex_pos.x, (int)(tex_pos.y)));
 		tex_pos.y += step;
 		i++;
 	}

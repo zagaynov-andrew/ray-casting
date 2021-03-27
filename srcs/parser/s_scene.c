@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_scene.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 17:43:11 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/15 13:16:26 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/27 10:02:17 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_scene	*scene_new(void)
 
 void	free_scene(t_scene *scene)
 {
+	if (scene == NULL)
+		return ;
 	if (scene->no != NULL)
 		free(scene->no);
 	if (scene->so != NULL)

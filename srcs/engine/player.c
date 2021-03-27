@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:45:09 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 21:21:53 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/26 19:43:00 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	set_start_position(t_player *player, t_vec *map)
 
 void	init_player(t_player *player, t_scene *scene)
 {
+	player->movement = STOP;
 	set_start_position(player, scene->map);
 	if (scene->start_pos_flag == 'N')
 		player->cam_angle = M_PI_2;

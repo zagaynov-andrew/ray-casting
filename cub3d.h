@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/24 16:22:54 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 11:10:50 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define WALL '1'
 # define SPRITE '2'
 
-# define CUB_SIZE 64
-# define EPSILON 5
+# define CUB_SIZE 512
+# define EPSILON 20
 # define NUM_RAYS 2001
 # define FOV 1.15
 # define RAY_LEN 200
@@ -67,6 +67,9 @@
 
 # define COUNTERCLOCKWISE 0b01
 # define CLOCKWISE 0b10
+
+# define MOVEMENT_SPEED 10
+# define ROTATION_SPEED 0.01
 
 # define NOTHING 0
 
@@ -154,10 +157,10 @@ typedef struct		s_player
 typedef struct		s_game
 {
 	t_scene			*scene;
-	t_player		*player;
+	t_player		player;
 	void			*mlx;
 	void			*win;
-	t_img			*img;
+	t_img			img;
 	int				last_side;
 	float			cur_ray_angle;
 	t_img			no;
@@ -233,14 +236,14 @@ void	vec2f_normalize(t_vec2f *vec);
 void	vec2f_multiply(t_vec2f *vec, float num);
 void	draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info, 
 														int texture_code);
-void	init_game(t_game *game, t_scene **scene, t_player *player, t_img *img);
-void	init_mlx(t_game *game, void **mlx, void **mlx_win);
+int		init_game(t_game *game);
+int		init_window(t_game *game, t_scene *scene);
 void	init_textures(t_game *game);
-void	set_cur_ray_angle(t_game *game, float cur_ray_angle);
+void	cut_angle(float *angle);
 
 void	sprite_set_data(t_game *game);
 void	draw_sprites(t_game *game);
-void	init_sprites(t_game *game);
+int		init_sprites(t_game *game);
 void	save_bmp(t_game *game);
 void	draw_floor(t_game *game);
 void	draw_ceiling(t_game *game);

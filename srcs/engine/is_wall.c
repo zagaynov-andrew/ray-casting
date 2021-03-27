@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:10:07 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 22:08:27 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 10:36:20 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ int	is_wall(t_game *game, t_vec2 *ray_dir)
 	int		flag;
 
 	flag = 0;
-	cur.x = game->player->pos.x + ray_dir->x - 1;
-	cur.y = game->player->pos.y + ray_dir->y - 1;
+	cur.x = game->player.pos.x + ray_dir->x - 2;
+	cur.y = game->player.pos.y + ray_dir->y - 2;
 	vec2_cpy(&begin, &cur);
-	while (cur.y < begin.y + 3)
+	while (cur.y < begin.y + 5)
 	{
 		cur.x = begin.x;
-		while (cur.x < begin.x + 3)
+		while (cur.x < begin.x + 5)
 		{
 			line = (char*)((game->scene->map->data)[cur.y / CUB_SIZE]);
 			if (line[cur.x / CUB_SIZE] == WALL)

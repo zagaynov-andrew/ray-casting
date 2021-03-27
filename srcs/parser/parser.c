@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:36:19 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/15 13:16:18 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/27 10:01:13 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_scene		*parse_cub(char *path)
 	t_scene	*scene;
 	int		fd;
 
+	scene = NULL;
 	if ((fd = open(path, O_RDONLY)) < 0)
 		return (NULL);
 	if (!(scene = scene_new()))

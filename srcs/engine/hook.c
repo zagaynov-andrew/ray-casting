@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/24 15:48:26 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 09:29:06 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,34 @@
 int		key_pressed(int key_code, t_game *game)
 {
 	if (key_code == KEY_W || key_code == KEY_UP)
-		game->player->movement |= TOWARD;
+		game->player.movement |= TOWARD;
 	else if (key_code == KEY_S || key_code == KEY_DOWN)
-		game->player->movement |= BACKWARD;
+		game->player.movement |= BACKWARD;
 	else if (key_code == KEY_A)
-		game->player->movement |= LEFT;
+		game->player.movement |= LEFT;
 	else if (key_code == KEY_D)
-		game->player->movement |= RIGHT;
+		game->player.movement |= RIGHT;
 	else if (key_code == KEY_LEFT)
-		game->player->rotation |= COUNTERCLOCKWISE;
+		game->player.rotation |= COUNTERCLOCKWISE;
 	else if (key_code == KEY_RIGHT)
-		game->player->rotation |= CLOCKWISE;
+		game->player.rotation |= CLOCKWISE;
 	return (0);
 }
 
 int		key_released(int key_code, t_game *game)
 {
 	if (key_code == KEY_W || key_code == KEY_UP)
-		game->player->movement &= (0b11111111 - TOWARD);
+		game->player.movement &= (0b11111111 - TOWARD);
 	else if (key_code == KEY_S || key_code == KEY_DOWN)
-		game->player->movement &= (0b11111111 - BACKWARD);
+		game->player.movement &= (0b11111111 - BACKWARD);
 	else if (key_code == KEY_A)
-		game->player->movement &= (0b11111111 - LEFT);
+		game->player.movement &= (0b11111111 - LEFT);
 	else if (key_code == KEY_D)
-		game->player->movement &= (0b11111111 - RIGHT);
+		game->player.movement &= (0b11111111 - RIGHT);
 	else if (key_code == KEY_LEFT)
-		game->player->rotation &= (0b11111111 - COUNTERCLOCKWISE);
+		game->player.rotation &= (0b11111111 - COUNTERCLOCKWISE);
 	else if (key_code == KEY_RIGHT)
-		game->player->rotation &= (0b11111111 - CLOCKWISE);
+		game->player.rotation &= (0b11111111 - CLOCKWISE);
 	if (key_code == KEY_ESC)
 		exit_game(game);
 	return (0);
@@ -66,6 +66,6 @@ int		render_frame(t_game *game)
 	draw_ceiling(game);
 	draw_walls(game);
 	draw_sprites(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->img->img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	return (0);
 }

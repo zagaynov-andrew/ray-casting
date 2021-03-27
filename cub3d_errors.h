@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_errors.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 12:54:22 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/16 10:35:32 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/27 09:57:52 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERR_EXTRA_MAP			150//"Extra character in the map"
 
  
-
+int		print_error_string(char *str);
 void	print_error(void);
 
 #endif

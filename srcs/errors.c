@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 12:23:33 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/16 10:35:24 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/27 09:57:44 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_errors.h"
 #include <errno.h>
 #include <stdio.h>
+
+int		print_error_string(char *str)
+{
+	write(2, str, ft_strlen(str));
+	return (EXIT_FAILURE);
+}
 
 void	print_error(void)
 {

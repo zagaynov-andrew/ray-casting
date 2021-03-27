@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vec.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 20:12:51 by nforce            #+#    #+#             */
-/*   Updated: 2021/01/27 13:42:05 by nforce           ###   ########.fr       */
+/*   Updated: 2021/03/27 10:14:56 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <stddef.h>
+# include <errno.h>
 
 typedef	struct	s_vec
 {
