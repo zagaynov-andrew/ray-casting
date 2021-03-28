@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 00:08:40 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/27 10:26:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 13:23:09 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ static t_vec	*ft_vec_realloc(t_vec *vec)
 		return (NULL);
 	if (!(new = ft_calloc(vec->capacity * 2, sizeof(void*))))
 	{
+		i = -1;
+		while (++i < (int)vec->size)
+			free((vec->data)[i]);
+		free(vec->data);
 		errno = ENOMEM;
 		return (NULL);
 	}

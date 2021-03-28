@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/27 11:10:50 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/28 19:36:28 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ typedef struct		s_game
 	void			*mlx;
 	void			*win;
 	t_img			img;
-	int				last_side;
 	float			cur_ray_angle;
 	t_img			no;
 	t_img			so;
@@ -248,6 +247,14 @@ void	save_bmp(t_game *game);
 void	draw_floor(t_game *game);
 void	draw_ceiling(t_game *game);
 
-void	print_scene(t_scene *scene);//
+void	print_scene(t_scene *scene); //
+
+int		is_left_down_corner(t_game *game, t_vec2 *point);
+int		is_right_up_corner(t_game *game, t_vec2 *point);
+int		is_left_up_corner(t_game *game, t_vec2 *point);
+int		is_right_down_corner(t_game *game, t_vec2 *point);
+
+void	destroy_mlx_ptrs(t_game *game);
+void	free_game(t_game *game);
 
 #endif

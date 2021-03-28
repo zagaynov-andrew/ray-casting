@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 17:26:57 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/21 14:01:10 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 13:01:03 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ char				*ft_strupcase(char *str);
 int					ft_str_is_empty(char *str);
 int					ft_lli_len(long long int n);
 int					ft_is_whitespace(char c);
+int					ft_strcmp(const char *s1, const char *s2);
 
 #endif

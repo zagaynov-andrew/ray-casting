@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:24:56 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/26 19:43:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 14:36:38 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	move_straight(t_game *game, int where)
 	t_vec2	dir;
 	t_vec2	*cur_pos;
 
-	dir.x = MOVEMENT_SPEED;
+	dir.x = game->scene->width * 0.02;
 	dir.y = 0;
 	cur_pos = &game->player.pos;
 	vec2_rotate(&dir, game->player.cam_angle);
@@ -42,7 +42,7 @@ void	move_sidewise(t_game *game, int where)
 	t_vec2	dir;
 	t_vec2	*cur_pos;
 
-	dir.x = MOVEMENT_SPEED;
+	dir.x = game->scene->width * 0.02;
 	dir.y = 0;
 	cur_pos = &game->player.pos;
 	vec2_rotate(&dir, game->player.cam_angle);
@@ -77,9 +77,9 @@ void	move_player(t_game *game)
 void	rotate_player(t_game *game)
 {
 	if (game->player.rotation & COUNTERCLOCKWISE)
-		game->player.cam_angle += ROTATION_SPEED;
+		game->player.cam_angle += game->scene->width * 0.00002;
 	else if (game->player.rotation & CLOCKWISE)
-		game->player.cam_angle -= ROTATION_SPEED;
+		game->player.cam_angle -= game->scene->width * 0.00002;
 	if (game->player.cam_angle >= 2 * M_PI)
 		game->player.cam_angle -= 2 * M_PI;
 	if (game->player.cam_angle < 0)

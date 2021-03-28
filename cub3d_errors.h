@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 12:54:22 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/27 09:57:52 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:35:46 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERR_EXTRA_MAP			150//"Extra character in the map"
 
  
-int		print_error_string(char *str);
-void	print_error(void);
+int	print_error_string(char *str);
+int print_error(void);
 
 #endif

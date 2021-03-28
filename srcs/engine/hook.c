@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 09:29:06 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/28 19:17:16 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		exit_game(t_game *game)
 	ft_vec_free(game->sprites);
 	free(game->wall_depth);
 	free(game->angle);
+	destroy_mlx_ptrs(game);
 	exit(0);
 	return (0);
 }

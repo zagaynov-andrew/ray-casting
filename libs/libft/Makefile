@@ -6,7 +6,7 @@
 #    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/15 17:57:46 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/13 11:47:12 by ngamora          ###   ########.fr        #
+#    Updated: 2021/03/27 13:05:31 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS	=	ft_memset.c		\
 			ft_llitoa.c		\
 			ft_itoa_base.c	\
 			ft_strupcase.c	\
+			ft_strcmp.c		\
 			ft_str_is_empty.c		\
 			ft_lli_len.c			\
 			ft_is_whitespace.c		\

@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 14:35:13 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/26 20:58:37 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:39:34 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void	save_bmp(t_game *game)
 	draw_walls(game);
 	draw_sprites(game);
 	save_bmp_util(game);
+	exit_game(game);
 }

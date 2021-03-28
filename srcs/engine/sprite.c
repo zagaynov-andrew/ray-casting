@@ -6,13 +6,13 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:07:37 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 10:31:43 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 16:49:33 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-t_sprite		*create_sprite(int map_x, int map_y)
+t_sprite	*create_sprite(int map_x, int map_y)
 {
 	t_sprite	*spr;
 
@@ -27,7 +27,7 @@ t_sprite		*create_sprite(int map_x, int map_y)
 	return (spr);
 }
 
-int		init_sprites(t_game *game)
+int			init_sprites(t_game *game)
 {
 	t_sprite	*spr;
 	char		*line;
@@ -45,15 +45,17 @@ int		init_sprites(t_game *game)
 		{
 			if (line[x] == SPRITE)
 			{
-				spr = create_sprite(x, y);
-				ft_vec_push(&game->sprites, spr);
+				if (!(spr = create_sprite(x, y)))
+					return (-1);
+				if (!ft_vec_push(&game->sprites, spr))
+					return (-1);
 			}
 		}
 	}
 	return (0);
 }
 
-t_sprite		*sprite_cpy(t_sprite *dst, const t_sprite *src)
+t_sprite	*sprite_cpy(t_sprite *dst, const t_sprite *src)
 {
 	vec2_cpy(&dst->pos, &src->pos);
 	dst->depth = src->depth;
@@ -63,7 +65,7 @@ t_sprite		*sprite_cpy(t_sprite *dst, const t_sprite *src)
 	return (dst);
 }
 
-void			sprites_sort(t_vec *sprites)
+void		sprites_sort(t_vec *sprites)
 {
 	int			i;
 	int			j;
@@ -89,7 +91,7 @@ void			sprites_sort(t_vec *sprites)
 	}
 }
 
-void			sprite_set_data(t_game *game)
+void		sprite_set_data(t_game *game)
 {
 	int			i;
 	t_sprite	*spr;
@@ -104,7 +106,7 @@ void			sprite_set_data(t_game *game)
 	}
 }
 
-void			sprite_delta_angle(t_game *game, t_sprite *spr)
+void		sprite_delta_angle(t_game *game, t_sprite *spr)
 {
 	spr->delta_angle = -atan2(spr->dir.y, spr->dir.x);
 	if (spr->delta_angle < 0.)
@@ -116,14 +118,7 @@ void			sprite_delta_angle(t_game *game, t_sprite *spr)
 		spr->delta_angle += 2 * M_PI;
 }
 
-int				min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-void			set_visible(t_game *game)
+void		set_visible(t_game *game)
 {
 	t_sprite	*spr;
 	int			i;
@@ -145,7 +140,7 @@ void			set_visible(t_game *game)
 	}
 }
 
-void			draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
+void		draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
 																	int size)
 {
 	t_vec2	win_point;
@@ -157,22 +152,24 @@ void			draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
 	win_point.y = game->img.height / 2;
 	info.x = 0;
 	info.y = size;
-	// tex_pos.x = (float)info.x / CUB_SIZE * texture->width;
 	step = (float)game->s.width / size;
 	offset = 0;
 	while (info.x < game->s.width)
 	{
-		if (spr->depth * cos(game->player.cam_angle -
+		if (win_point.x >= game->scene->width)
+			return ;
+		if (win_point.x >= 0)
+			if (spr->depth * cos(game->player.cam_angle -
 										game->angle[win_point.x]) <
 											game->wall_depth[win_point.x])
-			draw_texture_line(game, win_point, info, SPRITE);
+				draw_texture_line(game, win_point, info, SPRITE);
 		offset += step;
 		info.x = (int)offset;
 		win_point.x++;
 	}
 }
 
-void			draw_sprites_util(t_game *game)
+void		draw_sprites_util(t_game *game)
 {
 	t_sprite	*spr;
 	int			i;
@@ -197,7 +194,7 @@ void			draw_sprites_util(t_game *game)
 	}
 }
 
-void			draw_sprites(t_game *game)
+void		draw_sprites(t_game *game)
 {
 	set_visible(game);
 	draw_sprites_util(game);

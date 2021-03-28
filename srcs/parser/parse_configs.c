@@ -6,38 +6,49 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 21:08:36 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/22 22:12:24 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/27 14:40:18 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-int			parse_r(char *str, t_scene *scene)
+int			parse_r_util(char **str, t_scene *scene)
 {
 	if (scene->width > 0 || scene->height > 0)
 	{
 		errno = ERR_RE_CONFIG;
 		return (-1);
 	}
-	if ((scene->width = ft_atoi(str)) <= 0)
+	if ((scene->width = ft_atoi(*str)) <= 0)
 	{
 		errno = ERR_RSOLUTION;
 		return (-1);
 	}
-	if (next_value(&str, scene->width) == -1)
+	if (next_value(str, scene->width) == -1)
 		return (-1);
-	if (!ft_isdigit(*pass_whitespaces(&str)))
+	if (!ft_isdigit(*pass_whitespaces(str)))
 	{
 		errno = ERR_EXTRA_CHAR;
 		return (-1);
 	}
-	if ((scene->height = ft_atoi(str)) <= 0)
+	if ((scene->height = ft_atoi(*str)) <= 0)
 	{
 		errno = ERR_RSOLUTION;
 		return (-1);
 	}
-	if (next_value(&str, scene->height) == -1)
+	if (next_value(str, scene->height) == -1)
 		return (-1);
+	return (0);
+}
+
+int			parse_r(char *str, t_scene *scene)
+{
+	if (parse_r_util(&str, scene) == -1)
+		return (-1);
+	if (scene->width > 1848)
+		scene->width = 1848;
+	if (scene->height > 1015)
+		scene->height = 1015;
 	errno = (*pass_whitespaces(&str) == 0) ? SUCCESS : ERR_EXTRA_CHAR_AFTER;
 	return ((*pass_whitespaces(&str) == 0) ? 1 : -1);
 }
@@ -86,44 +97,4 @@ int			parse_fc(char *str, unsigned int *color)
 		return (1);
 	errno = ERR_EXTRA_CHAR_AFTER;
 	return (-1);
-}
-
-static int	parse_after_texture_path(char *begin, char *after, char **path)
-{
-	char	*end;
-
-	end = after;
-	pass_whitespaces(&after);
-	if (!*after)
-	{
-		*end = '\0';
-		if ((is_valid_path(begin)) == -1)
-			return (-1);
-		*path = ft_strdup(begin);
-		return (1);
-	}
-	errno = ERR_EXTRA_CHAR_AFTER;
-	return (-1);
-}
-
-int			parse_texture_path(char *str, char **path)
-{
-	char	*ptr;
-
-	if (*path)
-	{
-		errno = ERR_RE_CONFIG;
-		return (-1);
-	}
-	pass_whitespaces(&str);
-	if (!(ptr = ft_strnstr(str, ".xpm", ft_strlen(str))))
-	{
-		if (!(ptr = ft_strnstr(str, ".png", ft_strlen(str))))
-		{
-			errno = ERR_EXTEN_TEXTURE;
-			return (-1);
-		}
-	}
-	ptr += 4;
-	return (parse_after_texture_path(str, ptr, path));
 }

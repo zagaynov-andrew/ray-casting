@@ -6,7 +6,7 @@
 #    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/24 14:41:19 by ngamora          ###   ########.fr        #
+#    Updated: 2021/03/27 16:11:24 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ LIBFT_SRCS	=	ft_memset.c		\
 				ft_llitoa.c		\
 				ft_itoa_base.c	\
 				ft_strupcase.c	\
+				ft_strcmp.c	\
 				ft_str_is_empty.c	\
 				ft_lli_len.c		\
 				ft_is_whitespace.c	\
@@ -106,6 +107,7 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c				\
 			$(SRCS_DIR)$(PARSER_DIR)parser_utils.c			\
 			$(SRCS_DIR)$(PARSER_DIR)parse_configs.c			\
 			$(SRCS_DIR)$(PARSER_DIR)parse_configs_utils.c	\
+			$(SRCS_DIR)$(PARSER_DIR)parse_texture_path.c	\
 			$(SRCS_DIR)$(PARSER_DIR)map.c					\
 			$(SRCS_DIR)$(PARSER_DIR)map_utils.c				\
 			$(SRCS_DIR)$(PARSER_DIR)s_scene.c				\
@@ -120,11 +122,11 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)movement.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)side.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)is_wall.c				\
-			$(SRCS_DIR)$(ENGINE_DIR)for_testing.c			\
 			$(SRCS_DIR)$(ENGINE_DIR)textures.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)game.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)sprite.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)bmp.c					\
+			$(SRCS_DIR)$(ENGINE_DIR)is_corner.c				\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))
