@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:36:35 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/28 19:36:01 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/29 13:32:55 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ int				init_window(t_game *game, t_scene *scene)
 											game->scene->height, "cub3D");
 	game->img.img = mlx_new_image(game->mlx, game->scene->width,
 														game->scene->height);
-	if (!game->win || !game->img.img)
-	{
-		free_game(game);
-		return (-1);
-	}
 	game->img.addr = mlx_get_data_addr(game->img.img,
 			&game->img.bits_per_pixel, &game->img.size_line, &game->img.endian);
-	if (!game->img.addr)
+	if (!game->win || !game->img.img || !game->img.addr)
 	{
 		free_game(game);
 		return (-1);
@@ -72,6 +67,7 @@ int				init_game(t_game *game)
 		free_game(game);
 		return (-1);
 	}
+	game->horizont = game->scene->height / 2;
 	init_player(&game->player, game->scene);
 	if (init_sprites(game) == -1)
 	{

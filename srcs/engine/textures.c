@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:31:48 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 12:24:23 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/29 14:24:17 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void			draw_texture_line(t_game *game, t_vec2 win_point, t_vec2 info,
 	tex_pos.x = (float)info.x;
 	tex_pos.y = 0;
 	step = (float)texture->width / height;
-	i = 0;
-	while (i < height)
+	i = lower_cutoff(game, &tex_pos.y, step, height);
+	while (i < height - upper_cutoff(game, height))
 	{
 		if (!(texture_code == SPRITE &&
 				get_pixel_color(texture, (int)tex_pos.x, (int)(tex_pos.y)) ==

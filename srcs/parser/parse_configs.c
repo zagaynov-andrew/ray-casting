@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 21:08:36 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/27 14:40:18 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/28 22:44:39 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,25 @@ int			parse_r_util(char **str, t_scene *scene)
 
 int			parse_r(char *str, t_scene *scene)
 {
+	void	*mlx;
+	int		screen_w;
+	int		screen_h;
+
 	if (parse_r_util(&str, scene) == -1)
 		return (-1);
-	if (scene->width > 1848)
-		scene->width = 1848;
-	if (scene->height > 1015)
-		scene->height = 1015;
+	mlx = mlx_init();
+	if (!mlx)
+	{
+		errno = ENOMEM;
+		return (-1);
+	}
+	mlx_get_screen_size(mlx, &screen_w, &screen_h);
+	if (scene->width > screen_w)
+		scene->width = screen_w;
+	if (scene->height > screen_h)
+		scene->height = screen_h;
+	mlx_destroy_display(mlx);
+	free(mlx);
 	errno = (*pass_whitespaces(&str) == 0) ? SUCCESS : ERR_EXTRA_CHAR_AFTER;
 	return ((*pass_whitespaces(&str) == 0) ? 1 : -1);
 }

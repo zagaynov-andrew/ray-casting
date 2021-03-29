@@ -6,7 +6,7 @@
 #    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/27 16:11:24 by ngamora          ###   ########.fr        #
+#    Updated: 2021/03/29 14:35:23 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ PROCESSOR_DIR	= processor/
 T_PH_DIR		= t_ph/
 LIBFT_DIR		= ./libs/libft/
 GNL_DIR			= ./libs/gnl/
+MLX_DIR			= ./libs/minilibx-linux/
 PARSER_DIR		= parser/
 ENGINE_DIR		= engine/
 SRCS_DIR		= ./srcs/
@@ -123,10 +124,13 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)side.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)is_wall.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)textures.c				\
+			$(SRCS_DIR)$(ENGINE_DIR)textures_utils.c		\
 			$(SRCS_DIR)$(ENGINE_DIR)game.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)sprite.c				\
+			$(SRCS_DIR)$(ENGINE_DIR)sprite_utils.c			\
 			$(SRCS_DIR)$(ENGINE_DIR)bmp.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)is_corner.c				\
+			$(SRCS_DIR)$(ENGINE_DIR)engine.c				\
 			$(SRCS_DIR)test.c
 
 OBJS			= $(notdir $(SRCS:.c=.o))
@@ -160,6 +164,7 @@ $(OBJS_DIR)%.o : $(SRCS_DIR)$(ENGINE_DIR)%.c cub3d.h
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)
+	@$(MAKE) -C $(MLX_DIR)
 	@gcc -g -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(MLX_FLAGS)
 	@echo "\033[1;31;42m=====cub3D IS COMPLETED======\033[0m\n"
 	@echo "\033[1;33m __   __    ______    ______    __    __    ______    ______    ______    "
@@ -172,6 +177,7 @@ all: $(NAME)
 
 clean:
 	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(MAKE) clean -C $(MLX_DIR)
 	rm -Rf $(OBJS_DIR)
 	rm -Rf $(GNL_DIR)$(OBJS_DIR)
 

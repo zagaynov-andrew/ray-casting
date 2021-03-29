@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/28 19:36:28 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/29 14:28:34 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ typedef struct		s_game
 	t_vec			*sprites;
 	float			*wall_depth;
 	float			*angle;
+	int				horizont;
 }					t_game;
 
 typedef struct		s_dda
@@ -196,7 +197,7 @@ void	vec2_rotate(t_vec2 *vec, float angle);
 void	set_start_position(t_player *player, t_vec *map);
 void	draw_square_centre(t_img *img, t_vec2 *p0, int size, int color);
 void	draw_rectangle(t_img *img, t_vec2 *begin, t_vec2 *end, int color);
-int		cut_line(t_game *game, t_vec2f *ray_dir);
+int		get_ray_dir(t_game *game, t_vec2f *ray_dir);
 void	draw_walls(t_game *game);
 float	get_side_dist_x(const t_player *player, const t_vec2f *ray_dir, float delta_dist_x);
 float	get_side_dist_y(const t_player *player, const t_vec2f *ray_dir, float delta_dist_y);
@@ -256,5 +257,12 @@ int		is_right_down_corner(t_game *game, t_vec2 *point);
 
 void	destroy_mlx_ptrs(t_game *game);
 void	free_game(t_game *game);
+
+void	sprites_sort(t_vec *sprites);
+void	set_visible(t_game *game);
+
+int		lower_cutoff(t_game *game, float *tex_pos_y, float step, int height);
+int		upper_cutoff(t_game *game, int height);
+int		get_texture_offset_x(t_game *game, t_vec2f *ray_dir, int side);
 
 #endif
