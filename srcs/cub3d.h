@@ -6,7 +6,7 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 16:38:16 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/31 15:53:45 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 17:47:33 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define COUNTERCLOCKWISE	1
 # define CLOCKWISE			2
 # define CAMERA_UP			4
-# define CAMERA_DOWN		5
+# define CAMERA_DOWN		8
 
 # define MOVEMENT_SPEED		1
 # define ROTATION_SPEED		1
@@ -166,6 +166,7 @@ typedef struct		s_sprite
 	float			depth;
 	float			delta_angle;
 	int				visible;
+	int				was_visible;
 	t_vec2			dir;
 }					t_sprite;
 
@@ -283,5 +284,6 @@ int					check_int_overflow(const char *str);
 
 int					print_error_string(char *str);
 int					print_error(void);
+void				move_sprite(t_game *game);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite.c                                           :+:      :+:    :+:   */
+/*   sprite_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:07:37 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/31 15:05:45 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 17:28:03 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_sprite	*create_sprite(int map_x, int map_y)
 		errno = ENOMEM;
 		return (NULL);
 	}
+	spr->was_visible = 0;
+	spr->visible = 0;
 	spr->pos.x = map_x * CUB_SIZE + CUB_SIZE / 2;
 	spr->pos.y = map_y * CUB_SIZE + CUB_SIZE / 2;
 	return (spr);
@@ -63,10 +65,8 @@ void		draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
 	float	step;
 	float	offset;
 
-	win_point.x = win_offset_x;
-	win_point.y = game->horizont;
-	info.x = 0;
-	info.y = size;
+	vec2_init(&win_point, win_offset_x, game->horizont);
+	vec2_init(&info, 0, size);
 	step = (float)game->s.width / size;
 	offset = 0;
 	while (info.x < game->s.width)
@@ -77,7 +77,10 @@ void		draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
 			if (spr->depth * cos(game->player.cam_angle -
 										game->angle[win_point.x]) <
 											game->wall_depth[win_point.x])
+			{
 				draw_texture_line(game, win_point, info, SPRITE);
+				spr->was_visible = 1;
+			}
 		offset += step;
 		info.x = (int)offset;
 		win_point.x++;

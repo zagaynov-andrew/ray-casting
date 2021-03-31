@@ -6,7 +6,7 @@
 #    By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 17:10:51 by ngamora           #+#    #+#              #
-#    Updated: 2021/03/31 15:42:49 by ngamora          ###   ########.fr        #
+#    Updated: 2021/03/31 18:23:06 by ngamora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ GNL_DIR			= ./libs/gnl/
 MLX_DIR			= ./libs/minilibx-linux/
 PARSER_DIR		= parser/
 ENGINE_DIR		= engine/
+MANDATORY_DIR	= mandatory/
+BONUS_DIR		= bonus/
 SRCS_DIR		= ./srcs/
 OBJS_DIR		= objs/
 CC				= gcc
@@ -99,14 +101,11 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)vec2f.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)vec2f_utils.c			\
 			$(SRCS_DIR)$(ENGINE_DIR)player.c				\
-			$(SRCS_DIR)$(ENGINE_DIR)hook.c					\
-			$(SRCS_DIR)$(ENGINE_DIR)movement.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)side.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)is_wall.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)textures.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)textures_utils.c		\
 			$(SRCS_DIR)$(ENGINE_DIR)game.c					\
-			$(SRCS_DIR)$(ENGINE_DIR)sprite.c				\
 			$(SRCS_DIR)$(ENGINE_DIR)sprite_utils.c			\
 			$(SRCS_DIR)$(ENGINE_DIR)bmp.c					\
 			$(SRCS_DIR)$(ENGINE_DIR)is_corner.c				\
@@ -114,10 +113,22 @@ SRCS	=	$(SRCS_DIR)$(PARSER_DIR)parser.c				\
 			$(SRCS_DIR)errors.c								\
 			$(SRCS_DIR)main.c
 
+SRCS_MANDATORY	=	$(SRCS_DIR)$(MANDATORY_DIR)hook.c		\
+					$(SRCS_DIR)$(MANDATORY_DIR)movement.c	\
+					$(SRCS_DIR)$(BONUS_DIR)sprite.c
+
+SRCS_BONUS		=	$(SRCS_DIR)$(BONUS_DIR)hook_bonus.c		\
+					$(SRCS_DIR)$(BONUS_DIR)movement_bonus.c	\
+					$(SRCS_DIR)$(BONUS_DIR)sprite_bonus.c
+
 OBJS			= $(notdir $(SRCS:.c=.o))
 OBJS_PATH		= $(addprefix $(OBJS_DIR), $(OBJS))
 LIBFT_OBJ_PATH	= $(addprefix $(LIBFT_DIR)$(OBJS_DIR), $(notdir $(LIBFT_SRCS:.c=.o)))
 GNL_OBJ_PATH	= $(addprefix $(GNL_DIR)$(OBJS_DIR), $(GNL_SRCS:.c=.o))
+OBJS_MANDATORY			= $(notdir $(SRCS_MANDATORY:.c=.o))
+OBJS_MANDATORY_PATH		= $(addprefix $(OBJS_DIR), $(OBJS_MANDATORY))
+OBJS_BONUS			= $(notdir $(SRCS_BONUS:.c=.o))
+OBJS_BONUS_PATH		= $(addprefix $(OBJS_DIR), $(OBJS_BONUS))
 
 $(LIBFT_DIR)$(OBJS_DIR)%.o : $(LIBFT_DIR)%.c $(LIBFT_DIR)libft.h
 	@$(MAKE) bonus -C $(LIBFT_DIR)
@@ -144,10 +155,20 @@ $(OBJS_DIR)%.o : $(SRCS_DIR)$(ENGINE_DIR)%.c $(SRCS_DIR)cub3d.h
 	@echo "\033[1;31m- Done :\033[0m $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
-$(NAME): $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH)
+$(OBJS_DIR)%.o : $(SRCS_DIR)$(MANDATORY_DIR)%.c $(SRCS_DIR)cub3d.h
+	@mkdir -p $(OBJS_DIR)
+	@echo "\033[1;31m- Done :\033[0m $<"
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(OBJS_DIR)%.o : $(SRCS_DIR)$(BONUS_DIR)%.c $(SRCS_DIR)cub3d.h
+	@mkdir -p $(OBJS_DIR)
+	@echo "\033[1;31m- Done :\033[0m $<"
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(NAME): $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(OBJS_MANDATORY_PATH)
 	@$(MAKE) -C $(MLX_DIR)
 	@echo "\033[1;31;42m=====MLX IS COMPLETED======\033[0m\n"
-	@gcc -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(MLX_FLAGS)
+	@gcc -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(OBJS_MANDATORY_PATH) $(MLX_FLAGS)
 	@echo "\033[1;31;42m=====cub3D IS COMPLETED======\033[0m\n"
 	@echo "\033[1;33m __   __    ______    ______    __    __    ______    ______    ______    "
 	@echo "/\ \`-.\ \  /\  ___\  /\  __ \  /\ \`-./  \  /\  __ \  /\  == \  /\  __ \   "
@@ -170,4 +191,15 @@ fclean: clean
 
 re: fclean all
 
-.PHONY : all clean fclean re
+bonus: $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(OBJS_BONUS_PATH)
+	@$(MAKE) -C $(MLX_DIR)
+	@echo "\033[1;31;42m=====MLX IS COMPLETED======\033[0m\n"
+	@gcc -o $(NAME) $(LIBFT_OBJ_PATH) $(GNL_OBJ_PATH) $(OBJS_PATH) $(OBJS_BONUS_PATH) $(MLX_FLAGS)
+	@echo "\033[1;31;42m=====cub3D bonus IS COMPLETED======\033[0m\n"
+	@echo "\033[1;33m __   __    ______    ______    __    __    ______    ______    ______    "
+	@echo "/\ \`-.\ \  /\  ___\  /\  __ \  /\ \`-./  \  /\  __ \  /\  == \  /\  __ \   "
+	@echo "\ \ \-.  \ \ \ \__ \ \ \  __ \ \ \ \-./\ \ \ \ \/\ \ \ \  __<  \ \  __ \  "
+	@echo " \ \_\\\\\\\`\_\ \ \_____\ \ \_\ \_\ \ \_\ \ \_\ \ \_____\ \ \_\ \_\ \ \_\ \_\ "
+	@echo "  \/_/ \/_/  \/_____/  \/_/\/_/  \/_/  \/_/  \/_____/  \/_/ /_/  \/_/\/_/ \033[0m"
+
+.PHONY : all clean fclean re bonus
