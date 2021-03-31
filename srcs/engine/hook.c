@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:13:24 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/28 19:17:16 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:25 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 int		key_pressed(int key_code, t_game *game)
 {

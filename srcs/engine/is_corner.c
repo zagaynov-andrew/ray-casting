@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 13:14:11 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 13:20:11 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:28 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 int	is_left_down_corner(t_game *game, t_vec2 *point)
 {

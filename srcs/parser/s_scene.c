@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 17:43:11 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/27 10:02:17 by ngamora          ###   ########.fr       */
+/*   Created: 2021/01/26 17:43:11 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/31 15:06:27 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 t_scene	*scene_new(void)
 {

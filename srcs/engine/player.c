@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:45:09 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 15:12:35 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:36 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 void	set_start_position(t_player *player, t_vec *map)
 {

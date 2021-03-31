@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nforce <nforce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 15:20:46 by nforce            #+#    #+#             */
-/*   Updated: 2021/02/18 18:35:49 by nforce           ###   ########.fr       */
+/*   Created: 2021/01/27 15:20:46 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/31 15:06:21 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 int		is_full_configs(t_scene *scene)
 {

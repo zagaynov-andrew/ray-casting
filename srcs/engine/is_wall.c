@@ -6,13 +6,13 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:10:07 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 10:36:20 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:30 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
-int	is_wall_around_point(t_game *game, int x, int y)
+int	is_barrier_around_point(t_game *game, int x, int y)
 {
 	t_vec	*map;
 	char	*line;

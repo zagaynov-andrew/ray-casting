@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:26:53 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/26 19:42:14 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:10 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 void			init_dda(t_dda *dda, const t_game *game, const t_vec2f *ray_dir)
 {

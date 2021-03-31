@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 09:34:22 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 13:14:38 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:40 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 int			is_vertical(t_game *game, t_vec2 *point)
 {

@@ -6,15 +6,15 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:23:56 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/25 23:09:10 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:59 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 float			vec2f_length(const t_vec2f *vec)
 {
-	return (sqrtf(vec->x * vec->x + vec->y * vec->y));
+	return (sqrt((float)(vec->x * vec->x + vec->y * vec->y)));
 }
 
 void			vec2f_change_length(t_vec2f *vec, float length)

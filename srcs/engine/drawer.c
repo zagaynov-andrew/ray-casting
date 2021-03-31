@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:30:55 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/29 14:18:36 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:15 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 void	pixel_put(t_img *img, int x, int y, int color)
 {

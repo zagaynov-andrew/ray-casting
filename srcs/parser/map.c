@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 12:36:34 by nforce            #+#    #+#             */
-/*   Updated: 2021/03/27 15:45:13 by ngamora          ###   ########.fr       */
+/*   Created: 2021/01/27 12:36:34 by ngamora           #+#    #+#             */
+/*   Updated: 2021/03/31 15:06:11 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 static int	check_map_chars(char **line, t_scene *scene)
 {

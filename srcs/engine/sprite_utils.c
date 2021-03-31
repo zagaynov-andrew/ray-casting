@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 22:33:17 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/28 22:33:29 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:42 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 t_sprite	*sprite_cpy(t_sprite *dst, const t_sprite *src)
 {
@@ -89,7 +89,7 @@ void		set_visible(t_game *game)
 		sprite_delta_angle(game, spr);
 		spr->depth = vec2_length(&spr->dir);
 		if ((spr->delta_angle < FOV / 2 + 0.33 && spr->delta_angle >
-				-FOV / 2 - 0.33) && spr->depth > 0.8 * CUB_SIZE)
+				-FOV / 2 - 0.33) && spr->depth > 0.4 * CUB_SIZE)
 			spr->visible = 1;
 		else
 			spr->visible = 0;

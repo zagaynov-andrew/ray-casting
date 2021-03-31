@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 14:35:13 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 12:39:34 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:04 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 void	write_header(t_game *game, int fd)
 {

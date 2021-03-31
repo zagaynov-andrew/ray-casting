@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:26:01 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/29 14:27:51 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/29 21:43:49 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 t_vec2f	*init_ray_dir(t_game *game, t_vec2f *ray_dir, int len)
 {
@@ -53,18 +53,18 @@ void	draw_walls(t_game *game)
 
 	game->cur_ray_angle = game->player.cam_angle + FOV / 2;
 	win_point.x = 0;
-	win_point.y = game->img.height / 2;
+	win_point.y = game->horizont;
 	i = -1;
 	while (++i < game->scene->width + 1)
 	{
 		cut_angle(&game->cur_ray_angle);
 		side = get_ray_dir(game, &ray_dir);
-		game->wall_depth[i] = round((float)vec2f_length(&ray_dir) *
-							cos(game->player.cam_angle - game->cur_ray_angle));
+		game->wall_depth[i] = vec2f_length(&ray_dir) *
+						fabs(cos(game->player.cam_angle - game->cur_ray_angle));
 		game->angle[i] = game->cur_ray_angle;
 		info.x = get_texture_offset_x(game, &ray_dir, side);
-		info.y = ((game->scene->width + 1) / (2 * tan(FOV / 2)) * CUB_SIZE /
-														game->wall_depth[i]);
+		info.y = ((float)(game->scene->width + 1) /
+					(2 * tan(FOV / 2)) * CUB_SIZE / game->wall_depth[i]);
 		if (side != NOTHING)
 			draw_texture_line(game, win_point, info, side);
 		win_point.x++;

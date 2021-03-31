@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:26:30 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/22 21:26:36 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:54 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 float	vec2_length(const t_vec2 *vec)
 {

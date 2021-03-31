@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 14:40:08 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/27 14:40:32 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:06:19 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 static int	parse_after_texture_path(char *begin, char *after, char **path)
 {

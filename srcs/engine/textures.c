@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 21:31:48 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/29 14:24:17 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:52 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 unsigned int	get_pixel_color(t_img *img, int x, int y)
 {

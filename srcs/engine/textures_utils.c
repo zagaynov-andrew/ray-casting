@@ -6,18 +6,23 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:23:53 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/29 14:29:46 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:49 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 int		lower_cutoff(t_game *game, float *tex_pos_y, float step, int height)
 {
-	if (height > game->scene->height)
+	int	offset;
+
+	if (height / 2 > game->horizont)
 	{
-		*tex_pos_y = step * (height / 2 - game->horizont);
-		return (height / 2 - game->horizont);
+		offset = height / 2 - game->horizont;
+		*tex_pos_y = step * offset;
+		if (offset < 0)
+			return (-offset);
+		return (offset);
 	}
 	return (0);
 }

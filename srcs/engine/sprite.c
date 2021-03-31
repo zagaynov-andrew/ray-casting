@@ -6,11 +6,11 @@
 /*   By: ngamora <ngamora@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:07:37 by ngamora           #+#    #+#             */
-/*   Updated: 2021/03/28 22:33:01 by ngamora          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:05:45 by ngamora          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 t_sprite	*create_sprite(int map_x, int map_y)
 {
@@ -64,7 +64,7 @@ void		draw_sprite(t_game *game, t_sprite *spr, int win_offset_x,
 	float	offset;
 
 	win_point.x = win_offset_x;
-	win_point.y = game->img.height / 2;
+	win_point.y = game->horizont;
 	info.x = 0;
 	info.y = size;
 	step = (float)game->s.width / size;
